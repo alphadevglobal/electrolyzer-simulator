@@ -23,11 +23,6 @@
 \usepackage{titlesec}   % para customizar títulos
 \usepackage{authblk}    % para gerenciar autores/afiliações
 \usepackage[most]{tcolorbox} 
-\usepackage{amsmath}    % para equações matemáticas
-\usepackage{amsfonts}   % para fontes matemáticas
-\usepackage{amssymb}    % para símbolos matemáticos
-\usepackage{booktabs}   % para tabelas profissionais
-\usepackage{float}      % para posicionamento de figuras
 
 % Remove numeração de páginas
 \pagestyle{empty}
@@ -39,133 +34,87 @@
 
 \includegraphics[width=17cm,height=4.26cm]{logo_artigo.png}
 
+%\spaceskip=1.5mm  % espaçamento
+
 \vspace{1.0cm}
 \begin{center}
 {\bfseries\textit{\fontsize{14pt}{14pt}\selectfont{Simulação de eletrolisadores e a temperatura como parâmetro basilar à redução de consumo de energia}}}
 \end{center}
-
-{\textit{\fontsize{11pt}{11pt}\selectfont Karen Moura Fernandes\textsuperscript{1}, Mateus Gomes Macário\textsuperscript{2}, Paulo Henrique Pereira Silva\textsuperscript{3}}}
+{\textit{\fontsize{11pt}{11pt}\selectfont Karen Moura Fernandes\textsuperscript{1}, Mateus Gomes Macário\textsuperscript{2}, Autor 3\textsuperscript{3}}}
 
 {\textit{\fontsize{11pt}{11pt}\selectfont
 \textsuperscript{1.} Universidade de Fortaleza – Programa de Iniciação Científica \\
-\textsuperscript{2.} Universidade de Fortaleza – Instituto Científico Voluntário \\
-\textsuperscript{3.} Universidade de Fortaleza – Professor Orientador
+\textsuperscript{2.} Universidade de Fortaleza – Instituto Científico Voluntário
 }}
 
 \vspace{0.5cm}
 {\fontsize{11pt}{11pt}\selectfont
-Palavras-chave: eletrolisadores; hidrogênio verde; simulação computacional; temperatura; eficiência energética.
+Palavras-chave: inserir até cinco palavras-chave, separadas por ponto e vírgula.
 }
 
 \vspace{0.5cm}
 \begin{tcolorbox}[colback=gray!30, colframe=black, width=\textwidth, boxrule=1.5pt, arc=0mm, left=2mm, right=2mm, top=0mm, bottom=0mm]
 \textbf{Resumo}
 \end{tcolorbox}
-A crescente demanda por fontes de energia sustentáveis impulsionou o desenvolvimento do hidrogênio verde, cuja produção ocorre via eletrólise da água, utilizando energia renovável e resultando em emissões zero carbono. Este artigo apresenta uma abordagem metodológica híbrida para simulação de eletrolisadores, combinando modelagem matemática rigorosa com implementação computacional acessível através de uma aplicação web interativa. O estudo investigou o efeito da temperatura sobre o desempenho de eletrolisadores alcalinos, PEM e SOEC, com ênfase particular na análise de tropicalização para condições brasileiras. Os resultados demonstram que temperaturas ótimas de operação (75°C para alcalinos, 70°C para PEM, 850°C para SOEC) podem proporcionar ganhos de eficiência energética de até 20.8\% e reduções de consumo específico de energia de 29.3\%. A análise climática regional revelou que Fortaleza apresenta condições excepcionalmente favoráveis para operação de eletrolisadores, com eficiência 9.5\% superior à média de outras regiões estudadas. A ferramenta desenvolvida estabelece base sólida para futuras pesquisas em otimização de eletrolisadores e contribui significativamente para o desenvolvimento da indústria de hidrogênio verde em regiões tropicais.
+A crescente demanda por fontes de energia sustentáveis impulsionou o desenvolvimento do hidrogênio verde, cuja produção ocorre via eletrólise da água, utilizando energia renovável e resultando em emissões zero carbono. Este artigo aborda a simulação computacional de eletrolisadores, equipamento que possibilita a eletrólise, explorando a modelagem matemática e os paramêtros que influenciam a perfomance desses dispositivos.
 
 \begin{tcolorbox}[colback=gray!30, colframe=black, width=\textwidth, boxrule=1.5pt, arc=0mm, left=2mm, right=2mm, top=0mm, bottom=0mm]
 \textbf{Introdução}
 \end{tcolorbox}
-O hidrogênio é uma fonte promissora de energia, tanto pela sua abundância quanto pela alta eficiência da eletricidade convertida do seu desenvolvimento \cite{ref1}. A química necessária à produção de hidrogênio por eletrólise da água, processo eletroquímico que utiliza uma corrente elétrica para decompor a água ($H_2O$) em seus constituintes, hidrogênio ($H_2$) e oxigênio ($O_2$), por meio de eletrodos inseridos em um meio condutor aquoso, é amplamente conhecida e bem simples: o procedimento acontece em uma cuba eletrolítica onde eletricidade passa por dois eletrodos na água, que produz oxigênio, no ânodo, e hidrogênio, no cátodo \cite{ref1}. O eletrolisador é o equipamento que possibilita este processo químico e, após a decomposição das moléculas de $H_2O$, o $O_2$ é ou liberado à atmosfera ou reutilizado, enquanto o $H_2$ é armazenado. Em escala industrial, os dois tipos de eletrolisadores mais comumentemente usados são os eletrolisadores alcalino e membrana de troca de prótons \textit{(PEM)}. Além destes, consideramos também o de óxido sólido \textit{(SOEC)} em todas as abordagens deste artigo.
+O hidrogênio é uma fonte promissora de energia, tanto pela sua abundância quanto pela alta eficiência da eletricidade convertida do seu desenvolvimento \cite{ref1}. A química necessária à produção de hidrogênio por eletrólise da água, processo eletroquímico que utiliza uma corrente elétrica para decompor a água ($H_2O$) em seus constituintes, hidrogênio ($H_2$) e oxigênio ($O_2$), por meio de eletrodos inseridos em um meio condutor aquoso, é amplamente conhecida e bem simples: o procedimento acontece em uma cuba eletrolítica onde eletricidade passa por dois eletrodos na água, que produz oxigênio, no ânodo, e hidrogênio, no cátodo \cite{ref1}. O eletrolisador é o equipamento que possibilita este processo químico e, após a decomposição das moléculas de $H_2O$, o $O_2$ é ou liberado à atmosfera ou reutilizado, enquanto o $H_2$ é armazenado. Em escala industrial, os dois tipos de eletrolisadores mais comumentemente usados são os eletrolisadores alcalino e membrana de troca de prótons \textit{(PEM)}. Além destes, consideramos também o de óxido sólido \textit{(SOEC)} em todas as abordagens deste artigo. \\
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{tipos_eletrolisadores.png}
-\caption{Comparação entre os três principais tipos de eletrolisadores: alcalino, PEM e SOEC, mostrando suas características operacionais, temperaturas de funcionamento e eficiências típicas.}
-\label{fig:tipos_eletrolisadores}
-\end{figure}
+O eletrolisador alcalino funciona a partir de uma solução aquosa alcalina de hidróxido de potássio (\textit{KOH}), na faixa de concentração de $25$ a $30\%$. Esta solução, por conta da sua alta condutividade, atua como condutor iônico, já que demanda menos eletricidade em função de sua baixa resistência ôhmica. Em geral, operam entre $70$ e $80 ^\circ C$ e apresentam rendimento de $70$ a $80 \%$ \cite{ref2}.  O hidrogênio produzido é coletado da superfície do cátodo, enquanto os íons hidróxido atravessam o diafragma poroso em direção ao ânodo, impulsionados pela diferença de voltagem entre os eletrodos. A tecnologia do eletrolisador de membrana de troca de prótons (PEM) é amplamente adotada nos processos industriais devido à sua capacidade de produzir hidrogênio de alta pureza de forma eficiente, ao mesmo tempo em que minimiza os desafios relacionados ao manuseio e à manutenção \cite{ref3}. Em contrapartida, os altos custos dos materiais envolvidos neste processo impossibilitam a produção em massa destes eletrolisadores, que empregam um material plástico sólido especializado como eletrólito. No ânodo, oxigênio é produzido \cite{ref1}, enquanto no cátodo, prótons se combinam aos elétrons, que foram fornecidos pela fonte de energia, para produzir hidrogênio. O eletrolisador de óxido sólido é uma célula de combustível que opera a pressões e temperaturas consideravelmente mais altas comparado aos eletrolisadores alcalinos e PEM, podendo alcançar até $1000 ^\circ C$, acelerando, assim, a degradação do eletrólito, redução de sua vida útil e tempos de inicialização prolongados. Em compensação, oferece alta eficiência de conversão, baixo custo e baixas emissões associadas a separação do hidrogênio, que requer menos eletricidade \cite{ref3}. Neste método, o uso de vapor, ao invés de água líquida, permite uma eficiência energética maior, uma vez que a alta temperatura acelera a cinética da reação, reduzindo as perdas de energia devido à polarização dos eletrodos, o que aumenta a eficiência geral do sistema. O fluido a ser dissociado é vapor que, após ser aquecido, entra no lado do cátodo. Após a divisão do vapor em gás hidrogênio e íons de oxigênio, no cátodo, os íons são transportados até o ânodo, onde se descarregam e formam gás oxigênio.\\
 
-O eletrolisador alcalino funciona a partir de uma solução aquosa alcalina de hidróxido de potássio (\textit{KOH}), na faixa de concentração de $25$ a $30\%$. Esta solução, por conta da sua alta condutividade, atua como condutor iônico, já que demanda menos eletricidade em função de sua baixa resistência ôhmica. Em geral, operam entre $70$ e $80 ^\circ C$ e apresentam rendimento de $70$ a $80 \%$ \cite{ref2}. O hidrogênio produzido é coletado da superfície do cátodo, enquanto os íons hidróxido atravessam o diafragma poroso em direção ao ânodo, impulsionados pela diferença de voltagem entre os eletrodos. A tecnologia do eletrolisador de membrana de troca de prótons (PEM) é amplamente adotada nos processos industriais devido à sua capacidade de produzir hidrogênio de alta pureza de forma eficiente, ao mesmo tempo em que minimiza os desafios relacionados ao manuseio e à manutenção \cite{ref3}. Em contrapartida, os altos custos dos materiais envolvidos neste processo impossibilitam a produção em massa destes eletrolisadores, que empregam um material plástico sólido especializado como eletrólito. No ânodo, oxigênio é produzido \cite{ref1}, enquanto no cátodo, prótons se combinam aos elétrons, que foram fornecidos pela fonte de energia, para produzir hidrogênio. O eletrolisador de óxido sólido é uma célula de combustível que opera a pressões e temperaturas consideravelmente mais altas comparado aos eletrolisadores alcalinos e PEM, podendo alcançar até $1000 ^\circ C$, acelerando, assim, a degradação do eletrólito, redução de sua vida útil e tempos de inicialização prolongados. Em compensação, oferece alta eficiência de conversão, baixo custo e baixas emissões associadas a separação do hidrogênio, que requer menos eletricidade \cite{ref3}. Neste método, o uso de vapor, ao invés de água líquida, permite uma eficiência energética maior, uma vez que a alta temperatura acelera a cinética da reação, reduzindo as perdas de energia devido à polarização dos eletrodos, o que aumenta a eficiência geral do sistema. O fluido a ser dissociado é vapor que, após ser aquecido, entra no lado do cátodo. Após a divisão do vapor em gás hidrogênio e íons de oxigênio, no cátodo, os íons são transportados até o ânodo, onde se descarregam e formam gás oxigênio.
-
-Parâmetros de desempenho como eficiência, densidade de corrente e consumo energético são fatores chaves considerados mais relevantes à esta pesquisa. A densidade de corrente representa a quantidade de energia fluindo no eletrodo e no eletrolisador de acordo com o potencial elétrico aplicado e é diretamente proporcional à taxa de geração de hidrogênio, uma vez que quanto maior densidade de corrente, mais elétrons participando da reação eletroquímica; uma maior densidade de corrente resulta em uma maior queda de tensão, reduzindo a eficiência da tensão do eletrólise; se a densidade de corrente diminui, a taxa de produção de hidrogênio também reduz. Consumo energético é o parâmetro mais amplamente utilizado para comparar tecnologias de eletrólise e, em aplicações industriais convencionais, é relativamente alto, entre $4.5-5kWh/m^3$ \cite{ref3} ou $55.6kWh/kg$, aproximadamente, dependendo do tipo de eletrolisador usado. Este alto consumo se apresenta como um desafio considerável que deve ser enfrentado para minimizar os custos de produção do hidrogênio \cite{ref3}. A eficiência energética de um eletrolisador é definida pelo hidrogênio produzido pela energia consumida, sendo determinante à produção economicamente viável de hidrogênio verde e é crucial que seja analisado o ciclo completo do processo de eletrólise da água para avaliar a eficiência e o consumo energético da operação.
+Parâmetros de desempenho como eficiência, densidade de corrente e consumo energético são fatores chaves considerados mais relevantes à esta pesquisa. A densidade de corrente representa a quantidade de energia fluindo no eletrodo e no eletrolisador de acordo com o potencial elétrico aplicado e é diretamente proporcional à taxa de geração de hidrogênio, uma vez que quanto maior densidade de corrente, mais elétrons participando da reação eletroquímica; uma maior densidade de corrente resulta em uma maior queda de tensão, reduzindo a eficiência da tensão do eletrólise; se a densidade de corrente diminui, a taxa de produção de hidrogênio também reduz. Consumo energético é o parâmetro mais amplamente utilizado para comparar tecnologias de eletrólise e, em aplicações industriais convencionais, é relativamente alto, entre $4.5-5kWh/m^3$ \cite{ref3} ou $55.6kWh/kg$, aproximadamente, dependendo do tipo de eletrolisador usado. Este alto consumo se apresenta como um desafio considerável que deve ser enfrentado para minimizar os custos de produção do hidrogênio \cite{ref3}. A eficiência energética de um eletrolisador é definida pelo hidrogênio produzido pela energia consumida, sendo determinante à produção economicamente viável de hidrogênio verde e é crucial que seja analisado o ciclo completo do processo de eletrólise da água para avaliar a eficiência e o consumo energético da operação. \\
 
 Estudos apontam que a temperatura é um fator central nesses parâmetros, pois aumentar a temperatura pode melhorar a eficiência do sistema e reduzir o consumo de energia, e é ainda mais crucial quando falamos da relação entre a temperatura e o custo de produção de hidrogênio: a eletricidade é um fator central no custo da produção através da eletrólise, e em sistemas de altas temperaturas, estudos apontam que esse custo diminui. Inclusive, entre 47-78\% do total desse custo é com eletricidade. Nem tudo são flores, porém: em teoria, tudo isso se aplica, mas, na prática, temperaturas mais altas nem sempre são viáveis se consideradas a limitação dos equipamentos, que podem ter sua vida útil comprometida \cite{ref4}. A modelagem matemática é fundamental à análise do efeito da temperatura na curva I-U, potenciais de sobretensão e eficiência energética \cite{ref5}. A modelagem matemática, por sua vez, é uma abordagem utilizada para explicar ou compreender situações reais, e a modelagem de eletrolisadores desempenha um papel fundamental na compreensão e otimização do processo de eletrólise, permitindo a previsão do desempenho e a identificação de limitações operacionais. Para descrever matematicamente esse processo, são utilizadas diversas equações fundamentais, que englobam desde as reações químicas envolvidas até a transferência de massa e calor dentro do sistema.
-
-
 
 \begin{tcolorbox}[colback=gray!30, colframe=black, width=\textwidth, boxrule=1.5pt, arc=0mm, left=2mm, right=2mm, top=0mm, bottom=0mm]
 \textbf{Metodologia}
 \end{tcolorbox}
-
-Este estudo adotou uma abordagem metodológica híbrida, combinando modelagem matemática fundamentada em princípios físicos com técnicas computacionais avançadas para desenvolver um simulador abrangente de eletrolisadores. A metodologia foi estruturada em quatro etapas principais: (1) desenvolvimento do modelo matemático baseado em equações fundamentais da eletroquímica, (2) implementação computacional através de uma aplicação web interativa, (3) validação dos modelos através de comparação com dados da literatura científica, e (4) análise de sensibilidade considerando variações climáticas regionais, com ênfase particular nos efeitos de tropicalização característicos da região de Fortaleza, Ceará.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{fluxograma_metodologia.png}
-\caption{Fluxograma da metodologia híbrida desenvolvida, mostrando as quatro etapas principais: modelagem matemática, implementação computacional, validação de modelos e análise climática regional.}
-\label{fig:fluxograma_metodologia}
-\end{figure}
-
-\subsection{Modelagem Matemática Fundamental}
-
-A base teórica do simulador fundamenta-se nas equações clássicas da eletroquímica, adaptadas para os três principais tipos de eletrolisadores: alcalino, membrana de troca de prótons (PEM) e óxido sólido (SOEC). O modelo matemático desenvolvido incorpora as seguintes equações fundamentais:
-
-A tensão total do eletrolisador é descrita pela equação de Nernst modificada, considerando as sobretensões características do processo:
+Foram realizados extensos estudos bibliográficos para definir os modelos matemáticos, e as técnicas computacionais, que melhor auxiliariam na simulação de eletrolisadores. A base teórica do simulador fundamenta-se nas equações clássicas da eletroquímica, adaptadas para os tipos de eletrolisadores que são relevantes a esse estudo. A tensão total do eletrolisador é descrita pela equação de Nernst modificada (\ref{Nernst}), considerando as sobretensões características do processo, sendo $V_{rev}$ a tensão reversível teórica, $\eta_{act}$ a sobretensão de ativação, $\eta_{ohm}$ a sobretensão ôhmica, e $\eta_{conc}$ a sobretensão de concentração; a tensão reversível (\ref{tensãoRev}) é calculada considerando a dependência da temperatura através da equação de Nernst.
 
 \begin{equation}
 V_{cell} = V_{rev} + \eta_{act} + \eta_{ohm} + \eta_{conc}
+\label{Nernst}
 \end{equation}
-
-onde $V_{rev}$ representa a tensão reversível teórica, $\eta_{act}$ a sobretensão de ativação, $\eta_{ohm}$ a sobretensão ôhmica, e $\eta_{conc}$ a sobretensão de concentração.
-
-A tensão reversível é calculada considerando a dependência da temperatura através da equação de Nernst:
 
 \begin{equation}
 V_{rev} = 1.229 - 0.0009 \times (T - 298.15) + \frac{RT}{2F} \ln\left(\frac{P_{H_2} \times P_{O_2}^{0.5}}{P_{H_2O}}\right)
+\label{tensãoRev}
 \end{equation}
 
-A sobretensão de ativação, que representa a energia necessária para iniciar as reações eletroquímicas nos eletrodos, é modelada pela equação de Tafel:
+A sobretensão de ativação, que representa a energia necessária para iniciar as reações eletroquímicas nos eletrodos, é modelada pela equação de Tafel (\ref{Tafel}), onde $\alpha$ é o coeficiente de transferência de carga, $i$ a densidade de corrente operacional, e $i_0$ a densidade de corrente de troca; a sobretensão ôhmica, relacionada à resistência elétrica dos componentes do eletrolisador, é expressa pela lei de Ohm (\ref{Ohm}). 
 
 \begin{equation}
 \eta_{act} = \frac{RT}{\alpha F} \ln\left(\frac{i}{i_0}\right)
+\label{Tafel}
 \end{equation}
-
-onde $\alpha$ é o coeficiente de transferência de carga, $i$ a densidade de corrente operacional, e $i_0$ a densidade de corrente de troca.
-
-A sobretensão ôhmica, relacionada à resistência elétrica dos componentes do eletrolisador, é expressa pela lei de Ohm:
 
 \begin{equation}
 \eta_{ohm} = i \times R_{total}
+\label{Ohm}
 \end{equation}
 
-A produção de hidrogênio é calculada através da lei de Faraday:
+A produção de hidrogênio é calculada através da lei de Faraday (\ref{faraday}), sendo $\eta_F$ a eficiência faradaica, $I$ a corrente total, e $F$ a constante de Faraday, com a eficiência energética do sistema é definida pela equação (\ref{eficiencia}).
 
 \begin{equation}
 \dot{n}_{H_2} = \frac{\eta_F \times I}{2F}
+\label{faraday}
 \end{equation}
-
-onde $\eta_F$ é a eficiência faradaica, $I$ a corrente total, e $F$ a constante de Faraday.
-
-A eficiência energética do sistema é definida como:
 
 \begin{equation}
-\eta_{energy} = \frac{V_{rev}}{V_{cell}} \times \eta_F
+\eta_{energetica} = \frac{V_{rev}}{V_{cell}} \times \eta_F
+\label{eficiencia}
 \end{equation}
 
-\subsection{Implementação Computacional}
+Essa modelagem matemática foi implementada em uma aplicação web interativa, desenvolvida utilizando tecnologias modernas de desenvolvimento frontend. A arquitetura da aplicação baseia-se em React.js, para a interface de usuário, com bibliotecas especializadas para cálculos científicos e visualização de dados. A aplicação foi estruturada em módulos funcionais distintos: Módulo de Simulação Estática para análise de condições operacionais fixas, Módulo de Simulação Dinâmica para análises temporais, Módulo de Análise Térmica focado no efeito da temperatura, e Módulo de Análise Climática Regional incorporando dados climáticos de diferentes regiões globais. Além disso, foi desenvolvida uma metodologia sistemática de análise de sensibilidade, visando identificar os parâmetros mais influentes no desempenho dos eletrolisadores, com os dados sendo expostos na tabela \ref{parametros_eletrolise} do apêndice.\\
 
-O modelo matemático foi implementado em uma aplicação web interativa desenvolvida utilizando tecnologias modernas de desenvolvimento frontend. A arquitetura da aplicação baseia-se em React.js para a interface de usuário, com bibliotecas especializadas para cálculos científicos e visualização de dados.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{arquitetura_sistema.png}
-\caption{Arquitetura do sistema de simulação, mostrando as camadas de interface de usuário, lógica de aplicação, motor matemático e dados.}
-\label{fig:arquitetura_sistema}
-\end{figure}
-
-A aplicação foi estruturada em módulos funcionais distintos: Módulo de Simulação Estática para análise de condições operacionais fixas, Módulo de Simulação Dinâmica para análises temporais, Módulo de Análise Térmica focado no efeito da temperatura, e Módulo de Análise Climática Regional incorporando dados climáticos de diferentes regiões globais.
-
-\subsection{Análise de Sensibilidade e Otimização}
-
-Uma metodologia sistemática de análise de sensibilidade foi desenvolvida para identificar os parâmetros mais influentes no desempenho dos eletrolisadores. Os parâmetros analisados incluem temperatura operacional (25°C a 80°C para alcalinos e PEM, até 1000°C para SOEC), densidade de corrente (0.1 a 2.0 A/cm² para alcalinos e PEM), pressão operacional (1 a 30 bar), concentração do eletrólito (10% a 50% para KOH), e área ativa dos eletrodos (1 a 10000 cm²).
-
-\subsection{Metodologia de Análise Climática}
-
-A análise climática regional foi desenvolvida considerando dados meteorológicos históricos de cinco regiões representativas: Fortaleza (Brasil, clima tropical), Alemanha (clima temperado oceânico), região de Pilbara na Austrália (clima desértico quente), Noruega (clima subártico oceânico), e deserto do Atacama no Chile (clima desértico árido). Particular atenção foi dedicada aos efeitos de tropicalização, característicos da região de Fortaleza, incluindo alta umidade relativa (75-85% ao longo do ano), temperaturas elevadas e constantes (26-29°C), presença de aerossóis marinhos, e variações sazonais limitadas.
+A análise climática regional foi desenvolvida considerando dados meteorológicos históricos de cinco regiões representativas: Fortaleza, (Brasil, clima tropical), Alemanha (clima temperado oceânico), região de Pilbara na Austrália (clima desértico quente), Noruega (clima subártico oceânico), e deserto do Atacama no Chile (clima desértico árido). Particular atenção foi dedicada aos efeitos de tropicalização, característicos da região de Fortaleza, incluindo alta umidade relativa (75-85\% ao longo do ano), temperaturas elevadas e constantes (26-29°C), presença de aerossóis marinhos, e variações sazonais limitadas.
 
 \subsection{Validação e Verificação}
 
-A validação dos modelos implementados foi realizada através de comparação sistemática com dados experimentais reportados na literatura científica especializada. Foram utilizados como referência os trabalhos de Bi et al. (2025) sobre efeitos de temperatura em eletrolisadores alcalinos, e dados de desempenho de eletrolisadores comerciais. Critérios estatísticos foram estabelecidos para aceitação dos modelos, incluindo coeficientes de correlação superiores a 0.95 e erros médios absolutos inferiores a 5% para parâmetros principais.
+A validação dos modelos implementados foi realizada através de comparação sistemática com dados experimentais reportados na literatura científica especializada. Foram utilizados como referência os trabalhos de Bi et al. (2025) sobre efeitos de temperatura em eletrolisadores alcalinos, e dados de desempenho de eletrolisadores comerciais. Critérios estatísticos foram estabelecidos para aceitação dos modelos, incluindo coeficientes de correlação superiores a 0.95 e erros médios absolutos inferiores a 5\% para parâmetros principais.
 
 
 \begin{tcolorbox}[colback=gray!30, colframe=black, width=\textwidth, boxrule=1.5pt, arc=0mm, left=2mm, right=2mm, top=0mm, bottom=0mm]
@@ -254,7 +203,7 @@ A análise de tropicalização específica para Fortaleza revelou aspectos únic
 
 A análise de comportamento dinâmico dos eletrolisadores revelou características importantes para aplicações práticas, particularmente em sistemas integrados com fontes renováveis intermitentes.
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{simulacao_dinamica.png}
 \caption{Resposta temporal de um eletrolisador alcalino a variações escalonadas de densidade de corrente, mostrando constantes de tempo térmicas de 15-20 minutos para estabilização completa.}
@@ -300,6 +249,26 @@ Reconhecemos o apoio do Programa de Iniciação Científica da UNIFOR, que propo
 
 Agradecemos aos recursos computacionais e tecnológicos que viabilizaram o desenvolvimento da aplicação web interativa, incluindo as plataformas de desenvolvimento modernas e bibliotecas científicas que permitiram a implementação eficiente dos modelos matemáticos complexos. Reconhecemos o apoio de recursos de inteligência artificial que auxiliaram no desenvolvimento técnico e na organização de informações, demonstrando o potencial de colaboração entre inteligência humana e artificial para avanço do conhecimento científico.
 
+\begin{tcolorbox}[colback=gray!30, colframe=black, width=\textwidth, boxrule=1.5pt, arc=0mm, left=2mm, right=2mm, top=0mm, bottom=0mm]
+\textbf{Apêndice}
+\end{tcolorbox}
+Os dados utilizados para a modelagem dos eletrolisadores seguem nas tabelas abaixo. 
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Parâmetro}        & \textbf{Alcalino}       & \textbf{PEM}            & \textbf{SOEC} \\ \hline
+Temperatura operacional ($^\circ$C)   & 25--80         & 25--80       & até 1000 \\ \hline
+Densidade de corrente (A/cm$^2$)    & 0.1--2.0      & 0.1--2.0     & -- \\ \hline
+Pressão operacional (bar)    & 1--30          & 1--30              & -- \\ \hline
+Concentração do eletrólito (\% KOH) & 10--50            & --                      & -- \\ \hline
+Área ativa dos eletrodos (cm$^2$) & 1--10000         & 1--10000        & 1--10000\\ \hline
+\end{tabular}
+\caption{Parâmetros operacionais típicos de diferentes tecnologias de eletrólise da água.}
+\label{parametros_eletrolise}
+\end{table}
+
 \begin{thebibliography}{00}
 
 \bibitem{ref1} SALIBA-SILVA, Adonis Marcelo; CARVALHO, Fátima M. S.; BERGAMASCHI, Vanderlei Sérgio; OLIVEIRA SILVA, Marco Antonio; LINARDI, Marcelo. Non-carbogenic production of hydrogen by water electrolysis in Brazilian perspective. \textbf{Revista Brasileira de Pesquisa e Desenvolvimento}, São Paulo, v. 12, n. 2, p. 66-78, ago. 2010.
@@ -317,4 +286,3 @@ Agradecemos aos recursos computacionais e tecnológicos que viabilizaram o desen
 \end{thebibliography}
 
 \end{document}
-
