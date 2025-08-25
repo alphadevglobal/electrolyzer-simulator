@@ -1,0 +1,155 @@
+% Seção Metodologia para o artigo científico
+
+\begin{tcolorbox}[colback=gray!30, colframe=black, width=\textwidth, boxrule=1.5pt, arc=0mm, left=2mm, right=2mm, top=0mm, bottom=0mm]
+\textbf{Metodologia}
+\end{tcolorbox}
+
+Este estudo adotou uma abordagem metodológica híbrida, combinando modelagem matemática fundamentada em princípios físicos com técnicas computacionais avançadas para desenvolver um simulador abrangente de eletrolisadores. A metodologia foi estruturada em quatro etapas principais: (1) desenvolvimento do modelo matemático baseado em equações fundamentais da eletroquímica, (2) implementação computacional através de uma aplicação web interativa, (3) validação dos modelos através de comparação com dados da literatura científica, e (4) análise de sensibilidade considerando variações climáticas regionais, com ênfase particular nos efeitos de tropicalização característicos da região de Fortaleza, Ceará.
+
+\subsection{Modelagem Matemática Fundamental}
+
+A base teórica do simulador fundamenta-se nas equações clássicas da eletroquímica, adaptadas para os três principais tipos de eletrolisadores: alcalino, membrana de troca de prótons (PEM) e óxido sólido (SOEC). O modelo matemático desenvolvido incorpora as seguintes equações fundamentais:
+
+A tensão total do eletrolisador é descrita pela equação de Nernst modificada, considerando as sobretensões características do processo:
+
+\begin{equation}
+V_{cell} = V_{rev} + \eta_{act} + \eta_{ohm} + \eta_{conc}
+\end{equation}
+
+onde $V_{rev}$ representa a tensão reversível teórica, $\eta_{act}$ a sobretensão de ativação, $\eta_{ohm}$ a sobretensão ôhmica, e $\eta_{conc}$ a sobretensão de concentração.
+
+A tensão reversível é calculada considerando a dependência da temperatura através da equação de Nernst:
+
+\begin{equation}
+V_{rev} = 1.229 - 0.0009 \times (T - 298.15) + \frac{RT}{2F} \ln\left(\frac{P_{H_2} \times P_{O_2}^{0.5}}{P_{H_2O}}\right)
+\end{equation}
+
+A sobretensão de ativação, que representa a energia necessária para iniciar as reações eletroquímicas nos eletrodos, é modelada pela equação de Tafel:
+
+\begin{equation}
+\eta_{act} = \frac{RT}{\alpha F} \ln\left(\frac{i}{i_0}\right)
+\end{equation}
+
+onde $\alpha$ é o coeficiente de transferência de carga, $i$ a densidade de corrente operacional, e $i_0$ a densidade de corrente de troca.
+
+A sobretensão ôhmica, relacionada à resistência elétrica dos componentes do eletrolisador, é expressa pela lei de Ohm:
+
+\begin{equation}
+\eta_{ohm} = i \times R_{total}
+\end{equation}
+
+A resistência total incorpora contribuições da membrana/eletrólito, eletrodos e conexões elétricas, sendo fortemente dependente da temperatura:
+
+\begin{equation}
+R_{total} = R_{membrane} + R_{electrodes} + R_{connections}
+\end{equation}
+
+Para eletrolisadores alcalinos, a resistência da solução de KOH é modelada considerando a concentração e temperatura:
+
+\begin{equation}
+R_{KOH} = \frac{l}{\sigma \times A}
+\end{equation}
+
+onde $l$ é a espessura do eletrólito, $A$ a área ativa, e $\sigma$ a condutividade específica da solução.
+
+A sobretensão de concentração, significativa em altas densidades de corrente, é descrita pela equação:
+
+\begin{equation}
+\eta_{conc} = \frac{RT}{nF} \ln\left(\frac{i_L}{i_L - i}\right)
+\end{equation}
+
+onde $i_L$ representa a densidade de corrente limite.
+
+A produção de hidrogênio é calculada através da lei de Faraday:
+
+\begin{equation}
+\dot{n}_{H_2} = \frac{\eta_F \times I}{2F}
+\end{equation}
+
+onde $\eta_F$ é a eficiência faradaica, $I$ a corrente total, e $F$ a constante de Faraday.
+
+A eficiência energética do sistema é definida como:
+
+\begin{equation}
+\eta_{energy} = \frac{V_{rev}}{V_{cell}} \times \eta_F
+\end{equation}
+
+O consumo específico de energia é calculado por:
+
+\begin{equation}
+SEC = \frac{V_{cell} \times 2F}{\eta_F \times 3600} \text{ (kWh/Nm³)}
+\end{equation}
+
+\subsection{Implementação Computacional}
+
+O modelo matemático foi implementado em uma aplicação web interativa desenvolvida utilizando tecnologias modernas de desenvolvimento frontend. A arquitetura da aplicação baseia-se em React.js para a interface de usuário, com bibliotecas especializadas para cálculos científicos e visualização de dados. A escolha por uma aplicação web justifica-se pela necessidade de acessibilidade e facilidade de uso por parte da comunidade científica e educacional.
+
+A aplicação foi estruturada em módulos funcionais distintos:
+
+\textbf{Módulo de Simulação Estática}: Implementa cálculos para condições operacionais fixas, permitindo análise detalhada do desempenho em pontos específicos de operação. Este módulo incorpora todos os modelos matemáticos descritos anteriormente, com interfaces intuitivas para entrada de parâmetros operacionais.
+
+\textbf{Módulo de Simulação Dinâmica}: Desenvolve análises temporais considerando variações de parâmetros ao longo do tempo. Este módulo é particularmente relevante para estudos de transientes e otimização operacional, implementando algoritmos de integração numérica para resolver as equações diferenciais do sistema.
+
+\textbf{Módulo de Análise Térmica}: Foca especificamente no efeito da temperatura sobre o desempenho dos eletrolisadores, implementando modelos de dependência térmica para todos os parâmetros relevantes. Este módulo permite identificação de temperaturas ótimas de operação e análise de sensibilidade térmica.
+
+\textbf{Módulo de Análise Climática Regional}: Incorpora dados climáticos de diferentes regiões globais para avaliar o impacto das condições ambientais no desempenho dos eletrolisadores. Particular atenção foi dedicada à análise de tropicalização, considerando as condições específicas da região Nordeste do Brasil.
+
+A validação dos cálculos foi implementada através de rotinas de teste automatizadas, comparando resultados com dados experimentais disponíveis na literatura científica. Algoritmos de verificação de consistência física foram incorporados para garantir que os resultados respeitam princípios fundamentais como conservação de energia e massa.
+
+\subsection{Análise de Sensibilidade e Otimização}
+
+Uma metodologia sistemática de análise de sensibilidade foi desenvolvida para identificar os parâmetros mais influentes no desempenho dos eletrolisadores. Esta análise utiliza técnicas de variação paramétrica controlada, onde cada parâmetro é variado individualmente dentro de faixas fisicamente realistas, mantendo os demais constantes.
+
+Os parâmetros analisados incluem:
+- Temperatura operacional (25°C a 80°C para alcalinos e PEM, até 1000°C para SOEC)
+- Densidade de corrente (0.1 a 2.0 A/cm² para alcalinos e PEM)
+- Pressão operacional (1 a 30 bar)
+- Concentração do eletrólito (10% a 50% para KOH)
+- Área ativa dos eletrodos (1 a 10000 cm²)
+
+Para cada combinação de parâmetros, o simulador calcula métricas de desempenho incluindo eficiência energética, consumo específico de energia, produção de hidrogênio, e distribuição de sobretensões.
+
+\subsection{Metodologia de Análise Climática}
+
+A análise climática regional foi desenvolvida considerando dados meteorológicos históricos de cinco regiões representativas: Fortaleza (Brasil, clima tropical), Alemanha (clima temperado oceânico), região de Pilbara na Austrália (clima desértico quente), Noruega (clima subártico oceânico), e deserto do Atacama no Chile (clima desértico árido).
+
+Para cada região, foram coletados dados mensais de:
+- Temperatura ambiente média
+- Umidade relativa
+- Pressão atmosférica
+- Radiação solar incidente
+
+Estes dados foram incorporados aos modelos de eletrolisadores para avaliar variações sazonais de desempenho e identificar estratégias de otimização específicas para cada clima.
+
+Particular atenção foi dedicada aos efeitos de tropicalização, característicos da região de Fortaleza, incluindo:
+- Alta umidade relativa (75-85% ao longo do ano)
+- Temperaturas elevadas e constantes (26-29°C)
+- Presença de aerossóis marinhos
+- Variações sazonais limitadas
+
+\subsection{Validação e Verificação}
+
+A validação dos modelos implementados foi realizada através de comparação sistemática com dados experimentais reportados na literatura científica especializada. Foram utilizados como referência os trabalhos de Bi et al. (2025) sobre efeitos de temperatura em eletrolisadores alcalinos, e dados de desempenho de eletrolisadores comerciais disponíveis em bases de dados técnicas.
+
+O processo de validação incluiu:
+- Comparação de curvas de polarização (I-V)
+- Verificação de eficiências energéticas
+- Validação de consumos específicos de energia
+- Análise de distribuição de sobretensões
+
+Critérios estatísticos foram estabelecidos para aceitação dos modelos, incluindo coeficientes de correlação superiores a 0.95 e erros médios absolutos inferiores a 5% para parâmetros principais.
+
+\subsection{Ferramentas de Análise Avançada}
+
+O simulador incorpora funcionalidades avançadas para análise científica, incluindo:
+
+\textbf{Exportação de Dados}: Capacidade de exportar resultados em formatos compatíveis com ferramentas de análise científica como MATLAB, Python, e software de simulação multifísica como COMSOL.
+
+\textbf{Análise Estatística}: Implementação de algoritmos para análise de incertezas e propagação de erros, considerando variabilidades nos parâmetros de entrada.
+
+\textbf{Otimização Multi-objetivo}: Algoritmos de otimização para identificação de condições operacionais que maximizam eficiência energética enquanto minimizam custos operacionais.
+
+\textbf{Visualização Científica}: Interfaces gráficas avançadas para visualização de resultados, incluindo gráficos 3D de superfícies de resposta e mapas de contorno para análise de sensibilidade.
+
+Esta metodologia híbrida, combinando rigor científico com acessibilidade computacional, estabelece uma base sólida para análise abrangente de eletrolisadores, contribuindo tanto para o avanço do conhecimento científico quanto para aplicações práticas na indústria de hidrogênio verde.
+
