@@ -12,6 +12,7 @@ on:
 jobs:
   deploy:
     name: Deploy to AWS Lambda
+    if: ${{ secrets.AWS_ACCESS_KEY_ID != '' && secrets.AWS_SECRET_ACCESS_KEY != '' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -69,7 +70,7 @@ jobs:
 
     - name: Criar resumo do deploy
       run: |
-        echo "##  Deploy Concluído!" >> $GITHUB_STEP_SUMMARY
+        echo "## Deploy Concluído" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### API URL" >> $GITHUB_STEP_SUMMARY
         echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
@@ -88,11 +89,19 @@ jobs:
     - name: Notificar sucesso
       if: success()
       run: |
-        echo "✅ Deploy para AWS Lambda concluído com sucesso!"
-        echo " API URL: ${{ steps.get-url.outputs.API_URL }}"
+        echo "Deploy para AWS Lambda concluído com sucesso."
+        echo "API URL: ${{ steps.get-url.outputs.API_URL }}"
 
     - name: Notificar falha
       if: failure()
       run: |
-        echo "❌ Deploy falhou! Verifique os logs acima."
+        echo "Deploy falhou. Verifique os logs acima."
         exit 1
+
+  deploy_secrets_missing:
+    name: Aviso - AWS secrets ausentes
+    if: ${{ secrets.AWS_ACCESS_KEY_ID == '' || secrets.AWS_SECRET_ACCESS_KEY == '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "AWS_ACCESS_KEY_ID e AWS_SECRET_ACCESS_KEY não foram configurados como secrets. Configure-os para habilitar o deploy automático."
