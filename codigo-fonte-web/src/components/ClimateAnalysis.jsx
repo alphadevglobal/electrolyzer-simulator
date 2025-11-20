@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -27,14 +27,13 @@ const ClimateAnalysis = () => {
   const [selectedMonth, setSelectedMonth] = useState('annual');
   const [electrolyzerType, setElectrolyzerType] = useState('Alkaline');
   const [currentDensity, setCurrentDensity] = useState(1.5);
-  const pressure = 1;
   const molality = 6.0;
   const [area, setArea] = useState(100);
   const [analysisData, setAnalysisData] = useState([]);
   const [comparisonData, setComparisonData] = useState([]);
 
   // Dados climáticos das regiões (valores médios baseados em dados reais)
-  const climateData = {
+  const climateData = useMemo(() => ({
     fortaleza: {
       name: "Fortaleza, Brasil",
       type: "Tropical Costeiro",
@@ -140,7 +139,7 @@ const ClimateAnalysis = () => {
       ],
       annual: { temp: 18.4, humidity: 32, pressure: 1016.8, solar: 7.7, wind: 3.7 }
     }
-  };
+  }), []);
 
   // Função para calcular desempenho do eletrolisador
   const calculatePerformance = (temperature, humidity, pressure, electrolyzerType, currentDensity, area, molality) => {
