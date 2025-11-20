@@ -9,7 +9,7 @@ import { Progress } from './ui/progress';
 import { Alert, AlertDescription } from './ui/alert';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { simulateElectrolyzer } from '../lib/calculations';
-import { Play, Pause, Square, AlertCircle, CheckCircle, BookOpen, ExternalLink, Activity } from 'lucide-react';
+import { Play, Pause, Square, AlertCircle, CheckCircle, BookOpen, ExternalLink, Activity, Info } from 'lucide-react';
 import ElectrochemicalVisualization from './ElectrochemicalVisualization';
 import InteractiveElectrolyzerPhET from './InteractiveElectrolyzerPhET';
 
