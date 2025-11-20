@@ -14,7 +14,7 @@ describe('Electrolyzer Simulator smoke test', () => {
 
   it('navigates between tabs and shows content', () => {
     cy.contains('Simulação Dinâmica').click();
-    cy.contains('Resultados da Simulação Dinâmica').should('be.visible');
+    cy.contains('Configurações da Simulação').should('be.visible');
 
     cy.contains('Análise Climática').click();
     cy.contains('Análise Climática Regional').should('be.visible');
