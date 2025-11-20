@@ -63,7 +63,8 @@ jobs:
     defaults:
       run:
         working-directory: codigo-fonte-web
-    environment: production
+    environment:
+      name: production
 
     steps:
       - name: Checkout repository
