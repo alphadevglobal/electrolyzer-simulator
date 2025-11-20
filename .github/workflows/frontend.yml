@@ -136,4 +136,5 @@ jobs:
 
       - name: Aviso ausência secrets
         if: steps.check_secrets.outputs.ready != 'true'
+        working-directory: .
         run: echo "Deploy não executado por ausência de secrets do Vercel."
