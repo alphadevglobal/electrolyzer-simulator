@@ -127,7 +127,8 @@ jobs:
 
       - name: Print deployment URL
         if: steps.check_secrets.outputs.ready == 'true'
-        run: echo "Production deployment: ${{ steps.vercel_deploy.outputs.url }}"
+        run: |
+          echo "Production deployment: ${{ steps.vercel_deploy.outputs.url }}"
 
       - name: Aviso ausência secrets
         if: steps.check_secrets.outputs.ready != 'true'
