@@ -1,6 +1,6 @@
-# 🎬 ROTEIRO DE VÍDEO - PROJETO IA AV3
+#  ROTEIRO DE VÍDEO - PROJETO IA AV3
 
-## 📋 Informações do Vídeo
+##  Informações do Vídeo
 
 **Duração Estimada:** 10-15 minutos
 **Formato:** Apresentação com demonstração prática
@@ -12,18 +12,18 @@
 
 ---
 
-## 🎯 ESTRUTURA DO VÍDEO
+##  ESTRUTURA DO VÍDEO
 
 ### Abertura (0:00 - 1:00)
 
 **[SLIDE 1 - CAPA]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Olá! Meu nome é Mateus Gomes Macário e vou apresentar o Projeto IA AV3 da disciplina de Inteligência Artificial Computacional, ministrada pela professora Cynthia Moreira Maia.
 >
 > Neste projeto, implementei e avaliei quatro algoritmos de aprendizado de máquina COMPLETAMENTE do zero, sem uso de bibliotecas como pandas ou scikit-learn.
 
-**📹 DICAS DE GRAVAÇÃO:**
+** DICAS DE GRAVAÇÃO:**
 - Sorria e seja entusiasmado
 - Mantenha contato visual com a câmera
 - Fale pausadamente e claramente
@@ -37,7 +37,7 @@
 
 **[SLIDE 2 - AGENDA]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > A apresentação está dividida em 8 partes principais:
 > [Leia rapidamente os tópicos da agenda]
 >
@@ -45,14 +45,14 @@
 
 **[SLIDE 3 - INTRODUÇÃO]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > O objetivo principal foi avaliar diferentes algoritmos de classificação com um desafio especial: implementar TUDO manualmente!
 >
 > [ENFATIZE] Isso significa: SEM pandas para carregar dados, SEM scikit-learn para os algoritmos. Tudo foi programado do ZERO em Python puro, usando apenas NumPy para operações matemáticas básicas.
 >
 > O problema escolhido foi classificação de consumo de energia de eletrodomésticos, um tema que se alinha com minha pesquisa em eficiência energética.
 
-**📹 DICAS:**
+** DICAS:**
 - Enfatize a palavra "MANUAL" e "DO ZERO"
 - Use gestos de mão para reforçar pontos importantes
 - Mantenha energia alta
@@ -65,7 +65,7 @@
 
 **[SLIDE 4 - DATASET]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > O dataset escolhido foi o "Appliances Energy Prediction" disponível no OpenML.
 >
 > Ele possui 28 atributos - bem acima do requisito mínimo de 10 - e 5 mil instâncias de treino, muito além das 1000 exigidas.
@@ -74,12 +74,12 @@
 
 **[SLIDE 5 - DISTRIBUIÇÃO]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Os dados foram divididos em duas classes balanceadas: baixo consumo e alto consumo, com 2500 amostras cada.
 >
 > Apliquei pré-processamento manual incluindo normalização Z-Score - sim, implementei a normalização do zero também! - e divisão estratificada para validação cruzada.
 
-**📹 DICAS:**
+** DICAS:**
 - Aponte para os números relevantes no slide
 - Mostre que entende bem os dados
 
@@ -91,7 +91,7 @@
 
 **[SLIDE 6 - KNN]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Vamos aos algoritmos! O primeiro foi o K-Nearest Neighbors, ou KNN.
 >
 > Implementei duas versões: uma com distância Euclidiana e outra com Manhattan. Tudo calculado manualmente, sem bibliotecas.
@@ -102,7 +102,7 @@
 
 **[SLIDE 7 - PERCEPTRON]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > O segundo algoritmo foi o Perceptron, o neurônio artificial mais simples.
 >
 > Configurei com taxa de aprendizado de 0.01 e 50 épocas de treinamento. Para problemas multiclasse, usei a estratégia One-vs-Rest.
@@ -113,7 +113,7 @@
 
 **[SLIDE 8 - MLP]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Aqui está o destaque: o Multi-Layer Perceptron!
 >
 > [ENFATIZE COM ENTUSIASMO] Implementei uma rede neural completa com BACKPROPAGATION DO ZERO!
@@ -122,7 +122,7 @@
 >
 > O mais desafiador foi implementar o backpropagation manualmente - calcular os gradientes camada por camada, propagar o erro para trás, e atualizar os pesos. Mas funcionou!
 
-**📹 DICAS:**
+** DICAS:**
 - Mostre orgulho nesta parte
 - Gesticule ao explicar as camadas
 - Seja entusiasmado - isso é impressionante!
@@ -131,7 +131,7 @@
 
 **[SLIDE 9 - NAIVE BAYES]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Por fim, implementei o Naive Bayes em duas versões: univariada e multivariada.
 >
 > A diferença é que a versão multivariada considera a correlação entre as features usando a distribuição Gaussiana completa.
@@ -146,7 +146,7 @@
 
 **[SLIDE 10 - VALIDAÇÃO CRUZADA]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Para validar os modelos, implementei K-Fold Cross-Validation do zero.
 >
 > O processo divide os dados em 5 partes, treina com 4 e testa com 1, rodando 5 vezes.
@@ -155,7 +155,7 @@
 
 **[SLIDE 11 - MÉTRICAS]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Todas as métricas também foram implementadas do zero: acurácia, precisão, F1-Score, além de medir os tempos de treino e teste.
 >
 > Isso garantiu que eu realmente entendesse o que cada métrica significa e como calculá-las.
@@ -168,7 +168,7 @@
 
 **[SLIDE 12 - TABELA DE RESULTADOS]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > E agora, o momento mais importante: os resultados!
 >
 > [PAUSE PARA EFEITO]
@@ -179,19 +179,19 @@
 >
 > Os modelos KNN ficaram em torno de 80%, e o Perceptron em 77% - esperado, já que o problema não é linearmente separável.
 
-**📹 DICAS:**
+** DICAS:**
 - Aponte para cada linha da tabela
 - Enfatize o resultado do MLP com orgulho
 - Use tom de voz variado para manter interesse
 
 **[SLIDE 13 - RANKING]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Aqui está o ranking completo de acurácia. Note que os métodos baseados em probabilidade (MLP e Naive Bayes) superaram os baseados em distância (KNN).
 
 **[SLIDE 14 - TRADE-OFF]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Mas acurácia não é tudo! Também preciso considerar o tempo de execução.
 >
 > Criei um "Score de Eficiência" que divide a acurácia pelo tempo total.
@@ -210,7 +210,7 @@
 
 **[SLIDE 15 - PONTOS FORTES]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Cada algoritmo tem seus pontos fortes e limitações.
 >
 > O MLP tem a melhor acurácia mas é difícil de interpretar - é uma "caixa preta".
@@ -221,7 +221,7 @@
 
 **[SLIDE 16 - INSIGHTS]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Os principais insights que tirei deste projeto:
 >
 > Primeiro: Deep Learning realmente funciona! O MLP superou todos os modelos clássicos.
@@ -238,14 +238,14 @@
 
 **[SLIDE 20 - DEMONSTRAÇÃO]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Agora vou mostrar o código funcionando!
 >
 > [MUDE PARA TELA DO TERMINAL]
 
 **[DEMONSTRAÇÃO 1: Terminal]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Aqui está o código rodando localmente.
 >
 > [EXECUTE] python src/main.py
@@ -256,14 +256,14 @@
 
 **[DEMONSTRAÇÃO 2: Google Colab]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Também criei um notebook interativo no Google Colab onde qualquer pessoa pode executar os experimentos.
 >
 > [MOSTRE O NOTEBOOK ABERTO]
 >
 > Basta clicar no botão "Open in Colab" e executar as células sequencialmente.
 
-**📹 DICAS:**
+** DICAS:**
 - Grave a tela do computador
 - Mostre confiança ao navegar pelo código
 - Não se preocupe se demorar um pouco - é normal
@@ -276,7 +276,7 @@
 
 **[SLIDE 18 - EXTRAS]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Além de cumprir todos os requisitos, implementei vários extras:
 >
 > [LEIA ENTUSIASMADAMENTE]
@@ -290,7 +290,7 @@
 
 **[SLIDE 21 - CONCLUSÕES]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Em conclusão:
 >
 > ✅ Implementei com sucesso quatro algoritmos complexos do zero
@@ -304,7 +304,7 @@
 
 **[SLIDE 23 - AGRADECIMENTOS]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > Gostaria de agradecer à professora Cynthia pela excelente orientação na disciplina, aos colaboradores da minha pesquisa em eficiência energética, e à comunidade open source.
 
 **⏱️ Tempo:** 20 segundos
@@ -315,7 +315,7 @@
 
 **[SLIDE 24 - PERGUNTAS]**
 
-**🎤 ROTEIRO:**
+** ROTEIRO:**
 > E finalizo aqui! Estou à disposição para responder qualquer pergunta sobre o projeto.
 >
 > Todo o código está disponível no GitHub no repositório "electrolyzer-simulator" na pasta "projeto_ia_av3".
@@ -328,7 +328,7 @@
 
 ---
 
-## 📹 CHECKLIST DE GRAVAÇÃO
+##  CHECKLIST DE GRAVAÇÃO
 
 ### Antes de Gravar
 
@@ -365,7 +365,7 @@
 
 ---
 
-## 🎬 CONFIGURAÇÕES TÉCNICAS RECOMENDADAS
+##  CONFIGURAÇÕES TÉCNICAS RECOMENDADAS
 
 ### Gravação de Vídeo
 
@@ -398,7 +398,7 @@
 
 ---
 
-## 💡 DICAS PROFISSIONAIS
+##  DICAS PROFISSIONAIS
 
 ### Presença de Câmera
 
@@ -462,7 +462,7 @@
 
 ---
 
-## 🎯 PONTOS DE ÊNFASE
+##  PONTOS DE ÊNFASE
 
 ### MUITO Importante (Enfatizar Bastante)
 
@@ -497,7 +497,7 @@
 
 ---
 
-## 📝 SCRIPT DE EMERGÊNCIA
+##  SCRIPT DE EMERGÊNCIA
 
 ### Se Esquecer o que Falar
 
@@ -541,4 +541,4 @@
 
 ---
 
-**BOA SORTE! VOCÊ VAI ARRASAR! 🚀🎬**
+**BOA SORTE! VOCÊ VAI ARRASAR! **

@@ -1,10 +1,10 @@
 # Simulador de Eletrolisador v3.0
 
-## 🔬 Sobre o Projeto
+##  Sobre o Projeto
 
 Este é um simulador avançado de eletrolisadores desenvolvido como parte de uma pesquisa científica na Universidade de Fortaleza (UNIFOR). O projeto combina modelagem física rigorosa com técnicas de Machine Learning para análise de desempenho de eletrolisadores alcalinos, PEM e SOEC.
 
-### 🎯 Objetivos
+###  Objetivos
 
 - Simular o comportamento de diferentes tipos de eletrolisadores
 - Analisar o efeito da temperatura na produção de hidrogênio
@@ -12,7 +12,7 @@ Este é um simulador avançado de eletrolisadores desenvolvido como parte de uma
 - Integrar modelos físicos com Machine Learning (modelo híbrido)
 - Facilitar a exportação de dados para análise avançada
 
-## 🚀 Funcionalidades
+##  Funcionalidades
 
 ### ⚡ Simulação Estática
 - Cálculo de parâmetros de desempenho instantâneos
@@ -20,25 +20,25 @@ Este é um simulador avançado de eletrolisadores desenvolvido como parte de uma
 - Análise de tensão, eficiência e produção de hidrogênio
 - Exportação de dados em formato CSV
 
-### 📈 Simulação Dinâmica
+###  Simulação Dinâmica
 - Simulação em tempo real com controles de play/pause
 - Perfis temporais configuráveis (constante, linear, senoidal, degrau)
 - Visualização gráfica em tempo real
 - Análise da evolução temporal dos parâmetros
 
-### 🖼️ Galeria de Pesquisa
+### ️ Galeria de Pesquisa
 - Upload e armazenamento de gráficos e imagens
 - Redimensionamento automático para otimização
 - Sistema de metadados e organização
 - Exportação de dados da galeria
 
-### 📚 Recursos Educacionais
+###  Recursos Educacionais
 - FAQ científico detalhado
 - Guia sobre hidrogênio colorido
 - Explicações das equações físicas utilizadas
 - Referências bibliográficas
 
-## 🛠️ Tecnologias Utilizadas
+## ️ Tecnologias Utilizadas
 
 ### Frontend
 - **React 18** - Framework principal
@@ -53,7 +53,7 @@ Este é um simulador avançado de eletrolisadores desenvolvido como parte de uma
 - Equações baseadas em literatura científica
 - Suporte para diferentes tipos de eletrolisadores
 
-## 📦 Instalação e Uso
+##  Instalação e Uso
 
 ### Pré-requisitos
 - Node.js 18+ 
@@ -65,25 +65,47 @@ Este é um simulador avançado de eletrolisadores desenvolvido como parte de uma
 git clone [URL_DO_REPOSITORIO]
 
 # Entre no diretório
-cd electrolyzer-simulator-v3
+cd electrolyzer-simulator/codigo-fonte-web
 
-# Instale as dependências
-npm install
+# Instale as dependências (pnpm é recomendado)
+pnpm install
 
 # Inicie o servidor de desenvolvimento
-npm run dev
+pnpm run dev
 ```
 
 ### Build para Produção
 ```bash
 # Gere o build otimizado
-npm run build
+pnpm run build
 
 # Visualize o build localmente
-npm run preview
+pnpm run preview
 ```
 
-## 🔬 Base Científica
+### Testes e Qualidade
+```bash
+# Lint
+pnpm run lint
+
+# Testes E2E com Cypress (executa servidor + testes)
+pnpm run test:e2e
+
+# Apenas executar Cypress (servidor já iniciado manualmente)
+pnpm cypress run
+```
+
+## Integração com AWS Lambda
+
+A aplicação já está integrada com o backend público implantado em AWS Lambda + API Gateway.
+
+- **Endpoint padrão** (caso nenhuma variável seja configurada): `https://fcxzn6pkr1.execute-api.us-east-1.amazonaws.com/prod`
+- Para ambientes personalizados configure:
+  - `VITE_AWS_API_URL`
+  - `VITE_AWS_API_TOKEN` (opcional, caso proteja o endpoint)
+- O painel de “Simulação Estática” possui um cartão específico para enviar o cenário atual para a AWS e exibir o status da API.
+
+##  Base Científica
 
 O simulador é baseado no artigo científico:
 
@@ -114,7 +136,7 @@ O simulador é baseado no artigo científico:
    η = (E_rev / E_cell) * 100%
    ```
 
-## 📊 Estrutura do Projeto
+##  Estrutura do Projeto
 
 ```
 electrolyzer-simulator-v3/
@@ -139,7 +161,7 @@ electrolyzer-simulator-v3/
 └── package.json            # Dependências e scripts
 ```
 
-## 🧪 Tipos de Eletrolisadores Suportados
+##  Tipos de Eletrolisadores Suportados
 
 ### 1. Eletrolisador Alcalino
 - Eletrólito: Solução aquosa de KOH (25-30%)
@@ -159,7 +181,7 @@ electrolyzer-simulator-v3/
 - Eficiência: 85-95%
 - Alta eficiência, uso de vapor
 
-## 📈 Parâmetros de Simulação
+##  Parâmetros de Simulação
 
 ### Entradas
 - **Temperatura** (°C): 20-1000
@@ -175,7 +197,7 @@ electrolyzer-simulator-v3/
 - **Consumo Específico de Energia** (kWh/kg)
 - **Sobretensões** (V)
 
-## 🔄 Integração com Machine Learning
+##  Integração com Machine Learning
 
 O simulador foi projetado para integração com modelos de Machine Learning:
 
@@ -184,7 +206,7 @@ O simulador foi projetado para integração com modelos de Machine Learning:
 3. **Rede Neural Surrogate**: MLP (PyTorch) para predição rápida
 4. **Validação Cruzada**: Comparação entre modelo físico e ML
 
-## 🤝 Contribuições
+##  Contribuições
 
 Este projeto é desenvolvido para fins acadêmicos. Contribuições são bem-vindas através de:
 
@@ -193,11 +215,11 @@ Este projeto é desenvolvido para fins acadêmicos. Contribuições são bem-vin
 3. Feedback sobre a precisão dos modelos físicos
 4. Sugestões de novos tipos de eletrolisadores
 
-## 📄 Licença
+##  Licença
 
 Este projeto é desenvolvido para fins acadêmicos e de pesquisa na Universidade de Fortaleza (UNIFOR). Todos os direitos são reservados aos autores.
 
-## 👥 Equipe de Desenvolvimento
+##  Equipe de Desenvolvimento
 
 **Desenvolvedor Principal:**
 - **Mateus Gomes Macário** - Arquitetura e implementação do simulador
@@ -211,11 +233,11 @@ Este projeto é desenvolvido para fins acadêmicos e de pesquisa na Universidade
 **Assistência Técnica:**
 - **Manus AI** - Suporte em programação e arquitetura de software
 
-## 📞 Contato
+##  Contato
 
 Para questões acadêmicas ou técnicas, entre em contato através da UNIFOR.
 
-## 🙏 Agradecimentos
+##  Agradecimentos
 
 - Universidade de Fortaleza (UNIFOR)
 - Comunidade científica de eletroquímica
@@ -227,4 +249,3 @@ Para questões acadêmicas ou técnicas, entre em contato através da UNIFOR.
 
 *Simulador criado utilizando conhecimentos prévios em programação e arquitetura de software, 
 com auxílio de inteligências artificiais para aceleração do desenvolvimento e validação científica.*
-

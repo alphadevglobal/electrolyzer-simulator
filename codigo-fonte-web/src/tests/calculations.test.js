@@ -172,7 +172,7 @@ describe('Electrolyzer Calculations Tests', () => {
 
 // Função para executar todos os testes
 export function runAllTests() {
-  console.log('🧪 Executando testes unitários...');
+  console.log(' Executando testes unitários...');
   
   const testResults = {
     passed: 0,
@@ -250,12 +250,12 @@ export function runAllTests() {
     testResults.errors.push(`Erro durante testes: ${error.message}`);
   }
 
-  console.log(`\n📊 Resultados dos testes:`);
+  console.log(`\n Resultados dos testes:`);
   console.log(`✅ Passou: ${testResults.passed}`);
   console.log(`❌ Falhou: ${testResults.failed}`);
   
   if (testResults.errors.length > 0) {
-    console.log(`\n🚨 Erros encontrados:`);
+    console.log(`\n Erros encontrados:`);
     testResults.errors.forEach(error => console.log(`- ${error}`));
   }
 

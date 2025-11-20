@@ -1,10 +1,10 @@
 # Simulador Avançado de Eletrolisadores v3.0
 
-## 📋 Visão Geral
+##  Visão Geral
 
 Este projeto apresenta um simulador avançado de eletrolisadores desenvolvido como parte de uma pesquisa científica sobre produção de hidrogênio. O simulador combina modelagem física rigorosa com técnicas de Machine Learning para análise de desempenho de eletrolisadores alcalinos, PEM e SOEC.
 
-## 👥 Equipe de Desenvolvimento
+##  Equipe de Desenvolvimento
 
 - **Mateus Gomes Macário** - Desenvolvedor Principal
 - **Karen Moura Fernandes** - Pesquisadora
@@ -12,7 +12,7 @@ Este projeto apresenta um simulador avançado de eletrolisadores desenvolvido co
 
 *Desenvolvido com auxílio de inteligência artificial*
 
-## 📁 Estrutura do Projeto
+##  Estrutura do Projeto
 
 ```
 electrolyzer-simulator-v3-COMPLETO/
@@ -31,7 +31,7 @@ electrolyzer-simulator-v3-COMPLETO/
     └── arquitetura_proposta.png
 ```
 
-## 🚀 Funcionalidades Principais
+##  Funcionalidades Principais
 
 ### 1. Simulação Estática
 - Análise de desempenho em condições operacionais fixas
@@ -72,7 +72,7 @@ electrolyzer-simulator-v3-COMPLETO/
 - Classificação por origem e impacto ambiental
 - Aplicações e características de cada tipo
 
-## 🏗️ Arquitetura do Sistema
+## ️ Arquitetura do Sistema
 
 ### Arquitetura Atual (Monolítica)
 - Frontend e backend no mesmo repositório
@@ -86,7 +86,7 @@ electrolyzer-simulator-v3-COMPLETO/
 - Banco de dados para persistência
 - Escalabilidade melhorada
 
-## 📊 Análise de Performance
+##  Análise de Performance
 
 ### Custos Estimados (AWS)
 - **Lambda Functions**: ~$1.70/mês
@@ -99,7 +99,7 @@ electrolyzer-simulator-v3-COMPLETO/
 - Facilidade de testes
 - Colaboração em equipe
 
-## 🔬 Base Científica
+##  Base Científica
 
 O simulador foi desenvolvido com base no artigo científico:
 *"Simulation study on the effect of temperature on hydrogen production performance of alkaline electrolytic water"*
@@ -110,7 +110,7 @@ O simulador foi desenvolvido com base no artigo científico:
 - Modelos de sobretensão (ativação, ôhmica, concentração)
 - Cálculos de eficiência energética
 
-## 🛠️ Tecnologias Utilizadas
+## ️ Tecnologias Utilizadas
 
 ### Frontend
 - **React 18** - Framework principal
@@ -124,7 +124,7 @@ O simulador foi desenvolvido com base no artigo científico:
 - Modelagem física de eletrolisadores
 - Algoritmos de otimização
 
-## 📈 Resultados e Validação
+##  Resultados e Validação
 
 ### Testes Implementados
 - Testes unitários para cálculos
@@ -138,7 +138,7 @@ O simulador foi desenvolvido com base no artigo científico:
 - Performance otimizada
 - Código documentado
 
-## 🎯 Aplicações
+##  Aplicações
 
 ### Pesquisa Acadêmica
 - Validação de modelos teóricos
@@ -158,7 +158,7 @@ O simulador foi desenvolvido com base no artigo científico:
 - Laboratórios virtuais
 - Material de apoio
 
-## 🔄 Próximos Passos
+##  Próximos Passos
 
 ### Melhorias Técnicas
 1. Implementação da arquitetura de microserviços
@@ -178,14 +178,14 @@ O simulador foi desenvolvido com base no artigo científico:
 3. Calibração de modelos
 4. Publicação de resultados
 
-## 📞 Contato
+##  Contato
 
 Para questões técnicas ou colaborações:
 - **Desenvolvedor**: Mateus Gomes Macário
 - **Pesquisadora**: Karen Moura Fernandes
 - **Orientador**: Prof. Paulo Henrique Pereira Silva
 
-## 📄 Licença
+##  Licença
 
 Este projeto foi desenvolvido para fins acadêmicos e de pesquisa. Para uso comercial, entre em contato com a equipe de desenvolvimento.
 

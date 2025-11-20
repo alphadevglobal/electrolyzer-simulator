@@ -40,6 +40,8 @@ custom:
     dockerizePip: false
     slim: true
     layer: true
+    requirementsFile: requirements-lambda.txt
+    pythonBin: python3
 
 functions:
   # Função principal de predição
@@ -78,7 +80,6 @@ resources:
 
 plugins:
   - serverless-python-requirements
-  - serverless-offline
 
 package:
   exclude:

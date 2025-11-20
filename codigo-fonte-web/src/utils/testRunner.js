@@ -14,7 +14,7 @@ export class TestRunner {
   // Executar teste individual
   runTest(testName, testFunction) {
     try {
-      console.log(`🧪 Executando: ${testName}`);
+      console.log(` Executando: ${testName}`);
       const result = testFunction();
       
       if (result.success) {
@@ -37,7 +37,7 @@ export class TestRunner {
       }
     } catch (error) {
       this.results.failed++;
-      console.error(`💥 ${testName}: ERRO - ${error.message}`);
+      console.error(` ${testName}: ERRO - ${error.message}`);
       this.results.errors.push(`${testName}: ${error.message}`);
       this.results.details.push({
         name: testName,
@@ -255,7 +255,7 @@ export class TestRunner {
 
   // Executar todos os testes
   runAllTests() {
-    console.log('🚀 Iniciando bateria completa de testes...\n');
+    console.log(' Iniciando bateria completa de testes...\n');
     
     this.testBasicSimulation();
     this.testTemperatureVariation();
@@ -263,13 +263,13 @@ export class TestRunner {
     this.testUnitConsistency();
     this.testExtremeParameters();
 
-    console.log('\n📊 Resumo dos Testes:');
+    console.log('\n Resumo dos Testes:');
     console.log(`✅ Passou: ${this.results.passed}`);
     console.log(`❌ Falhou: ${this.results.failed}`);
-    console.log(`📈 Taxa de Sucesso: ${((this.results.passed / (this.results.passed + this.results.failed)) * 100).toFixed(1)}%`);
+    console.log(` Taxa de Sucesso: ${((this.results.passed / (this.results.passed + this.results.failed)) * 100).toFixed(1)}%`);
 
     if (this.results.errors.length > 0) {
-      console.log('\n🚨 Erros Encontrados:');
+      console.log('\n Erros Encontrados:');
       this.results.errors.forEach(error => console.log(`- ${error}`));
     }
 
@@ -307,7 +307,7 @@ export function runTests() {
 
 // Função para testar interface
 export function testInterface() {
-  console.log('🖱️ Testando interface...');
+  console.log('️ Testando interface...');
   
   // Verificar se elementos existem
   const tests = [

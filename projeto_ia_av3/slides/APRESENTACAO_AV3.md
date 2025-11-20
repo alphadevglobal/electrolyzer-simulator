@@ -259,7 +259,7 @@ def k_fold_split(X, y, n_folds=5):
 
 | Classificador | Score |
 |--------------|-------|
-| **Naive Bayes (Multivariado)** | **14.08** 🏆 |
+| **Naive Bayes (Multivariado)** | **14.08**  |
 | Naive Bayes (Univariado) | 7.07 |
 | MLP | 3.97 |
 | Perceptron | 2.05 |
@@ -456,4 +456,4 @@ projeto_ia_av3/
 
 ## Perguntas?
 
-💬 Estou à disposição para esclarecer dúvidas!
+ Estou à disposição para esclarecer dúvidas!

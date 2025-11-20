@@ -1,12 +1,12 @@
 # ✨ MELHORIAS IMPLEMENTADAS
 
-## 🎯 Correções Solicitadas
+##  Correções Solicitadas
 
 Você pediu melhorias em 3 áreas principais. Aqui está TUDO que foi implementado:
 
 ---
 
-## 1. 🚀 DEPLOY AWS (SEM ngrok)
+## 1.  DEPLOY AWS (SEM ngrok)
 
 ### ❌ Problema Anterior
 - ngrok limitava execução apenas local
@@ -86,11 +86,11 @@ serverless deploy --stage prod
 - **API Gateway:** 1 milhão chamadas/mês GRÁTIS (12 meses)
 - **S3:** 5 GB GRÁTIS permanentemente
 
-**Total: R$ 0,00** 💰
+**Total: R$ 0,00** 
 
 ---
 
-## 2. 🎨 APRESENTAÇÃO PPTX
+## 2.  APRESENTAÇÃO PPTX
 
 ### ❌ Problema Anterior
 - Apenas arquivo Markdown
@@ -174,7 +174,7 @@ Para gerar PDF:
 
 ---
 
-## 3. 🎬 ROTEIRO DE VÍDEO
+## 3.  ROTEIRO DE VÍDEO
 
 ### ❌ Problema Anterior
 - Sem roteiro para gravação
@@ -203,8 +203,8 @@ Para gerar PDF:
    - Demo/Conclusão (11:30 - 15:00)
 
 3. **Para Cada Seção:**
-   - 🎤 **Roteiro completo** (o que falar palavra por palavra)
-   - 📹 **Dicas de gravação** (como apresentar)
+   -  **Roteiro completo** (o que falar palavra por palavra)
+   -  **Dicas de gravação** (como apresentar)
    - ⏱️ **Timing preciso** (quanto tempo gastar)
    - [SLIDE X] - Qual slide usar
 
@@ -249,14 +249,14 @@ Para gerar PDF:
 **Exemplo de Roteiro (Slide Resultados):**
 
 ```
-🎤 ROTEIRO:
+ ROTEIRO:
 > E agora, o momento mais importante: os resultados!
 > [PAUSE PARA EFEITO]
 > [APONTE PARA MLP] O MLP alcançou incríveis 92.52% de
 > acurácia! Isso mostra que a implementação manual do
 > backpropagation funcionou perfeitamente.
 
-📹 DICAS:
+ DICAS:
 - Aponte para cada linha da tabela
 - Enfatize o resultado do MLP com orgulho
 - Use tom de voz variado para manter interesse
@@ -280,7 +280,7 @@ Para gerar PDF:
 
 ---
 
-## 📊 RESUMO DAS MELHORIAS
+##  RESUMO DAS MELHORIAS
 
 | Solicitação | Status | Arquivo Principal |
 |-------------|--------|-------------------|
@@ -291,7 +291,7 @@ Para gerar PDF:
 
 ---
 
-## 🎯 PRÓXIMOS PASSOS
+##  PRÓXIMOS PASSOS
 
 ### Para Deploy AWS
 
@@ -347,7 +347,7 @@ Para gerar PDF:
 
 ---
 
-## 🎉 TUDO PRONTO!
+##  TUDO PRONTO!
 
 ### O Que Você Tem Agora
 
@@ -376,7 +376,7 @@ Para gerar PDF:
 
 ---
 
-## 💪 ESTÁ TUDO PRONTO PARA:
+##  ESTÁ TUDO PRONTO PARA:
 
 1. ✅ Fazer deploy em produção (AWS)
 2. ✅ Apresentar dia 26/11 (PPTX pronto)
@@ -385,8 +385,8 @@ Para gerar PDF:
 
 ---
 
-**Mateus, agora SIM está TUDO perfeito e profissional!** 🚀
+**Mateus, agora SIM está TUDO perfeito e profissional!** 
 
 Você tem infraestrutura de nível empresarial, apresentação didática e roteiro de vídeo digno de TED Talk!
 
-**BOA SORTE NA APRESENTAÇÃO! VOCÊ VAI ARRASAR!** 🎉
+**BOA SORTE NA APRESENTAÇÃO! VOCÊ VAI ARRASAR!** 

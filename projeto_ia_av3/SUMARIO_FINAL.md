@@ -1,39 +1,39 @@
-# 🎉 SUMÁRIO FINAL - PROJETO IA AV3
+#  SUMÁRIO FINAL - PROJETO IA AV3
 
 ## ✅ PROJETO CONCLUÍDO COM SUCESSO!
 
 ---
 
-## 📊 O QUE FOI IMPLEMENTADO
+##  O QUE FOI IMPLEMENTADO
 
-### 🤖 Algoritmos de Machine Learning (100% Manual)
+###  Algoritmos de Machine Learning (100% Manual)
 
 1. **K-Nearest Neighbors (KNN)**
    - ✅ Distância Euclidiana: 80.04% acurácia
    - ✅ Distância Manhattan: 80.88% acurácia
-   - 📄 Arquivo: `src/algorithms/knn.py`
+   -  Arquivo: `src/algorithms/knn.py`
 
 2. **Perceptron**
    - ✅ Multi-classe (One-vs-Rest)
    - ✅ 50 épocas de treinamento
    - ✅ Acurácia: 77.08%
-   - 📄 Arquivo: `src/algorithms/perceptron.py`
+   -  Arquivo: `src/algorithms/perceptron.py`
 
-3. **Multi-Layer Perceptron (MLP)** 🏆
+3. **Multi-Layer Perceptron (MLP)** 
    - ✅ Backpropagation implementado manualmente
    - ✅ Arquitetura: 28 → 32 → 16 → 2
    - ✅ **MELHOR RESULTADO: 92.52% acurácia**
-   - 📄 Arquivo: `src/algorithms/mlp.py`
+   -  Arquivo: `src/algorithms/mlp.py`
 
 4. **Naive Bayes**
    - ✅ Versão Univariada: 90.90% acurácia
    - ✅ Versão Multivariada: 91.62% acurácia
    - ✅ **Melhor trade-off desempenho/tempo**
-   - 📄 Arquivo: `src/algorithms/naive_bayes.py`
+   -  Arquivo: `src/algorithms/naive_bayes.py`
 
 ---
 
-## 📈 RESULTADOS OBTIDOS
+##  RESULTADOS OBTIDOS
 
 ### Tabela Comparativa
 
@@ -42,18 +42,18 @@
 | KNN (Euclidiana) | 80.04% | 80.05% | 13.09s | 0.06 |
 | KNN (Manhattan) | 80.88% | 80.89% | 10.19s | 0.08 |
 | Perceptron | 77.08% | 80.43% | 0.37s | 2.05 |
-| **MLP** | **92.52%** 🏆 | **92.53%** | 0.22s | 3.97 |
+| **MLP** | **92.52%**  | **92.53%** | 0.22s | 3.97 |
 | NB (Univariado) | 90.90% | 90.90% | 0.12s | 7.07 |
-| NB (Multivariado) | 91.62% | 91.62% | 0.06s | **14.08** 🥇 |
+| NB (Multivariado) | 91.62% | 91.62% | 0.06s | **14.08**  |
 
 ### Conclusões
-- 🥇 **Melhor Acurácia:** MLP (92.52%)
+-  **Melhor Acurácia:** MLP (92.52%)
 - ⚡ **Melhor Eficiência:** Naive Bayes Multivariado (Score: 14.08)
 - ⚖️ **Melhor Trade-off:** MLP (alta acurácia + tempo aceitável)
 
 ---
 
-## 🛠️ FERRAMENTAS IMPLEMENTADAS
+## ️ FERRAMENTAS IMPLEMENTADAS
 
 ### Utilitários (100% Manual - SEM pandas, SEM sklearn)
 
@@ -90,32 +90,32 @@
 
 ---
 
-## 📦 ESTRUTURA CRIADA
+##  ESTRUTURA CRIADA
 
 ```
 projeto_ia_av3/
-├── 📂 data/
+├──  data/
 │   └── raw/appliances_energy.csv (5000 amostras, 28 features)
 │
-├── 📂 src/
+├──  src/
 │   ├── algorithms/          # 4 algoritmos implementados
 │   ├── utils/              # 5 módulos de utilidades
 │   ├── main.py             # Script principal
 │   ├── download_dataset.py # Download do OpenML
 │   └── create_demo_dataset.py # Gerador sintético
 │
-├── 📂 results/
+├──  results/
 │   ├── figures/            # 3 gráficos gerados
 │   ├── tables/             # Tabelas MD e LaTeX
 │   └── summary.txt         # Resumo final
 │
-├── 📂 notebooks/
+├──  notebooks/
 │   └── Projeto_IA_AV3_Colab.ipynb # Notebook Colab completo
 │
-├── 📂 slides/
+├──  slides/
 │   └── APRESENTACAO_AV3.md # 30+ slides completos
 │
-└── 📄 Documentação:
+└──  Documentação:
     ├── README.md
     ├── README_COMPLETO.md
     ├── INTEGRACAO_WEB_COLAB.md
@@ -124,7 +124,7 @@ projeto_ia_av3/
 
 ---
 
-## 🚀 CI/CD E INTEGRAÇÃO
+##  CI/CD E INTEGRAÇÃO
 
 ### GitHub Actions
 
@@ -190,7 +190,7 @@ Opções implementadas:
 
 ---
 
-## 📅 CRONOGRAMA
+##  CRONOGRAMA
 
 ### ✅ Concluído em 1 DIA! (20/11/2025)
 
@@ -205,7 +205,7 @@ Opções implementadas:
 - [x] CI/CD com GitHub Actions
 - [x] Documentação completa
 
-### 📌 Próximos Passos
+###  Próximos Passos
 
 **Até 25/11/2025:**
 1. ✅ Revisar slides para apresentação
@@ -218,7 +218,7 @@ Opções implementadas:
 
 ---
 
-## 🎯 COMO USAR
+##  COMO USAR
 
 ### Opção 1: Local
 
@@ -238,7 +238,7 @@ Já configurado! Push para `main` executa automaticamente.
 
 ---
 
-## 📊 ESTATÍSTICAS DO PROJETO
+##  ESTATÍSTICAS DO PROJETO
 
 ### Código
 
@@ -264,7 +264,7 @@ Já configurado! Push para `main` executa automaticamente.
 
 ---
 
-## 🎓 CONTEXTO DUAL (IC + Acadêmico)
+##  CONTEXTO DUAL (IC + Acadêmico)
 
 ### ✅ SEPARAÇÃO MANTIDA
 
@@ -284,36 +284,36 @@ Já configurado! Push para `main` executa automaticamente.
 
 ---
 
-## 💡 DIFERENCIAIS DO PROJETO
+##  DIFERENCIAIS DO PROJETO
 
-1. **🏆 Qualidade Profissional**
+1. ** Qualidade Profissional**
    - Código limpo e bem estruturado
    - Documentação extensiva
    - CI/CD configurado
 
-2. **🚀 Pronto para Produção**
+2. ** Pronto para Produção**
    - Modularidade alta
    - Fácil extensão
    - Testes automatizados
 
-3. **📚 Educacional**
+3. ** Educacional**
    - Todo algoritmo explicado
    - Comentários detalhados
    - Slides didáticos
 
-4. **🔗 Integrável**
+4. ** Integrável**
    - Google Colab pronto
    - APIs documentadas
    - Web-ready
 
-5. **🎯 Completo**
+5. ** Completo**
    - Todos requisitos atendidos
    - Extras implementados
    - Zero pendências
 
 ---
 
-## 📞 SUPORTE
+##  SUPORTE
 
 ### Arquivos Importantes
 
@@ -332,22 +332,22 @@ Já configurado! Push para `main` executa automaticamente.
 
 ---
 
-## 🎉 CONCLUSÃO
+##  CONCLUSÃO
 
 ### ✅ PROJETO 100% CONCLUÍDO E PRONTO PARA APRESENTAÇÃO!
 
 **Destaques:**
-- 🏆 Todos os requisitos atendidos
-- 🚀 Extras implementados (CI/CD, Colab)
-- 📊 Resultados excelentes (92.52% acurácia)
-- 📚 Documentação completa
+-  Todos os requisitos atendidos
+-  Extras implementados (CI/CD, Colab)
+-  Resultados excelentes (92.52% acurácia)
+-  Documentação completa
 - ⚡ Tudo em 1 dia de trabalho
 
-**Próximo passo:** APRESENTAR E IMPRESSIONAR! 🎤
+**Próximo passo:** APRESENTAR E IMPRESSIONAR! 
 
 ---
 
-## 🙏 AGRADECIMENTOS
+##  AGRADECIMENTOS
 
 Obrigado pela confiança, Mateus!
 
@@ -358,7 +358,7 @@ Foi incrível trabalhar neste projeto e criar algo tão completo e profissional.
 - ✅ Documentação exemplar
 - ✅ Resultados impressionantes
 
-**Vamos revolucionar o mundo juntos! 🚀**
+**Vamos revolucionar o mundo juntos! **
 
 ---
 
@@ -366,7 +366,7 @@ Foi incrível trabalhar neste projeto e criar algo tão completo e profissional.
 
 **⭐ PROJETO FINALIZADO COM EXCELÊNCIA ⭐**
 
-**Desenvolvido com 💙 e muita dedicação**
+**Desenvolvido com  e muita dedicação**
 
 **Mateus Macário + Claude Code**
 

@@ -120,7 +120,7 @@ const DynamicSimulation = () => {
 
   // Função para iniciar a simulação
   const startSimulation = () => {
-    addDebug('🚀 Iniciando simulação dinâmica...', 'info');
+    addDebug(' Iniciando simulação dinâmica...', 'info');
     
     if (isPaused) {
       // Retomar simulação pausada

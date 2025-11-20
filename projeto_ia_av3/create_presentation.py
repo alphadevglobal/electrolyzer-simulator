@@ -129,7 +129,7 @@ def create_conclusion_slide(prs, title, points, highlight):
 
 def main():
     """Cria apresentação completa"""
-    print("🎨 Criando apresentação PPTX...")
+    print(" Criando apresentação PPTX...")
 
     prs = Presentation()
     prs.slide_width = Inches(10)
@@ -145,7 +145,7 @@ def main():
     # Slide 2: Agenda
     create_content_slide(
         prs,
-        "📋 Agenda",
+        " Agenda",
         [
             "1. Introdução e Objetivo",
             "2. Dataset Escolhido",
@@ -161,7 +161,7 @@ def main():
     # Slide 3: Introdução
     create_content_slide(
         prs,
-        "🎯 Introdução",
+        " Introdução",
         [
             "Objetivo: Avaliar algoritmos de classificação",
             "Desafio: Implementação 100% MANUAL",
@@ -175,14 +175,14 @@ def main():
     # Slide 4: Dataset
     create_content_slide(
         prs,
-        "📊 Dataset: Appliances Energy",
+        " Dataset: Appliances Energy",
         [
             "Fonte: OpenML (ID: 46283)",
-            "📈 Instâncias: 5,000 amostras",
-            "🔢 Features: 28 atributos",
-            "🎯 Target: Consumo de energia (binarizado)",
+            " Instâncias: 5,000 amostras",
+            " Features: 28 atributos",
+            " Target: Consumo de energia (binarizado)",
             "✅ Atende TODOS os requisitos (>10 atributos, >1000 instâncias)",
-            "🔗 Alinhado com pesquisa em eficiência energética"
+            " Alinhado com pesquisa em eficiência energética"
         ]
     )
 
@@ -205,7 +205,7 @@ def main():
     # Slide 6: KNN
     create_content_slide(
         prs,
-        "🔍 Algoritmo 1: K-Nearest Neighbors",
+        " Algoritmo 1: K-Nearest Neighbors",
         [
             "Implementação Manual:",
             "   • Distância Euclidiana: √Σ(x₁-x₂)²",
@@ -222,7 +222,7 @@ def main():
     # Slide 7: Perceptron
     create_content_slide(
         prs,
-        "🧠 Algoritmo 2: Perceptron",
+        " Algoritmo 2: Perceptron",
         [
             "Implementação Manual:",
             "   • Taxa de aprendizado: 0.01",
@@ -240,7 +240,7 @@ def main():
     # Slide 8: MLP
     create_content_slide(
         prs,
-        "🚀 Algoritmo 3: Multi-Layer Perceptron",
+        " Algoritmo 3: Multi-Layer Perceptron",
         [
             "Arquitetura da Rede:",
             "   • Input: 28 neurônios",
@@ -258,7 +258,7 @@ def main():
     # Slide 9: Naive Bayes
     create_content_slide(
         prs,
-        "📊 Algoritmo 4: Naive Bayes",
+        " Algoritmo 4: Naive Bayes",
         [
             "Duas Implementações:",
             "",
@@ -276,7 +276,7 @@ def main():
     # Slide 10: Validação Cruzada
     create_content_slide(
         prs,
-        "🔄 Validação Cruzada",
+        " Validação Cruzada",
         [
             "K-Fold Cross-Validation (k=5)",
             "✅ Implementação 100% MANUAL!",
@@ -295,7 +295,7 @@ def main():
     # Slide 11: Métricas
     create_content_slide(
         prs,
-        "📏 Métricas de Avaliação",
+        " Métricas de Avaliação",
         [
             "Todas implementadas MANUALMENTE:",
             "",
@@ -315,13 +315,13 @@ def main():
     # Slide 12: Resultados - Tabela
     create_table_slide(
         prs,
-        "🏆 Resultados Completos",
+        " Resultados Completos",
         ["Classificador", "Acurácia", "F1-Score", "Tempo (s)"],
         [
             ["KNN (Euclidiana)", "80.04%", "80.05%", "13.09"],
             ["KNN (Manhattan)", "80.88%", "80.89%", "10.19"],
             ["Perceptron", "77.08%", "80.43%", "0.37"],
-            ["MLP 🏆", "92.52%", "92.53%", "0.22"],
+            ["MLP ", "92.52%", "92.53%", "0.22"],
             ["NB (Univariado)", "90.90%", "90.90%", "0.12"],
             ["NB (Multivariado)", "91.62%", "91.62%", "0.06"]
         ]
@@ -330,13 +330,13 @@ def main():
     # Slide 13: Análise por Desempenho
     create_content_slide(
         prs,
-        "📊 Análise por Desempenho",
+        " Análise por Desempenho",
         [
             "Ranking de Acurácia:",
             "",
-            "🥇 MLP: 92.52% ⭐",
-            "🥈 Naive Bayes (Multivariado): 91.62%",
-            "🥉 Naive Bayes (Univariado): 90.90%",
+            " MLP: 92.52% ⭐",
+            " Naive Bayes (Multivariado): 91.62%",
+            " Naive Bayes (Univariado): 90.90%",
             "4️⃣ KNN (Manhattan): 80.88%",
             "5️⃣ KNN (Euclidiana): 80.04%",
             "6️⃣ Perceptron: 77.08%"
@@ -350,21 +350,21 @@ def main():
         [
             "Score de Eficiência = Acurácia / Tempo Total",
             "",
-            "🥇 Naive Bayes (Multivariado): 14.08",
-            "🥈 Naive Bayes (Univariado): 7.07",
-            "🥉 MLP: 3.97",
+            " Naive Bayes (Multivariado): 14.08",
+            " Naive Bayes (Univariado): 7.07",
+            " MLP: 3.97",
             "4️⃣ Perceptron: 2.05",
             "5️⃣ KNN (Manhattan): 0.08",
             "6️⃣ KNN (Euclidiana): 0.06",
             "",
-            "💡 NB Multivariado: Melhor custo-benefício!"
+            " NB Multivariado: Melhor custo-benefício!"
         ]
     )
 
     # Slide 15: Pontos Fortes e Limitações
     create_content_slide(
         prs,
-        "💪 Pontos Fortes e Limitações",
+        " Pontos Fortes e Limitações",
         [
             "MLP:",
             "   ✅ Melhor acurácia (92.52%)",
@@ -385,7 +385,7 @@ def main():
     # Slide 16: Insights
     create_content_slide(
         prs,
-        "💡 Insights Obtidos",
+        " Insights Obtidos",
         [
             "1️⃣ Deep Learning funciona!",
             "   • MLP superou todos os modelos clássicos",
@@ -423,25 +423,25 @@ def main():
     # Slide 18: Extras Implementados
     create_content_slide(
         prs,
-        "🌟 Extras Implementados",
+        " Extras Implementados",
         [
             "Além dos requisitos:",
             "",
             "✨ GitHub Actions (CI/CD automático)",
             "☁️ Google Colab (notebook interativo)",
-            "🚀 Deploy AWS Lambda (Free Tier)",
-            "📊 Visualizações automáticas",
-            "📚 Documentação completa",
-            "🔗 Integração Web ↔ Colab",
-            "📈 Gráficos comparativos",
-            "💾 Exportação em múltiplos formatos"
+            " Deploy AWS Lambda (Free Tier)",
+            " Visualizações automáticas",
+            " Documentação completa",
+            " Integração Web ↔ Colab",
+            " Gráficos comparativos",
+            " Exportação em múltiplos formatos"
         ]
     )
 
     # Slide 19: Tecnologias
     create_content_slide(
         prs,
-        "🛠️ Tecnologias Utilizadas",
+        "️ Tecnologias Utilizadas",
         [
             "Permitidas:",
             "   • Python 3.10",
@@ -460,7 +460,7 @@ def main():
     # Slide 20: Demonstração
     create_content_slide(
         prs,
-        "🎬 Demonstração Prática",
+        " Demonstração Prática",
         [
             "Onde testar:",
             "",
@@ -482,7 +482,7 @@ def main():
     # Slide 21: Conclusões
     create_conclusion_slide(
         prs,
-        "🎯 Conclusões",
+        " Conclusões",
         [
             "✅ Todos os algoritmos implementados com sucesso",
             "✅ MLP: melhor performance (92.52%)",
@@ -491,13 +491,13 @@ def main():
             "✅ Código 100% original e documentado",
             "✅ Infraestrutura profissional (CI/CD)"
         ],
-        "🏆 Projeto Concluído com Excelência!"
+        " Projeto Concluído com Excelência!"
     )
 
     # Slide 22: Aplicações Futuras
     create_content_slide(
         prs,
-        "🚀 Aplicações Futuras",
+        " Aplicações Futuras",
         [
             "Para Produção:",
             "   • Naive Bayes para sistemas em tempo real",
@@ -519,7 +519,7 @@ def main():
     # Slide 23: Agradecimentos
     create_content_slide(
         prs,
-        "🙏 Agradecimentos",
+        " Agradecimentos",
         [
             "Prof. Ms. Cynthia Moreira Maia",
             "   • Orientação na disciplina",
@@ -551,7 +551,7 @@ def main():
     prs.save(output_path)
 
     print(f"✅ Apresentação criada: {output_path}")
-    print(f"📊 Total de slides: {len(prs.slides)}")
+    print(f" Total de slides: {len(prs.slides)}")
 
     return output_path
 

@@ -1,9 +1,9 @@
-# Projeto IA AV3 - Classificação de Energia 🤖
+# Projeto IA AV3 - Classificação de Energia 
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mateusmacario/electrolyzer-simulator/blob/main/projeto_ia_av3/notebooks/Projeto_IA_AV3_Colab.ipynb)
 [![CI/CD](https://github.com/mateusmacario/electrolyzer-simulator/workflows/Projeto%20IA%20AV3%20-%20CI%2FCD/badge.svg)](https://github.com/mateusmacario/electrolyzer-simulator/actions)
 
-## 📋 Informações do Projeto
+##  Informações do Projeto
 
 **Disciplina:** Inteligência Artificial Computacional
 **Professor:** Ms. Cynthia Moreira Maia
@@ -14,13 +14,13 @@
 
 ---
 
-## 🎯 Objetivo
+##  Objetivo
 
 Implementar e avaliar diferentes algoritmos de aprendizado de máquina **100% manualmente** (sem pandas, sem scikit-learn) para classificação de dados de consumo de energia de eletrodomésticos.
 
 ---
 
-## 📊 Dataset
+##  Dataset
 
 ### Appliances Energy Prediction (OpenML ID: 46283)
 
@@ -38,7 +38,7 @@ Implementar e avaliar diferentes algoritmos de aprendizado de máquina **100% ma
 
 ---
 
-## 🧠 Algoritmos Implementados
+##  Algoritmos Implementados
 
 Todos os algoritmos foram implementados **do ZERO** sem uso de bibliotecas de ML:
 
@@ -68,7 +68,7 @@ Todos os algoritmos foram implementados **do ZERO** sem uso de bibliotecas de ML
 
 ---
 
-## 📈 Resultados
+##  Resultados
 
 ### Tabela de Desempenho
 
@@ -77,7 +77,7 @@ Todos os algoritmos foram implementados **do ZERO** sem uso de bibliotecas de ML
 | KNN (Euclidiana) | 0.80 ± 0.01 | 0.80 ± 0.01 | 0.80 ± 0.01 | 0.00 ± 0.00 | 13.09 ± 0.61 |
 | KNN (Manhattan) | 0.81 ± 0.01 | 0.81 ± 0.01 | 0.81 ± 0.01 | 0.00 ± 0.00 | 10.19 ± 0.11 |
 | Perceptron | 0.77 ± 0.02 | 0.84 ± 0.01 | 0.80 ± 0.01 | 0.36 ± 0.04 | 0.00 ± 0.00 |
-| **🏆 MLP** | **0.93 ± 0.01** | **0.93 ± 0.01** | **0.93 ± 0.01** | **0.22 ± 0.01** | **0.00 ± 0.00** |
+| ** MLP** | **0.93 ± 0.01** | **0.93 ± 0.01** | **0.93 ± 0.01** | **0.22 ± 0.01** | **0.00 ± 0.00** |
 | Naive Bayes (Univariado) | 0.91 ± 0.01 | 0.91 ± 0.01 | 0.91 ± 0.01 | 0.00 ± 0.00 | 0.12 ± 0.00 |
 | Naive Bayes (Multivariado) | 0.92 ± 0.01 | 0.92 ± 0.01 | 0.92 ± 0.01 | 0.00 ± 0.00 | 0.05 ± 0.00 |
 
@@ -85,9 +85,9 @@ Todos os algoritmos foram implementados **do ZERO** sem uso de bibliotecas de ML
 
 **Score de Eficiência = Acurácia / Tempo Total**
 
-1. **🥇 Naive Bayes (Multivariado):** 14.08
-2. 🥈 Naive Bayes (Univariado): 7.07
-3. 🥉 MLP: 3.97
+1. ** Naive Bayes (Multivariado):** 14.08
+2.  Naive Bayes (Univariado): 7.07
+3.  MLP: 3.97
 4. Perceptron: 2.05
 5. KNN (Manhattan): 0.08
 6. KNN (Euclidiana): 0.06
@@ -100,7 +100,7 @@ Todos os algoritmos foram implementados **do ZERO** sem uso de bibliotecas de ML
 
 ---
 
-## 🏗️ Estrutura do Projeto
+## ️ Estrutura do Projeto
 
 ```
 projeto_ia_av3/
@@ -138,7 +138,7 @@ projeto_ia_av3/
 
 ---
 
-## 🚀 Como Executar
+##  Como Executar
 
 ### Opção 1: Localmente
 
@@ -182,7 +182,7 @@ O pipeline é executado automaticamente a cada push:
 
 ---
 
-## 📦 Requisitos Técnicos
+##  Requisitos Técnicos
 
 ### Dependências Mínimas
 
@@ -205,7 +205,7 @@ matplotlib>=3.4.0
 
 ---
 
-## 🔬 Metodologia
+##  Metodologia
 
 ### Pré-processamento
 1. Carregamento manual do CSV (sem pandas)
@@ -227,30 +227,30 @@ matplotlib>=3.4.0
 
 ---
 
-## 🎓 Contexto Acadêmico vs Pesquisa
+##  Contexto Acadêmico vs Pesquisa
 
 ### Projeto AV3 (Este Projeto)
 - ✅ Implementação 100% manual
 - ✅ Código educacional
 - ✅ Foco em fundamentos teóricos
 - ❌ **NÃO** usar bibliotecas de ML
-- 📂 Isolado em `projeto_ia_av3/`
+-  Isolado em `projeto_ia_av3/`
 
 ### Iniciação Científica (Separado)
 - ✅ Pode usar bibliotecas modernas
 - ✅ Foco em produção
 - ✅ Resultados práticos
-- 📂 Código em `jupyter/` e `codigo-fonte-web/`
+-  Código em `jupyter/` e `codigo-fonte-web/`
 
 **Ambos os contextos estão SEPARADOS e não se impactam!**
 
 ---
 
-## 🌐 Integração Web ↔ Colab
+##  Integração Web ↔ Colab
 
 Para integrar este projeto com aplicações web, veja:
 
-📄 **[INTEGRACAO_WEB_COLAB.md](INTEGRACAO_WEB_COLAB.md)**
+ **[INTEGRACAO_WEB_COLAB.md](INTEGRACAO_WEB_COLAB.md)**
 
 Opções disponíveis:
 1. API Flask + ngrok
@@ -260,7 +260,7 @@ Opções disponíveis:
 
 ---
 
-## 📚 Referências
+##  Referências
 
 ### Dataset
 - Appliances Energy Prediction, OpenML
@@ -300,7 +300,7 @@ Opções disponíveis:
 
 ---
 
-## 🎯 Próximos Passos
+##  Próximos Passos
 
 ### Para a Apresentação (26/11/2025)
 1. ✅ Revisar slides em `slides/APRESENTACAO_AV3.md`
@@ -316,7 +316,7 @@ Opções disponíveis:
 
 ---
 
-## 👨‍💻 Autor
+## ‍ Autor
 
 **Mateus Gomes Macário**
 
@@ -326,7 +326,7 @@ Opções disponíveis:
 
 ---
 
-## 📄 Licença
+##  Licença
 
 Este projeto foi desenvolvido para fins **acadêmicos** como parte da disciplina de Inteligência Artificial Computacional.
 
@@ -336,7 +336,7 @@ Este projeto foi desenvolvido para fins **acadêmicos** como parte da disciplina
 
 ---
 
-## 🙏 Agradecimentos
+##  Agradecimentos
 
 - **Prof. Ms. Cynthia Moreira Maia** - Orientação na disciplina
 - **Karen Moura Fernandes** - Pesquisadora colaboradora
@@ -346,7 +346,7 @@ Este projeto foi desenvolvido para fins **acadêmicos** como parte da disciplina
 
 ---
 
-## 📞 Contato
+##  Contato
 
 Para dúvidas ou colaborações:
 
@@ -364,7 +364,7 @@ Para dúvidas ou colaborações:
 
 ---
 
-Desenvolvido com 💙 por **Mateus Gomes Macário**
+Desenvolvido com  por **Mateus Gomes Macário**
 
 **UNIFOR - Universidade de Fortaleza**
 

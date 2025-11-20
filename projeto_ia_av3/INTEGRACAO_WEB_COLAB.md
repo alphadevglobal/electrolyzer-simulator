@@ -1,12 +1,12 @@
 # Integração Web ↔ Google Colab
 
-## 📋 Visão Geral
+##  Visão Geral
 
 Este documento descreve como integrar a aplicação web React com o Google Colab para processamento de modelos de IA.
 
 ---
 
-## 🎯 Arquitetura da Integração
+##  Arquitetura da Integração
 
 ```
 ┌─────────────────┐         ┌──────────────────┐         ┌─────────────────┐
@@ -23,7 +23,81 @@ Este documento descreve como integrar a aplicação web React com o Google Colab
 
 ---
 
-## 🔧 Opção 1: API Flask no Colab
+##  Estratégias por Ambiente
+
+| Ambiente | Objetivo | Stack recomendada | Observação |
+|----------|----------|-------------------|------------|
+| **Produção** | Expor modelos IA para a aplicação React | **AWS Lambda + API Gateway** (deploy em `projeto_ia_av3/deploy`) | Usa o bucket/S3 configurado e é monitorado pelo GitHub Actions |
+| **Pesquisa contínua** | Registrar experimentos feitos no Colab | Google Drive / Firebase / GitHub Actions | Serve para alimentar dashboards sem derrubar produção |
+| **Laboratório/local** | Debug rápido ou demonstração em sala | Flask + ngrok | Apenas para testes manuais; não deve ser usado em produção |
+
+Priorize sempre AWS para produção. As outras opções abaixo ficam como apoio quando o Colab precisa ficar aberto para experimentos ou quando queremos compartilhar algo temporário.
+
+---
+
+##  Opção 1: AWS Lambda + API Gateway (Produção)
+
+Esta abordagem já está parcialmente configurada:
+
+- Código Lambda em `projeto_ia_av3/deploy/aws_lambda_deploy.py`
+- Configuração Serverless (`serverless.yml`) e documentação (`DEPLOY_AWS.md`)
+- Workflow `.github/workflows/deploy-aws.yml` para deploy automático
+
+### Passo 1: Preparar credenciais e ambiente
+1. Criar `AWS_ACCESS_KEY_ID` e `AWS_SECRET_ACCESS_KEY` no IAM e configurá-los localmente (`aws configure`) e nos secrets do GitHub.
+2. Instalar o Serverless Framework (`npm install -g serverless`) se precisar de deploy manual.
+3. Dentro de `projeto_ia_av3/deploy`, rodar `npm install` para baixar plugins.
+
+### Passo 2: Deploy manual (opcional)
+
+```bash
+cd projeto_ia_av3/deploy
+serverless deploy --stage prod
+```
+
+O output mostra as URLs `/predict` e `/health`. Em pipelines, o workflow faz exatamente isso após cada push.
+
+### URLs públicas atuais
+- Health check: `https://fcxzn6pkr1.execute-api.us-east-1.amazonaws.com/prod/health`
+- Predição: `https://fcxzn6pkr1.execute-api.us-east-1.amazonaws.com/prod/predict`
+- Bucket S3 para modelos: `s3://projeto-ia-av3-models-prod`
+
+### Passo 3: Consumir no frontend
+
+```typescript
+// codigo-fonte-web/src/services/awsAPI.ts
+const AWS_API_URL = import.meta.env.VITE_AWS_API_URL;
+
+export async function predictWithAWS(features: number[], model = 'mlp') {
+  const response = await fetch(`${AWS_API_URL}/predict`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${import.meta.env.VITE_AWS_API_TOKEN}`,
+    },
+    body: JSON.stringify({ features, model }),
+  });
+
+  if (!response.ok) throw new Error('Erro ao fazer predição na AWS');
+  return response.json();
+}
+```
+
+Defina `VITE_AWS_API_URL` e `VITE_AWS_API_TOKEN` como variáveis de ambiente no Vercel para não versionar segredos.
+
+### Passo 4: Colab alimentando AWS
+
+Sempre que treinarmos novos modelos no Colab, salvamos o artefato em um bucket S3 (criado automaticamente pelo Serverless). Depois ajustamos `aws_lambda_deploy.py` para carregar o arquivo. Assim, a aplicação web continua consumindo a API AWS sem depender de uma sessão Colab ativa.
+
+No frontend React, use `VITE_AWS_API_URL` para apontar para a URL acima (o projeto já tem fallback para ela) e `VITE_AWS_API_TOKEN` caso a API seja protegida com bearer token.
+
+---
+
+##  Opção 2: API Flask no Colab (laboratório/local)
+
+> Uso recomendado apenas para testes rápidos com ngrok ou para compartilhar uma sessão durante algum experimento. Não utilizar em produção, já que temos AWS.
+
+### Passo a passo no Colab
 
 ### Passo 1: Criar API no Colab
 
@@ -107,7 +181,7 @@ const handlePredict = async () => {
 
 ---
 
-## 🔧 Opção 2: Google Drive + Polling
+##  Opção 3: Google Drive + Polling
 
 ### Passo 1: Salvar Resultados no Drive
 
@@ -168,7 +242,7 @@ useEffect(() => {
 
 ---
 
-## 🔧 Opção 3: Firebase Realtime Database
+##  Opção 4: Firebase Realtime Database
 
 ### Passo 1: Setup Firebase
 
@@ -238,7 +312,7 @@ useEffect(() => {
 
 ---
 
-## 🔐 Autenticação e Segurança
+##  Autenticação e Segurança
 
 ### Tokens de API
 
@@ -270,7 +344,7 @@ const response = await fetch(`${COLAB_API_URL}/predict`, {
 
 ---
 
-## 🚀 Deploy Automatizado
+##  Deploy Automatizado
 
 ### GitHub Actions → Colab
 
@@ -310,7 +384,7 @@ jobs:
 
 ---
 
-## 📊 Monitoramento
+##  Monitoramento
 
 ### Dashboard de Status
 
@@ -360,7 +434,7 @@ export function IAStatus() {
 
 ---
 
-## 🎓 Separação de Contextos
+##  Separação de Contextos
 
 ### Projeto AV3 (Faculdade)
 - ✅ Mantém implementação isolada em `projeto_ia_av3/`
@@ -391,12 +465,11 @@ export function IAStatus() {
 
 ---
 
-## 📝 Checklist de Implementação
+##  Checklist de Implementação
 
-- [ ] Escolher método de integração (Flask/Drive/Firebase)
+- [ ] Escolher método de integração (AWS produção / Drive / Firebase / Flask-local)
 - [ ] Configurar autenticação e tokens
 - [ ] Testar conexão local
-- [ ] Configurar ngrok para acesso público
 - [ ] Implementar cliente React
 - [ ] Adicionar tratamento de erros
 - [ ] Configurar monitoramento
@@ -406,7 +479,7 @@ export function IAStatus() {
 
 ---
 
-## 💡 Dicas Importantes
+##  Dicas Importantes
 
 1. **ngrok gratuito:** URL muda a cada execução
 2. **Firebase:** Melhor para produção
@@ -416,7 +489,7 @@ export function IAStatus() {
 
 ---
 
-## 📚 Recursos
+##  Recursos
 
 - [ngrok Documentation](https://ngrok.com/docs)
 - [Flask Documentation](https://flask.palletsprojects.com/)

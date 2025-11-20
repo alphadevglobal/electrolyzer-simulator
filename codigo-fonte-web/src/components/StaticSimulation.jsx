@@ -13,6 +13,7 @@ import { Calculator, Zap, Droplets, TrendingUp, DollarSign, AlertTriangle, Info,
 
 import { simulateElectrolyzer, validateParameters, ELECTROLYZER_PARAMS } from '../lib/calculations';
 import { calculateTemperatureEffects, generateTemperatureChartData, calculateOptimalTemperature } from '../lib/temperatureEffects';
+import { predictWithAWS, checkAWSHealth } from '../lib/awsApi';
 
 const StaticSimulation = () => {
   const [electrolyzerType, setElectrolyzerType] = useState('PEM');
@@ -30,6 +31,10 @@ const StaticSimulation = () => {
   const [isCalculating, setIsCalculating] = useState(false);
   const [temperatureData, setTemperatureData] = useState(null);
   const [optimalTemp, setOptimalTemp] = useState(null);
+  const [awsStatus, setAwsStatus] = useState('checking');
+  const [remotePrediction, setRemotePrediction] = useState(null);
+  const [isSyncingAws, setIsSyncingAws] = useState(false);
+  const [awsError, setAwsError] = useState(null);
 
   // Atualizar parâmetros quando o tipo de eletrolisador muda
   useEffect(() => {
@@ -42,6 +47,26 @@ const StaticSimulation = () => {
       }));
     }
   }, [electrolyzerType]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    checkAWSHealth()
+      .then(() => {
+        if (isMounted) {
+          setAwsStatus('online');
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setAwsStatus('offline');
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleParameterChange = (key, value) => {
     const numValue = parseFloat(value.replace(
@@ -155,6 +180,43 @@ const StaticSimulation = () => {
     { name: 'Ôhmica', value: results.overpotentials.ohmic, color: '#f97316' },
     { name: 'Concentração', value: results.overpotentials.concentration, color: '#eab308' }
   ] : [];
+
+  const featureVector = [
+    Number(parameters.temperature) || 0,
+    Number(parameters.pressure) || 0,
+    Number(parameters.currentDensity) || 0,
+    Number(parameters.electrodeArea) || 0,
+    Number(parameters.voltage) || 0,
+    Number(parameters.molality) || 0
+  ];
+
+  const handleSyncWithAws = async () => {
+    setIsSyncingAws(true);
+    setAwsError(null);
+    try {
+      const response = await predictWithAWS(featureVector, electrolyzerType);
+      setRemotePrediction(response);
+      setAwsStatus('online');
+    } catch (error) {
+      setRemotePrediction(null);
+      setAwsStatus('offline');
+      setAwsError(error.message);
+    } finally {
+      setIsSyncingAws(false);
+    }
+  };
+
+  const statusBadgeStyles = {
+    checking: 'bg-blue-100 text-blue-800',
+    online: 'bg-green-100 text-green-800',
+    offline: 'bg-red-100 text-red-800'
+  };
+
+  const awsStatusLabel = {
+    checking: 'Verificando',
+    online: 'Online',
+    offline: 'Offline'
+  };
 
   return (
     <div className="space-y-6">
@@ -350,6 +412,55 @@ const StaticSimulation = () => {
                 <TabsTrigger value="temperature">Temperatura</TabsTrigger>
                 <TabsTrigger value="charts">Gráficos</TabsTrigger>
               </TabsList>
+
+              <Card className="border-dashed">
+                <CardHeader className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
+                  <div>
+                    <CardTitle className="text-lg">Integração AWS Lambda</CardTitle>
+                    <CardDescription>
+                      Valide este cenário diretamente na API pública implantada em AWS Lambda + API Gateway.
+                    </CardDescription>
+                  </div>
+                  <Badge className={statusBadgeStyles[awsStatus] || statusBadgeStyles.checking}>
+                    {awsStatusLabel[awsStatus]}
+                  </Badge>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <Button variant="secondary" onClick={handleSyncWithAws} disabled={isSyncingAws}>
+                      {isSyncingAws ? 'Enviando...' : 'Enviar cenário para AWS'}
+                    </Button>
+                    <div className="text-sm text-muted-foreground">
+                      Endpoint: <span className="font-mono text-xs break-all">{import.meta.env.VITE_AWS_API_URL || 'https://fcxzn6pkr1.execute-api.us-east-1.amazonaws.com/prod'}</span>
+                    </div>
+                  </div>
+                  {remotePrediction && (
+                    <div className="grid gap-4 sm:grid-cols-3">
+                      <div>
+                        <p className="text-xs text-muted-foreground">Classe Prevista</p>
+                        <p className="text-lg font-semibold">{remotePrediction.prediction}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">Probabilidades</p>
+                        <p className="text-lg font-semibold">
+                          {remotePrediction.probability?.map((value, index) => `Class ${index}: ${(value * 100).toFixed(1)}%`).join(' | ')}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">Atualizado em</p>
+                        <p className="text-lg font-semibold">
+                          {remotePrediction.timestamp ? new Date(remotePrediction.timestamp * 1000).toLocaleString('pt-BR') : '--'}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  {awsError && (
+                    <p className="text-sm text-red-600">
+                      {awsError}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
 
               <TabsContent value="overview" className="space-y-4">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -575,5 +686,3 @@ const StaticSimulation = () => {
 };
 
 export default StaticSimulation;
-
-

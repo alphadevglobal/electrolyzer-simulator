@@ -1,10 +1,10 @@
 # Diagramas de Arquitetura do Sistema
 
-## 📋 Visão Geral
+##  Visão Geral
 
 Este diretório contém os diagramas de arquitetura do Simulador de Eletrolisadores, mostrando tanto a implementação atual quanto a proposta de evolução para uma arquitetura de microserviços.
 
-## 🏗️ Arquiteturas Disponíveis
+## ️ Arquiteturas Disponíveis
 
 ### 1. Arquitetura Atual (arquitetura_atual.png)
 
@@ -91,7 +91,7 @@ Este diretório contém os diagramas de arquitetura do Simulador de Eletrolisado
 - Gerenciamento de múltiplos deploys
 - Comunicação entre serviços
 
-## 💰 Análise de Custos (AWS)
+##  Análise de Custos (AWS)
 
 ### Arquitetura Atual
 - **Hosting**: AWS S3 + CloudFront
@@ -113,7 +113,7 @@ Este diretório contém os diagramas de arquitetura do Simulador de Eletrolisado
 - **Load Balancer**: ~$18/mês
 - **Total**: ~$53/mês
 
-## 🚀 Recomendações de Implementação
+##  Recomendações de Implementação
 
 ### Fase 1: Preparação
 1. Separar lógica de cálculos em módulos
@@ -139,7 +139,7 @@ Este diretório contém os diagramas de arquitetura do Simulador de Eletrolisado
 3. Implementar logs e alertas
 4. Documentação final
 
-## 🔧 Ferramentas Recomendadas
+##  Ferramentas Recomendadas
 
 ### Desenvolvimento
 - **Backend**: Python + Flask/FastAPI
@@ -159,7 +159,7 @@ Este diretório contém os diagramas de arquitetura do Simulador de Eletrolisado
 - **Firewall**: AWS Security Groups
 - **Backup**: Automated snapshots
 
-## 📊 Métricas de Sucesso
+##  Métricas de Sucesso
 
 ### Performance
 - Tempo de resposta < 2s

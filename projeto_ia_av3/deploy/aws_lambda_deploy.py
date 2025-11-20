@@ -3,8 +3,7 @@ Deploy automatizado para AWS Lambda (Free Tier)
 API serverless para modelos de IA
 """
 import json
-import base64
-import numpy as np
+import time
 
 
 # Handler principal do Lambda
@@ -45,12 +44,15 @@ def lambda_handler(event, context):
                 })
             }
 
-        # Converte para numpy array
-        X = np.array(features).reshape(1, -1)
+        # Garante lista bidimensional para simplificar lógica
+        if isinstance(features[0], list):
+            rows = [[float(val) for val in row] for row in features]
+        else:
+            rows = [[float(val) for val in features]]
 
         # Carrega modelo (simplificado - em produção carregaria do S3)
         # Aqui fazemos uma predição dummy
-        prediction = predict_with_model(X, model_type)
+        prediction = predict_with_model(rows, model_type)
 
         return {
             'statusCode': 200,
@@ -81,7 +83,7 @@ def lambda_handler(event, context):
         }
 
 
-def predict_with_model(X, model_type='mlp'):
+def predict_with_model(features_matrix, model_type='mlp'):
     """
     Faz predição com modelo especificado
 
@@ -92,13 +94,12 @@ def predict_with_model(X, model_type='mlp'):
     Returns:
         Predição com probabilidades
     """
-    import time
-
     # Em produção, carregaria modelos salvos do S3
     # Por enquanto, retorna predição dummy
 
     # Simula predição
-    prediction_class = 1 if X[0, 0] > 0 else 0
+    first_value = features_matrix[0][0] if features_matrix and features_matrix[0] else 0.0
+    prediction_class = 1 if first_value > 0 else 0
     probability = [0.3, 0.7] if prediction_class == 1 else [0.8, 0.2]
 
     return {

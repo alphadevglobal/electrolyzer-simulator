@@ -24,7 +24,7 @@
 
 ---
 
-## 📊 DATASET ESCOLHIDO
+##  DATASET ESCOLHIDO
 
 - **Nome**: Appliances Energy Prediction
 - **OpenML ID**: 46283
@@ -35,7 +35,7 @@
 
 ---
 
-## 🗂️ ESTRUTURA DO PROJETO
+## ️ ESTRUTURA DO PROJETO
 
 ```
 projeto_ia_av3/
@@ -79,7 +79,7 @@ projeto_ia_av3/
 
 ---
 
-## 🔧 IMPLEMENTAÇÃO DOS ALGORITMOS (100% MANUAL)
+##  IMPLEMENTAÇÃO DOS ALGORITMOS (100% MANUAL)
 
 ### 1. K-Nearest Neighbors (KNN)
 
@@ -185,7 +185,7 @@ class NaiveBayes:
 
 ---
 
-## 📈 MÉTRICAS DE AVALIAÇÃO (Implementadas Manualmente)
+##  MÉTRICAS DE AVALIAÇÃO (Implementadas Manualmente)
 
 ```python
 def accuracy(y_true, y_pred):
@@ -206,7 +206,7 @@ def f1_score(y_true, y_pred):
 
 ---
 
-## 🔄 VALIDAÇÃO CRUZADA (Manual)
+##  VALIDAÇÃO CRUZADA (Manual)
 
 ```python
 def k_fold_cross_validation(X, y, k=5):
@@ -227,7 +227,7 @@ def k_fold_cross_validation(X, y, k=5):
 
 ---
 
-## 📅 CRONOGRAMA DE DESENVOLVIMENTO
+##  CRONOGRAMA DE DESENVOLVIMENTO
 
 ### Semana 1: 20-24 de Novembro
 
@@ -273,7 +273,7 @@ def k_fold_cross_validation(X, y, k=5):
 
 ---
 
-## 📊 TABELA DE RESULTADOS (Modelo do PDF)
+##  TABELA DE RESULTADOS (Modelo do PDF)
 
 | Classificador | Acurácia | Precisão | F1-Score | Tempo Treino (s) | Tempo Teste (s) |
 |--------------|----------|----------|----------|------------------|-----------------|
@@ -286,7 +286,7 @@ def k_fold_cross_validation(X, y, k=5):
 
 ---
 
-## 🎯 ESTRUTURA DOS SLIDES
+##  ESTRUTURA DOS SLIDES
 
 ### Slides Obrigatórios:
 1. **Capa**: Título, Nome, Data
@@ -313,7 +313,7 @@ def k_fold_cross_validation(X, y, k=5):
 
 ---
 
-## 🚀 CÓDIGO INICIAL PARA COMEÇAR
+##  CÓDIGO INICIAL PARA COMEÇAR
 
 ### data_loader.py (SEM PANDAS!)
 ```python
@@ -368,7 +368,7 @@ def train_test_split_manual(X, y, test_size=0.2, random_seed=42):
 
 ---
 
-## 📝 NOTAS IMPORTANTES
+##  NOTAS IMPORTANTES
 
 1. **Pontualidade**: Atraso = penalização
 2. **Código obrigatório**: Sem código = nota zero
@@ -377,7 +377,7 @@ def train_test_split_manual(X, y, test_size=0.2, random_seed=42):
 
 ---
 
-## 🔗 LINKS ÚTEIS
+##  LINKS ÚTEIS
 
 - Dataset: https://www.openml.org/d/46283
 - Formulário de escolha: https://forms.gle/X5hF8WUqpFBdXSXx9
@@ -385,7 +385,7 @@ def train_test_split_manual(X, y, test_size=0.2, random_seed=42):
 
 ---
 
-## 💡 DICAS DE IMPLEMENTAÇÃO
+##  DICAS DE IMPLEMENTAÇÃO
 
 1. **Começar simples**: Primeiro fazer funcionar, depois otimizar
 2. **Testar incrementalmente**: Testar cada função individualmente

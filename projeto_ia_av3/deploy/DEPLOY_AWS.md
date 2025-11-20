@@ -1,6 +1,6 @@
 # Deploy Automático para AWS (Free Tier)
 
-## 🚀 Visão Geral
+##  Visão Geral
 
 Deploy serverless usando **AWS Lambda + API Gateway** (100% Free Tier)
 
@@ -15,11 +15,11 @@ Deploy serverless usando **AWS Lambda + API Gateway** (100% Free Tier)
 - **S3 (armazenamento modelos):**
   - 5 GB GRÁTIS permanentemente
 
-**Total:** R$ 0,00/mês dentro do Free Tier! 💰
+**Total:** R$ 0,00/mês dentro do Free Tier! 
 
 ---
 
-## 📋 Pré-requisitos
+##  Pré-requisitos
 
 ### 1. Conta AWS
 - Criar conta em: https://aws.amazon.com/free/
@@ -46,7 +46,7 @@ aws configure
 
 ---
 
-## 🔧 Configuração com Token (SEM Intervenção)
+##  Configuração com Token (SEM Intervenção)
 
 ### Opção 1: Usando GitHub Secrets (RECOMENDADO)
 
@@ -76,7 +76,7 @@ serverless deploy --stage prod
 
 ---
 
-## 📦 Deploy Manual (Primeira Vez)
+##  Deploy Manual (Primeira Vez)
 
 ```bash
 cd projeto_ia_av3/deploy
@@ -112,7 +112,7 @@ functions:
 
 ---
 
-## 🧪 Testar API
+##  Testar API
 
 ### Health Check
 
@@ -152,7 +152,7 @@ curl -X POST https://SEU-ENDPOINT.amazonaws.com/dev/predict \
 
 ---
 
-## 🌐 Integração com React
+##  Integração com React
 
 ### Cliente TypeScript
 
@@ -224,7 +224,7 @@ export function IAPrediction() {
 
 ---
 
-## 🔄 CI/CD Automático
+##  CI/CD Automático
 
 ### GitHub Actions (já configurado)
 
@@ -258,7 +258,7 @@ Cada stage tem sua própria URL independente!
 
 ---
 
-## 📊 Monitoramento
+##  Monitoramento
 
 ### CloudWatch Logs
 
@@ -300,7 +300,7 @@ resources:
 
 ---
 
-## 💾 Upload de Modelos Treinados
+##  Upload de Modelos Treinados
 
 ### Script de Upload
 
@@ -347,7 +347,7 @@ def load_model_from_s3(model_name='mlp'):
 
 ---
 
-## 🔒 Segurança
+##  Segurança
 
 ### API Key (Recomendado)
 
@@ -379,7 +379,7 @@ headers = {
 
 ---
 
-## 💰 Monitoramento de Custos
+##  Monitoramento de Custos
 
 ### AWS Budget Alert
 
@@ -395,11 +395,11 @@ Com 10,000 requisições/dia:
 - API Gateway: $0.00 (Free Tier primeiro ano)
 - S3: $0.00 (< 5GB)
 
-**Total: R$ 0,00** 🎉
+**Total: R$ 0,00** 
 
 ---
 
-## 🧹 Cleanup (Remover Tudo)
+##  Cleanup (Remover Tudo)
 
 ```bash
 # Remove toda infraestrutura
@@ -411,7 +411,7 @@ aws s3 rb s3://projeto-ia-av3-models-dev --force
 
 ---
 
-## 🆘 Troubleshooting
+##  Troubleshooting
 
 ### Erro: Access Denied
 
@@ -440,7 +440,7 @@ provider:
 
 ---
 
-## 📚 Recursos Úteis
+##  Recursos Úteis
 
 - [AWS Lambda Free Tier](https://aws.amazon.com/lambda/pricing/)
 - [Serverless Framework Docs](https://www.serverless.com/framework/docs)
@@ -464,4 +464,4 @@ provider:
 
 ---
 
-**Próximo:** Ao fazer push para `main`, GitHub Actions faz deploy automaticamente! 🚀
+**Próximo:** Ao fazer push para `main`, GitHub Actions faz deploy automaticamente! 
