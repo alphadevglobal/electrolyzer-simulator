@@ -24,6 +24,11 @@ const DynamicSimulation = () => {
   const molality = 6.0;
   const area = 100;
 
+  // Parâmetros geométricos
+  const [membraneArea, setMembraneArea] = useState(100); // cm² por célula
+  const [numberOfCells, setNumberOfCells] = useState(10);
+  const [electrodeGap, setElectrodeGap] = useState(2.0); // mm
+
   // Estados de controle
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -322,6 +327,63 @@ const DynamicSimulation = () => {
                 max="30"
                 disabled={isRunning}
               />
+            </div>
+          </div>
+
+          {/* Parâmetros Geométricos */}
+          <div className="mt-4 pt-4 border-t">
+            <h3 className="font-semibold text-sm mb-3 flex items-center gap-2">
+              <span className="text-purple-600">📐</span> Parâmetros Geométricos
+            </h3>
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <Label htmlFor="membraneArea">Área Membrana (cm²/célula)</Label>
+                <Input
+                  id="membraneArea"
+                  type="number"
+                  value={membraneArea}
+                  onChange={(e) => setMembraneArea(Number(e.target.value))}
+                  min="10"
+                  max="500"
+                  disabled={isRunning}
+                />
+                <p className="text-xs text-gray-500 mt-1">10 - 500 cm²</p>
+              </div>
+
+              <div>
+                <Label htmlFor="numberOfCells">Número de Células</Label>
+                <Input
+                  id="numberOfCells"
+                  type="number"
+                  value={numberOfCells}
+                  onChange={(e) => setNumberOfCells(Number(e.target.value))}
+                  min="1"
+                  max="100"
+                  disabled={isRunning}
+                />
+                <p className="text-xs text-gray-500 mt-1">1 - 100 células</p>
+              </div>
+
+              <div>
+                <Label htmlFor="electrodeGap">Gap Eletrodos (mm)</Label>
+                <Input
+                  id="electrodeGap"
+                  type="number"
+                  step="0.1"
+                  value={electrodeGap}
+                  onChange={(e) => setElectrodeGap(Number(e.target.value))}
+                  min="0.5"
+                  max="5"
+                  disabled={isRunning}
+                />
+                <p className="text-xs text-gray-500 mt-1">0.5 - 5 mm</p>
+              </div>
+            </div>
+
+            <div className="bg-purple-50 p-3 rounded mt-3 text-xs">
+              <p><strong>Área total ativa:</strong> {(membraneArea * numberOfCells).toFixed(0)} cm²</p>
+              <p><strong>Volume do stack:</strong> {((membraneArea * electrodeGap * numberOfCells) / 1000).toFixed(2)} L</p>
+              <p className="text-gray-600 mt-1">Geometria afeta eficiência, temperatura e produção de H₂</p>
             </div>
           </div>
         </CardContent>

@@ -24,7 +24,11 @@ const StaticSimulation = () => {
     currentDensity: 1.5,
     electrodeArea: 100,
     voltage: 2.0,
-    molality: 6.0 // Adicionado molalidade padrão
+    molality: 6.0, // Adicionado molalidade padrão
+    // Parâmetros geométricos
+    membraneArea: 100, // cm² por célula
+    numberOfCells: 10,
+    electrodeGap: 2.0, // mm
   });
   const [results, setResults] = useState(null);
   const [validation, setValidation] = useState({ isValid: true, errors: [], warnings: [] });
@@ -257,6 +261,65 @@ const StaticSimulation = () => {
                 <div className="text-sm text-muted-foreground">
                   <p>Eletrólito: {ELECTROLYZER_PARAMS[electrolyzerType]?.electrolyte}</p>
                   <p>Eletrodos: {ELECTROLYZER_PARAMS[electrolyzerType]?.electrodes}</p>
+                </div>
+              </div>
+
+              <Separator />
+
+              {/* Parâmetros Geométricos */}
+              <div className="space-y-3">
+                <h3 className="font-semibold text-sm flex items-center gap-2">
+                  <span className="text-purple-600">📐</span> Geometria do Eletrolisador
+                </h3>
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="space-y-2">
+                    <Label htmlFor="membraneArea" className="text-xs">Área da Membrana (cm²/célula)</Label>
+                    <Input
+                      id="membraneArea"
+                      type="number"
+                      value={parameters.membraneArea}
+                      onChange={(e) => handleParameterChange('membraneArea', e.target.value)}
+                      min="10"
+                      max="500"
+                      className="h-8"
+                    />
+                    <div className="text-xs text-muted-foreground">10 - 500 cm²</div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="numberOfCells" className="text-xs">Número de Células</Label>
+                    <Input
+                      id="numberOfCells"
+                      type="number"
+                      value={parameters.numberOfCells}
+                      onChange={(e) => handleParameterChange('numberOfCells', e.target.value)}
+                      min="1"
+                      max="100"
+                      className="h-8"
+                    />
+                    <div className="text-xs text-muted-foreground">1 - 100 células</div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="electrodeGap" className="text-xs">Gap Eletrodos (mm)</Label>
+                    <Input
+                      id="electrodeGap"
+                      type="number"
+                      step="0.1"
+                      value={parameters.electrodeGap}
+                      onChange={(e) => handleParameterChange('electrodeGap', e.target.value)}
+                      min="0.5"
+                      max="5"
+                      className="h-8"
+                    />
+                    <div className="text-xs text-muted-foreground">0.5 - 5 mm</div>
+                  </div>
+                </div>
+
+                <div className="bg-purple-50 p-2 rounded text-xs">
+                  <p><strong>Área total ativa:</strong> {(parameters.membraneArea * parameters.numberOfCells).toFixed(0)} cm²</p>
+                  <p><strong>Volume do stack:</strong> {((parameters.membraneArea * parameters.electrodeGap * parameters.numberOfCells) / 1000).toFixed(2)} L</p>
+                  <p className="text-gray-600 mt-1">Gap menor = menor resistência ôhmica. Área maior = melhor distribuição térmica.</p>
                 </div>
               </div>
 
