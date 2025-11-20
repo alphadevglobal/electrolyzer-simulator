@@ -1,0 +1,121 @@
+name: Projeto IA AV3 - CI/CD
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'projeto_ia_av3/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'projeto_ia_av3/**'
+  workflow_dispatch:
+
+jobs:
+  test-algorithms:
+    name: Testar Algoritmos de IA
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Instalar dependências
+      run: |
+        cd projeto_ia_av3
+        pip install numpy matplotlib pytest
+
+    - name: Criar dataset de teste
+      run: |
+        cd projeto_ia_av3
+        python src/create_demo_dataset.py
+
+    - name: Executar experimentos
+      run: |
+        cd projeto_ia_av3
+        python src/main.py
+
+    - name: Verificar resultados gerados
+      run: |
+        cd projeto_ia_av3
+        ls -la results/
+        test -f results/summary.txt && echo "✓ Summary gerado"
+
+    - name: Upload resultados como artefato
+      uses: actions/upload-artifact@v3
+      with:
+        name: resultados-experimentos
+        path: projeto_ia_av3/results/
+
+  validate-code:
+    name: Validar Código
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Instalar pylint
+      run: pip install pylint numpy
+
+    - name: Analisar qualidade do código
+      run: |
+        cd projeto_ia_av3/src
+        pylint algorithms/*.py --disable=all --enable=syntax-error,undefined-variable
+        pylint utils/*.py --disable=all --enable=syntax-error,undefined-variable
+
+  deploy-to-colab:
+    name: Preparar para Google Colab
+    runs-on: ubuntu-latest
+    needs: [test-algorithms]
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v3
+
+    - name: Verificar notebook Colab
+      run: |
+        test -f projeto_ia_av3/notebooks/Projeto_IA_AV3_Colab.ipynb
+        echo "✓ Notebook Colab encontrado"
+
+    - name: Gerar badge de status
+      run: |
+        echo "[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mateusmacario/electrolyzer-simulator/blob/main/projeto_ia_av3/notebooks/Projeto_IA_AV3_Colab.ipynb)" > projeto_ia_av3/COLAB_LINK.md
+        cat projeto_ia_av3/COLAB_LINK.md
+
+    - name: Commit badge (se houver mudanças)
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "docs: atualizar link do Colab"
+        file_pattern: projeto_ia_av3/COLAB_LINK.md
+
+  notify-success:
+    name: Notificar Sucesso
+    runs-on: ubuntu-latest
+    needs: [test-algorithms, validate-code, deploy-to-colab]
+    if: success()
+
+    steps:
+    - name: Criar resumo do workflow
+      run: |
+        echo "## ✅ Pipeline Concluído com Sucesso!" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Etapas Executadas:" >> $GITHUB_STEP_SUMMARY
+        echo "- ✓ Testes dos algoritmos" >> $GITHUB_STEP_SUMMARY
+        echo "- ✓ Validação de código" >> $GITHUB_STEP_SUMMARY
+        echo "- ✓ Preparação para Colab" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Próximos Passos:" >> $GITHUB_STEP_SUMMARY
+        echo "1. Revisar resultados dos experimentos" >> $GITHUB_STEP_SUMMARY
+        echo "2. Testar notebook no Google Colab" >> $GITHUB_STEP_SUMMARY
+        echo "3. Preparar apresentação" >> $GITHUB_STEP_SUMMARY
