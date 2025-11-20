@@ -81,53 +81,53 @@ jobs:
           fi
 
       - name: Checkout repository
-        uses: actions/checkout@v4
         if: steps.check_secrets.outputs.ready == 'true'
+        uses: actions/checkout@v4
 
       - name: Setup pnpm
+        if: steps.check_secrets.outputs.ready == 'true'
         uses: pnpm/action-setup@v4
         with:
           version: 10.4.1
-        if: steps.check_secrets.outputs.ready == 'true'
 
       - name: Setup Node.js
+        if: steps.check_secrets.outputs.ready == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
           cache-dependency-path: codigo-fonte-web/pnpm-lock.yaml
-        if: steps.check_secrets.outputs.ready == 'true'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
         if: steps.check_secrets.outputs.ready == 'true'
+        run: pnpm install --frozen-lockfile
 
       - name: Pull Vercel environment info
+        if: steps.check_secrets.outputs.ready == 'true'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
         run: npx vercel pull --yes --environment=production --token $VERCEL_TOKEN
-        if: steps.check_secrets.outputs.ready == 'true'
 
       - name: Build Vercel artifact
+        if: steps.check_secrets.outputs.ready == 'true'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: npx vercel build --prod --token $VERCEL_TOKEN
-        if: steps.check_secrets.outputs.ready == 'true'
 
       - name: Deploy to Vercel
         id: deploy
+        if: steps.check_secrets.outputs.ready == 'true'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           url=$(npx vercel deploy --prod --prebuilt --token $VERCEL_TOKEN)
           echo "url=${url}" >> "$GITHUB_OUTPUT"
-        if: steps.check_secrets.outputs.ready == 'true'
 
       - name: Print deployment URL
-        run: echo "Production deployment: ${{ steps.deploy.outputs.url }}"
         if: steps.check_secrets.outputs.ready == 'true'
+        run: echo "Production deployment: ${{ steps.deploy.outputs.url }}"
 
       - name: Aviso ausência secrets
         if: steps.check_secrets.outputs.ready != 'true'
