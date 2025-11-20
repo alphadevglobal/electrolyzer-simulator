@@ -71,6 +71,7 @@ jobs:
     steps:
       - name: Verificar secrets do Vercel
         id: check_secrets
+        working-directory: .
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
