@@ -56,7 +56,6 @@ jobs:
           wait-on-timeout: 120
 
   deploy:
-    if: ${{ secrets.VERCEL_TOKEN != '' && secrets.VERCEL_PROJECT_ID != '' && secrets.VERCEL_ORG_ID != '' }}
     name: Deploy to Vercel
     needs: test
     runs-on: ubuntu-latest
@@ -67,13 +66,29 @@ jobs:
       name: production
 
     steps:
+      - name: Verificar secrets do Vercel
+        id: check_secrets
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ] || [ -z "$VERCEL_ORG_ID" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "Secrets do Vercel ausentes. Configure VERCEL_TOKEN, VERCEL_PROJECT_ID e VERCEL_ORG_ID para habilitar o deploy automático." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Checkout repository
         uses: actions/checkout@v4
+        if: steps.check_secrets.outputs.ready == 'true'
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10.4.1
+        if: steps.check_secrets.outputs.ready == 'true'
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -81,9 +96,11 @@ jobs:
           node-version: 20
           cache: 'pnpm'
           cache-dependency-path: codigo-fonte-web/pnpm-lock.yaml
+        if: steps.check_secrets.outputs.ready == 'true'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        if: steps.check_secrets.outputs.ready == 'true'
 
       - name: Pull Vercel environment info
         env:
@@ -91,11 +108,13 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
         run: npx vercel pull --yes --environment=production --token $VERCEL_TOKEN
+        if: steps.check_secrets.outputs.ready == 'true'
 
       - name: Build Vercel artifact
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: npx vercel build --prod --token $VERCEL_TOKEN
+        if: steps.check_secrets.outputs.ready == 'true'
 
       - name: Deploy to Vercel
         id: deploy
@@ -104,13 +123,12 @@ jobs:
         run: |
           url=$(npx vercel deploy --prod --prebuilt --token $VERCEL_TOKEN)
           echo "url=${url}" >> "$GITHUB_OUTPUT"
+        if: steps.check_secrets.outputs.ready == 'true'
 
       - name: Print deployment URL
         run: echo "Production deployment: ${{ steps.deploy.outputs.url }}"
+        if: steps.check_secrets.outputs.ready == 'true'
 
-  deploy_secrets_missing:
-    if: ${{ secrets.VERCEL_TOKEN == '' || secrets.VERCEL_PROJECT_ID == '' || secrets.VERCEL_ORG_ID == '' }}
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "Vercel secrets ausentes. Configure VERCEL_TOKEN, VERCEL_PROJECT_ID e VERCEL_ORG_ID para habilitar o deploy automático."
+      - name: Aviso ausência secrets
+        if: steps.check_secrets.outputs.ready != 'true'
+        run: echo "Deploy não executado por ausência de secrets do Vercel."
