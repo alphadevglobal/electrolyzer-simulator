@@ -11,6 +11,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { simulateElectrolyzer } from '../lib/calculations';
 import { Play, Pause, Square, AlertCircle, CheckCircle, BookOpen, ExternalLink } from 'lucide-react';
 import ElectrochemicalVisualization from './ElectrochemicalVisualization';
+import InteractiveElectrolyzerPhET from './InteractiveElectrolyzerPhET';
 
 const DynamicSimulation = () => {
   // Estados da simulação
@@ -533,6 +534,12 @@ const DynamicSimulation = () => {
               </TabsContent>
 
               <TabsContent value="quimica" className="space-y-4">
+                <Alert className="mb-4">
+                  <Info className="h-4 w-4" />
+                  <AlertDescription>
+                    <strong>Escolha a visualização:</strong> Visualização básica (abaixo) ou Simulação Interativa PhET (mais abaixo)
+                  </AlertDescription>
+                </Alert>
                 <ElectrochemicalVisualization />
               </TabsContent>
             </Tabs>
@@ -703,6 +710,23 @@ const DynamicSimulation = () => {
               Última atualização: Novembro 2025
             </p>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Seção de Visualização Interativa PhET */}
+      <Card className="border-t-4 border-purple-500">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-2xl">
+            <Activity className="w-6 h-6 text-purple-600" />
+            Simulação Interativa Estilo PhET Colorado
+          </CardTitle>
+          <p className="text-sm text-gray-600">
+            Visualização molecular totalmente interativa com drag & drop, zoom, controle de velocidade e múltiplas camadas.
+            Inspirada nas simulações educacionais do PhET Interactive Simulations da University of Colorado Boulder.
+          </p>
+        </CardHeader>
+        <CardContent>
+          <InteractiveElectrolyzerPhET />
         </CardContent>
       </Card>
     </div>
