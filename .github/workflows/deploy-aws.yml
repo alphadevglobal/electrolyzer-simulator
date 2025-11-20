@@ -12,56 +12,78 @@ on:
 jobs:
   deploy:
     name: Deploy to AWS Lambda
-    if: ${{ secrets.AWS_ACCESS_KEY_ID != '' && secrets.AWS_SECRET_ACCESS_KEY != '' }}
     runs-on: ubuntu-latest
 
     steps:
+    - name: Verificar secrets da AWS
+      id: check_aws_secrets
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        if [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
+          echo "ready=false" >> "$GITHUB_OUTPUT"
+          echo "AWS_ACCESS_KEY_ID e AWS_SECRET_ACCESS_KEY não foram configurados. Configure-os para habilitar o deploy." >> $GITHUB_STEP_SUMMARY
+        else
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+        fi
+
     - name: Checkout código
       uses: actions/checkout@v3
+      if: steps.check_aws_secrets.outputs.ready == 'true'
 
     - name: Setup Node.js
       uses: actions/setup-node@v3
+      if: steps.check_aws_secrets.outputs.ready == 'true'
       with:
         node-version: '18'
 
     - name: Setup Python
       uses: actions/setup-python@v4
+      if: steps.check_aws_secrets.outputs.ready == 'true'
       with:
         python-version: '3.10'
 
     - name: Configurar AWS Credentials
       uses: aws-actions/configure-aws-credentials@v2
+      if: steps.check_aws_secrets.outputs.ready == 'true'
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
     - name: Instalar Serverless Framework
+      if: steps.check_aws_secrets.outputs.ready == 'true'
       run: npm install -g serverless
 
     - name: Instalar dependências do projeto
+      if: steps.check_aws_secrets.outputs.ready == 'true'
       run: |
         cd projeto_ia_av3/deploy
         npm install
 
     - name: Deploy para AWS Lambda
+      if: steps.check_aws_secrets.outputs.ready == 'true'
       run: |
         cd projeto_ia_av3/deploy
         serverless deploy --stage prod --verbose
 
     - name: Obter URL da API
       id: get-url
+      if: steps.check_aws_secrets.outputs.ready == 'true'
       run: |
         cd projeto_ia_av3/deploy
         API_URL=$(serverless info --stage prod | grep "POST" | awk '{print $3}')
         echo "API_URL=$API_URL" >> $GITHUB_OUTPUT
 
     - name: Testar Health Check
+      if: steps.check_aws_secrets.outputs.ready == 'true'
       run: |
         sleep 10
         curl -f ${{ steps.get-url.outputs.API_URL }}/health || exit 1
 
     - name: Testar Endpoint de Predição
+      if: steps.check_aws_secrets.outputs.ready == 'true'
       run: |
         curl -X POST ${{ steps.get-url.outputs.API_URL }}/predict \
           -H "Content-Type: application/json" \
@@ -69,6 +91,7 @@ jobs:
           || exit 1
 
     - name: Criar resumo do deploy
+      if: steps.check_aws_secrets.outputs.ready == 'true'
       run: |
         echo "## Deploy Concluído" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
@@ -98,10 +121,6 @@ jobs:
         echo "Deploy falhou. Verifique os logs acima."
         exit 1
 
-  deploy_secrets_missing:
-    name: Aviso - AWS secrets ausentes
-    if: ${{ secrets.AWS_ACCESS_KEY_ID == '' || secrets.AWS_SECRET_ACCESS_KEY == '' }}
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "AWS_ACCESS_KEY_ID e AWS_SECRET_ACCESS_KEY não foram configurados como secrets. Configure-os para habilitar o deploy automático."
+    - name: Aviso ausência secrets
+      if: steps.check_aws_secrets.outputs.ready != 'true'
+      run: echo "Deploy não executado por ausência de secrets da AWS."

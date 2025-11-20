@@ -46,6 +46,9 @@ jobs:
       - name: Build app
         run: pnpm run build
 
+      - name: Install Cypress binary
+        run: pnpm exec cypress install
+
       - name: Run Cypress E2E tests
         uses: cypress-io/github-action@v6
         with:
