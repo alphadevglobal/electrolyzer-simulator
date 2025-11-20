@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import { simulateElectrolyzer, calculateHydrogenProduction, calculateEfficiency, calculateSpecificEnergyConsumption } from '../lib/calculations.js';
 
 // Testes unitários para validar os cálculos do simulador
@@ -261,4 +263,3 @@ export function runAllTests() {
 
   return testResults;
 }
-

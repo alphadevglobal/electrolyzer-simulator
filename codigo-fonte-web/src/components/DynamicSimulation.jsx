@@ -19,8 +19,8 @@ const DynamicSimulation = () => {
   const [baseTemperature, setBaseTemperature] = useState(80);
   const [baseCurrent, setBaseCurrent] = useState(2);
   const [basePressure, setBasePressure] = useState(30);
-  const [molality, setMolality] = useState(6.0);
-  const [area, setArea] = useState(100);
+  const molality = 6.0;
+  const area = 100;
 
   // Estados de controle
   const [isRunning, setIsRunning] = useState(false);
@@ -550,4 +550,3 @@ const DynamicSimulation = () => {
 };
 
 export default DynamicSimulation;
-

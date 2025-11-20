@@ -1,3 +1,5 @@
+/* eslint-env cypress */
+
 describe('Electrolyzer Simulator smoke test', () => {
   beforeEach(() => {
     cy.visit('/');

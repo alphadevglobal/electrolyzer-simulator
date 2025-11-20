@@ -174,9 +174,6 @@ export function calculateOverpotentials(electrolyzerType, currentDensity, temper
   // Equação (22): ηact,c (sobretensão de ativação do cátodo)
   const activationOverpotentialCathode = (2.3 * CONSTANTS.R * tempK) / (alpha_c * CONSTANTS.FARADAY) * Math.log(j / j0_c);
 
-  // Equação (30): σNi (condutividade do Níquel)
-  const sigmaNi = 6000000 - 279650 * tempK + 532 * Math.pow(tempK, 2) - 0.38057 * Math.pow(tempK, 3);
-
   // Assumindo valores para La, Lc, Sa, Sc para simplificação (necessário para cálculos reais)
   // Para este modelo, vamos usar valores de exemplo ou considerar que já estão incorporados em constantes
   // Por simplicidade, vamos usar valores fixos para as resistências dos eletrodos por enquanto
@@ -185,7 +182,7 @@ export function calculateOverpotentials(electrolyzerType, currentDensity, temper
 
   // Equação (33): σbf (condutividade do eletrólito sem bolhas)
   // Para esta função, precisamos da molalidade (m) do KOH. Usaremos um valor padrão por enquanto.
-  const m_koh = 6; // Molalidade padrão do KOH (mol/kg)
+  const m_koh = molality; // Molalidade do KOH (mol/kg)
   const sigma_bf = -204.1 * m_koh - 0.28 * Math.pow(m_koh, 2) + 0.5332 * (m_koh * tempK) + 20720 * m_koh / tempK + 0.1043 * Math.pow(m_koh, 3) - 0.00003 * (Math.pow(m_koh, 2) * Math.pow(tempK, 2));
 
   // Equação (32): Rele,bf (resistência do eletrólito sem bolhas)
@@ -301,7 +298,6 @@ export function simulateElectrolyzer(params) {
     electrolyzerType,
     temperature: temp,
     pressure: press,
-    concentration,
     currentDensity: cd,
     area: ar,
     voltage: volt,
@@ -455,4 +451,3 @@ export function calculateElectrolyzerPerformance(params) {
     cost: results.cost
   };
 }
-

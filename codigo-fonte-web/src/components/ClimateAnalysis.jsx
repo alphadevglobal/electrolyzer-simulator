@@ -27,8 +27,8 @@ const ClimateAnalysis = () => {
   const [selectedMonth, setSelectedMonth] = useState('annual');
   const [electrolyzerType, setElectrolyzerType] = useState('Alkaline');
   const [currentDensity, setCurrentDensity] = useState(1.5);
-  const [pressure, setPressure] = useState(1);
-  const [molality, setMolality] = useState(6.0);
+  const pressure = 1;
+  const molality = 6.0;
   const [area, setArea] = useState(100);
   const [analysisData, setAnalysisData] = useState([]);
   const [comparisonData, setComparisonData] = useState([]);
@@ -558,4 +558,3 @@ const ClimateAnalysis = () => {
 };
 
 export default ClimateAnalysis;
-

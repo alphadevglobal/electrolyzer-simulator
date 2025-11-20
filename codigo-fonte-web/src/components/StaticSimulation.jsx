@@ -108,7 +108,7 @@ const StaticSimulation = () => {
         setResults(simulationResults);
 
         // Calcular efeitos da temperatura
-        const tempEffects = calculateTemperatureEffects(parameters.temperature, electrolyzerType);
+        calculateTemperatureEffects(parameters.temperature, electrolyzerType);
         
         // Gerar dados do gráfico de temperatura
         const electrolyzerParams = ELECTROLYZER_PARAMS[electrolyzerType];
