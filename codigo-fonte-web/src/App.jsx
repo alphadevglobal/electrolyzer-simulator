@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Zap, Activity, HelpCircle, Palette, Download, Github, FileImage, Globe, Thermometer } from 'lucide-react';
+import { Zap, Activity, HelpCircle, Palette, Download, Github, FileImage, Globe, Thermometer, Briefcase } from 'lucide-react';
 
 import StaticSimulation from './components/StaticSimulation';
 import DynamicSimulation from './components/DynamicSimulation';
@@ -13,6 +13,7 @@ import HydrogenColors from './components/HydrogenColors';
 import ResearchGallery from './components/ResearchGallery';
 import ClimateAnalysis from './components/ClimateAnalysis';
 import TemperatureEffect from './components/TemperatureEffect';
+import BusinessModel from './components/BusinessModel';
 
 function App() {
   const [activeTab, setActiveTab] = useState('static');
@@ -68,7 +69,7 @@ function App() {
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <div className="overflow-x-auto">
-            <TabsList className="grid w-full grid-cols-7 lg:w-auto lg:grid-cols-7 min-w-max">
+            <TabsList className="grid w-full grid-cols-8 lg:w-auto lg:grid-cols-8 min-w-max">
               <TabsTrigger value="static" className="flex items-center gap-2 text-xs sm:text-sm">
                 <Zap className="h-4 w-4" />
                 <span className="hidden sm:inline">Simulação</span> Estática
@@ -96,6 +97,10 @@ function App() {
               <TabsTrigger value="hydrogen" className="flex items-center gap-2 text-xs sm:text-sm">
                 <Palette className="h-4 w-4" />
                 <span className="hidden sm:inline">H₂</span> Colorido
+              </TabsTrigger>
+              <TabsTrigger value="business" className="flex items-center gap-2 text-xs sm:text-sm">
+                <Briefcase className="h-4 w-4" />
+                Modelo de Negócio
               </TabsTrigger>
             </TabsList>
           </div>
@@ -126,6 +131,10 @@ function App() {
 
           <TabsContent value="hydrogen">
             <HydrogenColors />
+          </TabsContent>
+
+          <TabsContent value="business">
+            <BusinessModel />
           </TabsContent>
         </Tabs>
 
@@ -215,5 +224,4 @@ function App() {
 }
 
 export default App;
-
 

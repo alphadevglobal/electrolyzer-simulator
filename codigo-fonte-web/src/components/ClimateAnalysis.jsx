@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -175,7 +175,7 @@ const ClimateAnalysis = () => {
   };
 
   // Função para executar análise
-  const runAnalysis = () => {
+  const runAnalysis = useCallback(() => {
     const region = climateData[selectedRegion];
     
     if (selectedMonth === 'annual') {
@@ -220,10 +220,10 @@ const ClimateAnalysis = () => {
         }]);
       }
     }
-  };
+  }, [selectedRegion, selectedMonth, climateData, electrolyzerType, currentDensity, area, molality]);
 
   // Função para comparar regiões
-  const compareRegions = () => {
+  const compareRegions = useCallback(() => {
     const comparison = Object.keys(climateData).map(regionKey => {
       const region = climateData[regionKey];
       const performance = calculatePerformance(
@@ -245,13 +245,13 @@ const ClimateAnalysis = () => {
     });
     
     setComparisonData(comparison);
-  };
+  }, [climateData, electrolyzerType, currentDensity, area, molality]);
 
   // Executar análise inicial
   useEffect(() => {
     runAnalysis();
     compareRegions();
-  }, [selectedRegion, selectedMonth, electrolyzerType, currentDensity, pressure, molality, area]);
+  }, [runAnalysis, compareRegions]);
 
   // Função para exportar dados
   const exportData = () => {

@@ -390,3 +390,11 @@ Para gerar PDF:
 Você tem infraestrutura de nível empresarial, apresentação didática e roteiro de vídeo digno de TED Talk!
 
 **BOA SORTE NA APRESENTAÇÃO! VOCÊ VAI ARRASAR!** 
+
+---
+
+## Integração contínua com a aplicação web
+
+- O módulo de cálculos usado na AV3 foi portado para a camada React (`codigo-fonte-web/src/lib/calculations.js`) com ajustes físicos (eficiência, sobretensões e consumo) e cobertura de testes.
+- O frontend possui um painel de “Modelo de Negócio” e integrações AWS/Colab, permitindo demonstrar o impacto comercial da pesquisa.
+- Os pipelines do GitHub Actions (lint, testes unitários, Cypress e deploy) agora garantem que tanto o projeto acadêmico quanto a aplicação web compartilhem o mesmo nível de qualidade.

@@ -20,7 +20,8 @@ export const ELECTROLYZER_PARAMS = {
     minConsumption: 50,
     maxConsumption: 60,
     electrolyte: 'KOH',
-    electrodes: 'Níquel'
+    electrodes: 'Níquel',
+    asr: 0.00045
   },
   Alkaline: {
     name: 'Eletrolisador Alcalino',
@@ -33,7 +34,8 @@ export const ELECTROLYZER_PARAMS = {
     minConsumption: 50,
     maxConsumption: 60,
     electrolyte: 'KOH',
-    electrodes: 'Níquel'
+    electrodes: 'Níquel',
+    asr: 0.00045
   },
   Alcalino: {
     name: 'Eletrolisador Alcalino',
@@ -46,7 +48,8 @@ export const ELECTROLYZER_PARAMS = {
     minConsumption: 50,
     maxConsumption: 60,
     electrolyte: 'KOH',
-    electrodes: 'Níquel'
+    electrodes: 'Níquel',
+    asr: 0.00045
   },
   PEM: {
     name: 'Membrana de Troca de Prótons',
@@ -59,7 +62,8 @@ export const ELECTROLYZER_PARAMS = {
     minConsumption: 45,
     maxConsumption: 55,
     electrolyte: 'Nafion',
-    electrodes: 'Pt/Ir'
+    electrodes: 'Pt/Ir',
+    asr: 0.00025
   },
   SOEC: {
     name: 'Eletrolisador de Óxido Sólido',
@@ -72,7 +76,8 @@ export const ELECTROLYZER_PARAMS = {
     minConsumption: 35,
     maxConsumption: 45,
     electrolyte: 'YSZ',
-    electrodes: 'Cerâmicos'
+    electrodes: 'Cerâmicos',
+    asr: 0.00012
   }
 };
 
@@ -126,12 +131,12 @@ export function calculateEfficiency(voltage, current, hydrogenMass, time = 3600)
     return 0;
   }
   
-  const energyInput = (voltageNum * currentNum * time) / 3600000; // MWh
-  const energyOutput = (hydrogenMassNum * CONSTANTS.H2_HHV) / 3600; // MWh
-  
-  if (energyInput <= 0) return 0;
-  
-  return Math.min((energyOutput / energyInput) * 100, 100); // % (limitado a 100%)
+  const energyInputKWh = (voltageNum * currentNum * time) / 3600000; // kWh
+  const energyOutputKWh = hydrogenMassNum * (CONSTANTS.H2_HHV / 3.6); // kWh
+
+  if (energyInputKWh <= 0) return 0;
+
+  return Math.min((energyOutputKWh / energyInputKWh) * 100, 100); // % (limitado a 100%)
 }
 
 /**
@@ -145,9 +150,8 @@ export function calculateEfficiency(voltage, current, hydrogenMass, time = 3600)
 export function calculateOverpotentials(electrolyzerType, currentDensity, temperature, area, molality = 6) {
   const tempK = parseFloat(temperature) + 273.15; // Convertendo para Kelvin
   const j = parseFloat(currentDensity) * 10000; // Convertendo A/cm² para A/m²
-  const S = parseFloat(area) / 10000; // Convertendo cm² para m²
 
-  if (isNaN(tempK) || isNaN(j) || isNaN(S) || j <= 0 || S <= 0) {
+  if (isNaN(tempK) || isNaN(j) || j <= 0) {
     return {
       activation: 0,
       ohmic: 0,
@@ -174,56 +178,26 @@ export function calculateOverpotentials(electrolyzerType, currentDensity, temper
   // Equação (22): ηact,c (sobretensão de ativação do cátodo)
   const activationOverpotentialCathode = (2.3 * CONSTANTS.R * tempK) / (alpha_c * CONSTANTS.FARADAY) * Math.log(j / j0_c);
 
-  // Assumindo valores para La, Lc, Sa, Sc para simplificação (necessário para cálculos reais)
-  // Para este modelo, vamos usar valores de exemplo ou considerar que já estão incorporados em constantes
-  // Por simplicidade, vamos usar valores fixos para as resistências dos eletrodos por enquanto
-  const Ra = 0.0001; // Exemplo
-  const Rc = 0.0001; // Exemplo
+  // Sobretensão ôhmica simplificada com ASR (ohm*m²)
+  const params = ELECTROLYZER_PARAMS[electrolyzerType] || {};
+  const areaSpecificResistance = params.asr ?? 0.0003;
+  const molalityFactor = 1 - Math.min(Math.max((molality - 6) * 0.01, -0.15), 0.15);
+  const ohmicOverpotential = j * areaSpecificResistance * molalityFactor;
 
-  // Equação (33): σbf (condutividade do eletrólito sem bolhas)
-  // Para esta função, precisamos da molalidade (m) do KOH. Usaremos um valor padrão por enquanto.
-  const m_koh = molality; // Molalidade do KOH (mol/kg)
-  const sigma_bf = -204.1 * m_koh - 0.28 * Math.pow(m_koh, 2) + 0.5332 * (m_koh * tempK) + 20720 * m_koh / tempK + 0.1043 * Math.pow(m_koh, 3) - 0.00003 * (Math.pow(m_koh, 2) * Math.pow(tempK, 2));
+  // Sobretensão de concentração aproximada
+  const jLimit = Math.max(1, (params.maxCurrentDensity || 2) * 10000 * 1.2);
+  const currentRatio = Math.min(j / jLimit, 0.95);
+  const concentrationOverpotential = (CONSTANTS.R * tempK) / (2 * CONSTANTS.FARADAY) * Math.log(1 / (1 - currentRatio));
 
-  // Equação (32): Rele,bf (resistência do eletrólito sem bolhas)
-  // Assumindo valores para da,m, dc,m, Sa, Sc para simplificação
-  const da_m = 0.001; // Exemplo em cm
-  const dc_m = 0.001; // Exemplo em cm
-  const Sa_cm2 = area; // Usando a área de entrada como área do eletrodo em cm2
-  const Sc_cm2 = area; // Usando a área de entrada como área do eletrodo em cm2
-
-  const Rele_bf = (1 / (sigma_bf / 100)) * ((da_m / Sa_cm2) + (dc_m / Sc_cm2)); // Convertendo S/m para S/cm e cm para m
-
-  // Equação (35): ε (coeficiente de bolhas)
-  // Assumindo Seff/S = 0.9 (90% da superfície efetiva)
-  const epsilon = 1 - 0.9; // Exemplo
-
-  // Equação (34): Rele,b (resistência devido às bolhas)
-  const Rele_b = Rele_bf * (1 / Math.pow((1 - epsilon), 1.5) - 1);
-
-  // Equação (31): Rele (resistência total do eletrólito)
-  const Rele = Rele_bf + Rele_b;
-
-  // Equação (36): Rmem (resistência da membrana)
-  // Assumindo Smem = area (cm2)
-  const Smem_cm2 = area;
-  const Rmem = (0.060 + 80 * Math.exp(tempK / 50)) / (10000 * Smem_cm2);
-
-  // Equação (27): Rtotal (resistência ôhmica total)
-  const Rtotal = Ra + Rc + Rele + Rmem;
-
-  // Sobretensão ôhmica total (V)
-  const ohmicOverpotential = Rtotal * (j * S); // j*S é a corrente total em A
-
-  // Sobretensão de concentração (mantida a simplificação anterior por falta de dados mais detalhados no artigo)
-  const concentrationOverpotential = j * 50 * Math.exp(j / (ELECTROLYZER_PARAMS[electrolyzerType].maxCurrentDensity * 10000)); // Convertendo para A/m²
+  const activation = Math.max(0, activationOverpotentialAnode + activationOverpotentialCathode);
 
   return {
     activationAnode: Math.max(0, activationOverpotentialAnode),
     activationCathode: Math.max(0, activationOverpotentialCathode),
+    activation,
     ohmic: Math.max(0, ohmicOverpotential),
     concentration: Math.max(0, concentrationOverpotential),
-    total: (activationOverpotentialAnode + activationOverpotentialCathode + ohmicOverpotential + concentrationOverpotential)
+    total: activation + Math.max(0, ohmicOverpotential) + Math.max(0, concentrationOverpotential)
   };
 }
 /**
@@ -325,10 +299,12 @@ export function simulateElectrolyzer(params) {
   // Cálculos principais
   const totalCurrent = parseFloat(currentDensity) * parseFloat(area);
   const production = calculateHydrogenProduction(currentDensity, area);
-  const efficiency = calculateEfficiency(voltage, totalCurrent, production.totalMass);
   const overpotentials = calculateOverpotentials(electrolyzerType, currentDensity, temperature, area, molality);
-  const specificConsumption = calculateSpecificEnergyConsumption(voltage, totalCurrent, production.totalMass);
   const theoreticalVoltage = calculateTheoreticalVoltage(temperature, pressure, molality);
+  const computedVoltage = theoreticalVoltage + overpotentials.total;
+  const actualVoltage = Math.max(computedVoltage, voltage);
+  const efficiency = calculateEfficiency(actualVoltage, totalCurrent, production.totalMass);
+  const specificConsumption = calculateSpecificEnergyConsumption(actualVoltage, totalCurrent, production.totalMass);
   
   // Custo estimado (baseado em tarifa elétrica brasileira média: R$ 0,65/kWh)
   const electricityCost = 0.65; // R$/kWh
@@ -343,21 +319,22 @@ export function simulateElectrolyzer(params) {
     },
     efficiency: {
       value: efficiency,
-      theoretical: (theoreticalVoltage / voltage) * 100
+      theoretical: (theoreticalVoltage / actualVoltage) * 100
     },
     overpotentials: {
       activationAnode: overpotentials.activationAnode,
       activationCathode: overpotentials.activationCathode,
-      activation: (overpotentials.activationAnode + overpotentials.activationCathode),
+      activation: overpotentials.activation,
       ohmic: overpotentials.ohmic,
       concentration: overpotentials.concentration,
       total: overpotentials.total
     },
     energy: {
       specificConsumption: specificConsumption,
-      totalConsumption: (voltage * totalCurrent) / 1000, // kW
+      totalConsumption: (actualVoltage * totalCurrent) / 1000, // kW
       theoreticalVoltage: theoreticalVoltage,
-      actualVoltage: voltage
+      actualVoltage,
+      inputVoltage: voltage
     },
     economics: {
       costPerKg: costPerKg,
@@ -365,7 +342,7 @@ export function simulateElectrolyzer(params) {
     },
     parameters: {
       totalCurrent: totalCurrent,
-      powerDensity: (voltage * currentDensity) / 1000, // kW/cm²
+      powerDensity: (actualVoltage * currentDensity) / 1000, // kW/cm²
       currentEfficiency: (production.totalMoles * 2 * CONSTANTS.FARADAY) / (totalCurrent * 3600) * 100 // %
     }
   };

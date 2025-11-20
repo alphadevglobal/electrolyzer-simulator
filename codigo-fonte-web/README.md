@@ -11,6 +11,7 @@ Este é um simulador avançado de eletrolisadores desenvolvido como parte de uma
 - Fornecer uma ferramenta educacional e de pesquisa
 - Integrar modelos físicos com Machine Learning (modelo híbrido)
 - Facilitar a exportação de dados para análise avançada
+- Apresentar um modelo de monetização para parceiros industriais e OEMs
 
 ##  Funcionalidades
 
@@ -87,6 +88,9 @@ pnpm run preview
 ```bash
 # Lint
 pnpm run lint
+
+# Testes unitários com Vitest
+pnpm run test:unit
 
 # Testes E2E com Cypress (executa servidor + testes)
 pnpm run test:e2e

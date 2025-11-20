@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -37,7 +37,7 @@ const TemperatureEffect = () => {
   const [energySavings, setEnergySavings] = useState(0);
 
   // Função para executar análise de temperatura
-  const runTemperatureAnalysis = () => {
+  const runTemperatureAnalysis = useCallback(() => {
     const data = [];
     let maxEfficiency = 0;
     let minConsumption = Infinity;
@@ -104,12 +104,12 @@ const TemperatureEffect = () => {
         setEnergySavings(energySave);
       }
     }
-  };
+  }, [electrolyzerType, pressure, currentDensity, voltage, concentration, minTemp, maxTemp, tempStep]);
 
   // Executar análise inicial
   useEffect(() => {
     runTemperatureAnalysis();
-  }, [electrolyzerType, pressure, currentDensity, voltage, concentration, minTemp, maxTemp, tempStep]);
+  }, [runTemperatureAnalysis]);
 
   // Função para exportar dados
   const exportData = () => {
@@ -513,4 +513,3 @@ const TemperatureEffect = () => {
 };
 
 export default TemperatureEffect;
-
