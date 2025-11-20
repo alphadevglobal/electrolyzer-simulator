@@ -1,0 +1,89 @@
+service: projeto-ia-av3-api
+
+provider:
+  name: aws
+  runtime: python3.10
+  stage: ${opt:stage, 'dev'}
+  region: us-east-1
+  memorySize: 512
+  timeout: 30
+
+  # IAM Role
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:GetObject
+            - s3:PutObject
+          Resource: "arn:aws:s3:::${self:custom.bucketName}/*"
+
+        - Effect: Allow
+          Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+          Resource: "*"
+
+  # Environment variables
+  environment:
+    STAGE: ${self:provider.stage}
+    MODEL_BUCKET: ${self:custom.bucketName}
+
+  # API Gateway CORS
+  apiGateway:
+    shouldStartNameWithService: true
+
+custom:
+  bucketName: projeto-ia-av3-models-${self:provider.stage}
+  pythonRequirements:
+    dockerizePip: false
+    slim: true
+    layer: true
+
+functions:
+  # Função principal de predição
+  predict:
+    handler: aws_lambda_deploy.lambda_handler
+    events:
+      - http:
+          path: /predict
+          method: post
+          cors: true
+    layers:
+      - {Ref: PythonRequirementsLambdaLayer}
+
+  # Health check
+  health:
+    handler: aws_lambda_deploy.health_check
+    events:
+      - http:
+          path: /health
+          method: get
+          cors: true
+
+# Recursos adicionais
+resources:
+  Resources:
+    # S3 Bucket para modelos
+    ModelsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.bucketName}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+
+plugins:
+  - serverless-python-requirements
+  - serverless-offline
+
+package:
+  exclude:
+    - node_modules/**
+    - venv/**
+    - .git/**
+    - __pycache__/**
+    - "*.pyc"

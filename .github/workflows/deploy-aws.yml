@@ -1,0 +1,98 @@
+name: Deploy AWS Lambda
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'projeto_ia_av3/deploy/**'
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    name: Deploy to AWS Lambda
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Configurar AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Instalar Serverless Framework
+      run: npm install -g serverless
+
+    - name: Instalar dependências do projeto
+      run: |
+        cd projeto_ia_av3/deploy
+        npm install
+
+    - name: Deploy para AWS Lambda
+      run: |
+        cd projeto_ia_av3/deploy
+        serverless deploy --stage prod --verbose
+
+    - name: Obter URL da API
+      id: get-url
+      run: |
+        cd projeto_ia_av3/deploy
+        API_URL=$(serverless info --stage prod | grep "POST" | awk '{print $3}')
+        echo "API_URL=$API_URL" >> $GITHUB_OUTPUT
+
+    - name: Testar Health Check
+      run: |
+        sleep 10
+        curl -f ${{ steps.get-url.outputs.API_URL }}/health || exit 1
+
+    - name: Testar Endpoint de Predição
+      run: |
+        curl -X POST ${{ steps.get-url.outputs.API_URL }}/predict \
+          -H "Content-Type: application/json" \
+          -d '{"features": [0.5, 0.3, 0.8, 0.2, 0.6, 0.4, 0.7, 0.1, 0.9, 0.5, 0.3, 0.8, 0.2, 0.6, 0.4, 0.7, 0.1, 0.9, 0.5, 0.3, 0.8, 0.2, 0.6, 0.4, 0.7, 0.1, 0.9, 0.5], "model": "mlp"}' \
+          || exit 1
+
+    - name: Criar resumo do deploy
+      run: |
+        echo "## 🚀 Deploy Concluído!" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### API URL" >> $GITHUB_STEP_SUMMARY
+        echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        echo "${{ steps.get-url.outputs.API_URL }}" >> $GITHUB_STEP_SUMMARY
+        echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Endpoints Disponíveis" >> $GITHUB_STEP_SUMMARY
+        echo "- 🏥 Health: \`GET /health\`" >> $GITHUB_STEP_SUMMARY
+        echo "- 🤖 Predict: \`POST /predict\`" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Próximos Passos" >> $GITHUB_STEP_SUMMARY
+        echo "1. Atualizar URL no frontend React" >> $GITHUB_STEP_SUMMARY
+        echo "2. Fazer upload dos modelos treinados para S3" >> $GITHUB_STEP_SUMMARY
+        echo "3. Configurar monitoramento no CloudWatch" >> $GITHUB_STEP_SUMMARY
+
+    - name: Notificar sucesso
+      if: success()
+      run: |
+        echo "✅ Deploy para AWS Lambda concluído com sucesso!"
+        echo "🌐 API URL: ${{ steps.get-url.outputs.API_URL }}"
+
+    - name: Notificar falha
+      if: failure()
+      run: |
+        echo "❌ Deploy falhou! Verifique os logs acima."
+        exit 1
