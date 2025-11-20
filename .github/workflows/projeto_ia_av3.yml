@@ -47,7 +47,7 @@ jobs:
         test -f results/summary.txt && echo "✓ Summary gerado"
 
     - name: Upload resultados como artefato
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: resultados-experimentos
         path: projeto_ia_av3/results/
