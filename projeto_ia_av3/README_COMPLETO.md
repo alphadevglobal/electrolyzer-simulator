@@ -31,10 +31,10 @@ Implementar e avaliar diferentes algoritmos de aprendizado de máquina **100% ma
 
 ### Justificativa da Escolha
 
-✅ **Requisito 1:** Mais de 10 atributos (28 features)
-✅ **Requisito 2:** Mais de 1000 instâncias (19,735 amostras)
-✅ **Alinhamento:** Conecta com pesquisa em eficiência energética
-✅ **Relevância:** Dados reais de consumo residencial
+**Requisito 1:** Mais de 10 atributos (28 features)
+**Requisito 2:** Mais de 1000 instâncias (19,735 amostras)
+**Alinhamento:** Conecta com pesquisa em eficiência energética
+**Relevância:** Dados reais de consumo residencial
 
 ---
 
@@ -43,27 +43,27 @@ Implementar e avaliar diferentes algoritmos de aprendizado de máquina **100% ma
 Todos os algoritmos foram implementados **do ZERO** sem uso de bibliotecas de ML:
 
 ### 1. K-Nearest Neighbors (KNN)
-- ✅ Distância Euclidiana
-- ✅ Distância Manhattan
+- Distância Euclidiana
+- Distância Manhattan
 - Implementação: `src/algorithms/knn.py`
 
 ### 2. Perceptron
-- ✅ Treinamento por múltiplas épocas
-- ✅ Taxa de aprendizado configurável
-- ✅ Estratégia One-vs-Rest para multiclasse
+- Treinamento por múltiplas épocas
+- Taxa de aprendizado configurável
+- Estratégia One-vs-Rest para multiclasse
 - Implementação: `src/algorithms/perceptron.py`
 
 ### 3. Multi-Layer Perceptron (MLP)
-- ✅ Arquitetura customizável
-- ✅ **Backpropagation manual**
-- ✅ Mini-batch Gradient Descent
-- ✅ Funções de ativação: ReLU, Sigmoid, Tanh
+- Arquitetura customizável
+- **Backpropagation manual**
+- Mini-batch Gradient Descent
+- Funções de ativação: ReLU, Sigmoid, Tanh
 - Implementação: `src/algorithms/mlp.py`
 
 ### 4. Naive Bayes
-- ✅ Versão Univariada
-- ✅ Versão Multivariada (Gaussiana)
-- ✅ PDF implementada manualmente
+- Versão Univariada
+- Versão Multivariada (Gaussiana)
+- PDF implementada manualmente
 - Implementação: `src/algorithms/naive_bayes.py`
 
 ---
@@ -193,15 +193,15 @@ matplotlib>=3.4.0
 
 ### Requisitos do Projeto (TODOS ATENDIDOS ✅)
 
-- ✅ **SEM pandas** - Carregamento manual com csv
-- ✅ **SEM scikit-learn** - Todos os algoritmos implementados do zero
-- ✅ Dataset com >10 atributos (28 features)
-- ✅ Dataset com >1000 instâncias (5000+ amostras)
-- ✅ 4 algoritmos de classificação
-- ✅ Validação cruzada manual (K-Fold)
-- ✅ Métricas implementadas manualmente
-- ✅ Código fonte entregue
-- ✅ Slides de apresentação
+- **SEM pandas** - Carregamento manual com csv
+- **SEM scikit-learn** - Todos os algoritmos implementados do zero
+- Dataset com >10 atributos (28 features)
+- Dataset com >1000 instâncias (5000+ amostras)
+- 4 algoritmos de classificação
+- Validação cruzada manual (K-Fold)
+- Métricas implementadas manualmente
+- Código fonte entregue
+- Slides de apresentação
 
 ---
 
@@ -230,16 +230,16 @@ matplotlib>=3.4.0
 ##  Contexto Acadêmico vs Pesquisa
 
 ### Projeto AV3 (Este Projeto)
-- ✅ Implementação 100% manual
-- ✅ Código educacional
-- ✅ Foco em fundamentos teóricos
-- ❌ **NÃO** usar bibliotecas de ML
+- Implementação 100% manual
+- Código educacional
+- Foco em fundamentos teóricos
+- **NÃO** usar bibliotecas de ML
 -  Isolado em `projeto_ia_av3/`
 
 ### Iniciação Científica (Separado)
-- ✅ Pode usar bibliotecas modernas
-- ✅ Foco em produção
-- ✅ Resultados práticos
+- Pode usar bibliotecas modernas
+- Foco em produção
+- Resultados práticos
 -  Código em `jupyter/` e `codigo-fonte-web/`
 
 **Ambos os contextos estão SEPARADOS e não se impactam!**
@@ -278,7 +278,7 @@ Opções disponíveis:
 
 ---
 
-## ✅ Checklist de Entrega
+## Checklist de Entrega
 
 - [x] Dataset com >10 atributos
 - [x] Dataset com >1000 instâncias
@@ -303,9 +303,9 @@ Opções disponíveis:
 ##  Próximos Passos
 
 ### Para a Apresentação (26/11/2025)
-1. ✅ Revisar slides em `slides/APRESENTACAO_AV3.md`
-2. ✅ Testar demonstração no Colab
-3. ✅ Preparar resposta para perguntas
+1. Revisar slides em `slides/APRESENTACAO_AV3.md`
+2. Testar demonstração no Colab
+3. Preparar resposta para perguntas
 
 ### Melhorias Futuras (Pós-apresentação)
 1. Baixar dataset real completo (19,735 amostras)
@@ -350,7 +350,7 @@ Este projeto foi desenvolvido para fins **acadêmicos** como parte da disciplina
 
 Para dúvidas ou colaborações:
 
-- **Email:** [seu-email@unifor.br]
+- **Email:** [mateusmacario@unifor.br]
 - **GitHub Issues:** [Abrir Issue](https://github.com/mateusmacario/electrolyzer-simulator/issues)
 - **LinkedIn:** [Seu LinkedIn]
 

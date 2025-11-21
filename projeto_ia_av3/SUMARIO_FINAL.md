@@ -1,6 +1,6 @@
 #  SUMÁRIO FINAL - PROJETO IA AV3
 
-## ✅ PROJETO CONCLUÍDO COM SUCESSO!
+## PROJETO CONCLUÍDO COM SUCESSO!
 
 ---
 
@@ -9,26 +9,26 @@
 ###  Algoritmos de Machine Learning (100% Manual)
 
 1. **K-Nearest Neighbors (KNN)**
-   - ✅ Distância Euclidiana: 80.04% acurácia
-   - ✅ Distância Manhattan: 80.88% acurácia
+   - Distância Euclidiana: 80.04% acurácia
+   - Distância Manhattan: 80.88% acurácia
    -  Arquivo: `src/algorithms/knn.py`
 
 2. **Perceptron**
-   - ✅ Multi-classe (One-vs-Rest)
-   - ✅ 50 épocas de treinamento
-   - ✅ Acurácia: 77.08%
+   - Multi-classe (One-vs-Rest)
+   - 50 épocas de treinamento
+   - Acurácia: 77.08%
    -  Arquivo: `src/algorithms/perceptron.py`
 
 3. **Multi-Layer Perceptron (MLP)** 
-   - ✅ Backpropagation implementado manualmente
-   - ✅ Arquitetura: 28 → 32 → 16 → 2
-   - ✅ **MELHOR RESULTADO: 92.52% acurácia**
+   - Backpropagation implementado manualmente
+   - Arquitetura: 28 → 32 → 16 → 2
+   - **MELHOR RESULTADO: 92.52% acurácia**
    -  Arquivo: `src/algorithms/mlp.py`
 
 4. **Naive Bayes**
-   - ✅ Versão Univariada: 90.90% acurácia
-   - ✅ Versão Multivariada: 91.62% acurácia
-   - ✅ **Melhor trade-off desempenho/tempo**
+   - Versão Univariada: 90.90% acurácia
+   - Versão Multivariada: 91.62% acurácia
+   - **Melhor trade-off desempenho/tempo**
    -  Arquivo: `src/algorithms/naive_bayes.py`
 
 ---
@@ -128,18 +128,18 @@ projeto_ia_av3/
 
 ### GitHub Actions
 
-✅ **Pipeline Criado:** `.github/workflows/projeto_ia_av3.yml`
+**Pipeline Criado:** `.github/workflows/projeto_ia_av3.yml`
 
 Etapas:
-1. ✅ Testar algoritmos automaticamente
-2. ✅ Validar qualidade do código
-3. ✅ Preparar para Google Colab
-4. ✅ Gerar artefatos de resultados
-5. ✅ Notificar sucesso
+1. Testar algoritmos automaticamente
+2. Validar qualidade do código
+3. Preparar para Google Colab
+4. Gerar artefatos de resultados
+5. Notificar sucesso
 
 ### Google Colab
 
-✅ **Notebook Completo:** `notebooks/Projeto_IA_AV3_Colab.ipynb`
+**Notebook Completo:** `notebooks/Projeto_IA_AV3_Colab.ipynb`
 
 Features:
 - Clone automático do repositório
@@ -150,7 +150,7 @@ Features:
 
 ### Integração Web ↔ Colab
 
-✅ **Guia Completo:** `INTEGRACAO_WEB_COLAB.md`
+**Guia Completo:** `INTEGRACAO_WEB_COLAB.md`
 
 Opções implementadas:
 1. **Flask API + ngrok**
@@ -160,23 +160,23 @@ Opções implementadas:
 
 ---
 
-## ✅ REQUISITOS DO PROJETO (TODOS ATENDIDOS)
+## REQUISITOS DO PROJETO (TODOS ATENDIDOS)
 
 ### Requisitos Obrigatórios
 
-- [x] **Dataset >10 atributos** → 28 features ✅
-- [x] **Dataset >1000 instâncias** → 5000 samples ✅
-- [x] **KNN implementado** → Euclidiana e Manhattan ✅
-- [x] **Perceptron implementado** → Multiclasse ✅
-- [x] **MLP implementado** → Backpropagation manual ✅
-- [x] **Naive Bayes implementado** → Uni e Multivariado ✅
-- [x] **Validação cruzada manual** → K-Fold estratificado ✅
-- [x] **Métricas implementadas** → Accuracy e F1-Score ✅
-- [x] **SEM pandas** → CSV manual ✅
-- [x] **SEM scikit-learn** → Tudo do zero ✅
-- [x] **Código fonte entregue** → Completo e documentado ✅
-- [x] **Slides de apresentação** → 30+ slides ✅
-- [x] **Tabela de resultados** → Completa com médias ± desvio ✅
+- [x] **Dataset >10 atributos** → 28 features
+- [x] **Dataset >1000 instâncias** → 5000 samples
+- [x] **KNN implementado** → Euclidiana e Manhattan
+- [x] **Perceptron implementado** → Multiclasse
+- [x] **MLP implementado** → Backpropagation manual
+- [x] **Naive Bayes implementado** → Uni e Multivariado
+- [x] **Validação cruzada manual** → K-Fold estratificado
+- [x] **Métricas implementadas** → Accuracy e F1-Score
+- [x] **SEM pandas** → CSV manual
+- [x] **SEM scikit-learn** → Tudo do zero
+- [x] **Código fonte entregue** → Completo e documentado
+- [x] **Slides de apresentação** → 30+ slides
+- [x] **Tabela de resultados** → Completa com médias ± desvio
 
 ### Extras Implementados (Além do Requisito)
 
@@ -192,7 +192,7 @@ Opções implementadas:
 
 ##  CRONOGRAMA
 
-### ✅ Concluído em 1 DIA! (20/11/2025)
+### Concluído em 1 DIA! (20/11/2025)
 
 - [x] Setup e estrutura do projeto
 - [x] Implementação dos 4 algoritmos
@@ -208,13 +208,13 @@ Opções implementadas:
 ###  Próximos Passos
 
 **Até 25/11/2025:**
-1. ✅ Revisar slides para apresentação
-2. ✅ Testar notebook no Colab
+1. Revisar slides para apresentação
+2. Testar notebook no Colab
 3. ⏳ Baixar dataset real (19,735 amostras) - OPCIONAL
 4. ⏳ Rodar experimentos com dataset completo - OPCIONAL
 
 **26/11/2025:**
-1. ✅ APRESENTAÇÃO PRONTA!
+1. APRESENTAÇÃO PRONTA!
 
 ---
 
@@ -266,19 +266,19 @@ Já configurado! Push para `main` executa automaticamente.
 
 ##  CONTEXTO DUAL (IC + Acadêmico)
 
-### ✅ SEPARAÇÃO MANTIDA
+### SEPARAÇÃO MANTIDA
 
 #### Projeto Acadêmico (AV3) - `projeto_ia_av3/`
-- ✅ Implementação 100% manual
-- ✅ SEM pandas, SEM scikit-learn
-- ✅ Código educacional
-- ✅ Isolado do resto do repositório
+- Implementação 100% manual
+- SEM pandas, SEM scikit-learn
+- Código educacional
+- Isolado do resto do repositório
 
 #### Iniciação Científica - `jupyter/` e `codigo-fonte-web/`
-- ✅ Mantém código original
-- ✅ Pode usar bibliotecas modernas
-- ✅ Não afetado pelo AV3
-- ✅ Continua independente
+- Mantém código original
+- Pode usar bibliotecas modernas
+- Não afetado pelo AV3
+- Continua independente
 
 **Ambos convivem harmoniosamente no mesmo repositório!**
 
@@ -334,7 +334,7 @@ Já configurado! Push para `main` executa automaticamente.
 
 ##  CONCLUSÃO
 
-### ✅ PROJETO 100% CONCLUÍDO E PRONTO PARA APRESENTAÇÃO!
+### PROJETO 100% CONCLUÍDO E PRONTO PARA APRESENTAÇÃO!
 
 **Destaques:**
 -  Todos os requisitos atendidos
@@ -352,11 +352,11 @@ Já configurado! Push para `main` executa automaticamente.
 Obrigado pela confiança, Mateus!
 
 Foi incrível trabalhar neste projeto e criar algo tão completo e profissional. Juntos criamos:
-- ✅ Código de qualidade acadêmica
-- ✅ Infraestrutura moderna (CI/CD)
-- ✅ Integração com ecossistema (Colab)
-- ✅ Documentação exemplar
-- ✅ Resultados impressionantes
+- Código de qualidade acadêmica
+- Infraestrutura moderna (CI/CD)
+- Integração com ecossistema (Colab)
+- Documentação exemplar
+- Resultados impressionantes
 
 **Vamos revolucionar o mundo juntos! **
 

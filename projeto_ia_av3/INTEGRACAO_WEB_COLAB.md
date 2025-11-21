@@ -437,16 +437,16 @@ export function IAStatus() {
 ##  Separação de Contextos
 
 ### Projeto AV3 (Faculdade)
-- ✅ Mantém implementação isolada em `projeto_ia_av3/`
-- ✅ Código 100% manual
-- ✅ Foco em avaliação acadêmica
-- ❌ **NÃO** misturar com iniciação científica
+- Mantém implementação isolada em `projeto_ia_av3/`
+- Código 100% manual
+- Foco em avaliação acadêmica
+- **NÃO** misturar com iniciação científica
 
 ### Iniciação Científica (Pesquisa)
-- ✅ Mantém código em `jupyter/` e `codigo-fonte-web/`
-- ✅ Pode usar bibliotecas modernas
-- ✅ Foco em produção e resultados reais
-- ❌ **NÃO** afetar requisitos da AV3
+- Mantém código em `jupyter/` e `codigo-fonte-web/`
+- Pode usar bibliotecas modernas
+- Foco em produção e resultados reais
+- **NÃO** afetar requisitos da AV3
 
 ### Integração Futura
 ```

@@ -171,14 +171,71 @@ class Particle {
       ctx.restore();
     }
 
-    isPointInside(px, py, zoom, pan) {
-      const x = (this.x + pan.x) * zoom;
-      const y = (this.y + pan.y) * zoom;
-      const radius = this.radius * zoom;
-      const dist = Math.sqrt((px - x) ** 2 + (py - y) ** 2);
-      return dist <= radius + 5;
-    }
+  isPointInside(px, py, zoom, pan) {
+    const x = (this.x + pan.x) * zoom;
+    const y = (this.y + pan.y) * zoom;
+    const radius = this.radius * zoom;
+    const dist = Math.sqrt((px - x) ** 2 + (py - y) ** 2);
+    return dist <= radius + 5;
   }
+}
+
+/**
+ * Componente principal de visualização interativa
+ */
+const InteractiveElectrolyzerPhET = () => {
+  // Estados de controle da simulação
+  const [isRunning, setIsRunning] = useState(false);
+  const [animationSpeed, setAnimationSpeed] = useState(1.0);
+  const [zoom, setZoom] = useState(1.0);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [time, setTime] = useState(0);
+
+  // Parâmetros físicos interativos
+  const [voltage, setVoltage] = useState(2.0);
+  const [current, setCurrent] = useState(10);
+  const [temperature, setTemperature] = useState(80);
+  const [pressure, setPressure] = useState(30);
+  const [kOHConcentration, setKOHConcentration] = useState(30);
+
+  // Camadas de visualização (toggle on/off)
+  const [showMolecules, setShowMolecules] = useState(true);
+  const [showElectrons, setShowElectrons] = useState(true);
+  const [showBubbles, setShowBubbles] = useState(true);
+  const [showElectricField, setShowElectricField] = useState(false);
+  const [showTemperatureGradient, setShowTemperatureGradient] = useState(false);
+  const [showMeasurements, setShowMeasurements] = useState(true);
+
+  // Estados de partículas e elementos
+  const [waterMolecules, setWaterMolecules] = useState([]);
+  const [hydroxideIons, setHydroxideIons] = useState([]);
+  const [hydrogenBubbles, setHydrogenBubbles] = useState([]);
+  const [oxygenBubbles, setOxygenBubbles] = useState([]);
+  const [electrons, setElectrons] = useState([]);
+
+  // Estados de drag & drop
+  const [isDragging, setIsDragging] = useState(false);
+  const [draggedElement, setDraggedElement] = useState(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  // Estados calculados em tempo real
+  const [hydrogenProduction, setHydrogenProduction] = useState(0);
+  const [oxygenProduction, setOxygenProduction] = useState(0);
+  const [efficiency, setEfficiency] = useState(0);
+  const [power, setPower] = useState(0);
+  const [heatGenerated, setHeatGenerated] = useState(0);
+
+  // Referências
+  const canvasRef = useRef(null);
+  const animationFrameRef = useRef(null);
+  const containerRef = useRef(null);
+
+  // Dimensões dos eletrodos
+  const CATHODE_X = 150;
+  const ANODE_X = 650;
+  const ELECTRODE_WIDTH = 30;
+  const ELECTRODE_HEIGHT = 400;
+  const ELECTRODE_Y = 100;
 
   // Inicialização de partículas
   useEffect(() => {
