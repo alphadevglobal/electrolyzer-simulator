@@ -22,146 +22,82 @@ import {
   EyeOff
 } from 'lucide-react';
 
+// Dimensões do canvas (constantes globais)
+const CANVAS_WIDTH = 800;
+const CANVAS_HEIGHT = 600;
+
 /**
- * Visualização Interativa de Eletrolisador - Estilo PhET Colorado
- *
- * Inspirado em: https://phet.colorado.edu/pt_BR/simulations/filter?subjects=chemistry
- *
- * Características:
- * - Totalmente interativo (drag & drop, zoom, pan)
- * - Múltiplas camadas de visualização
- * - Controles em tempo real
- * - Medidores visuais (voltímetro, amperímetro, termômetro)
- * - Feedback instantâneo
- * - Animação suave e controlável
+ * Classe para partículas interativas
+ * Movida para fora do componente para evitar recriação a cada render
  */
-const InteractiveElectrolyzerPhET = () => {
-  // Estados de controle da simulação
-  const [isRunning, setIsRunning] = useState(false);
-  const [animationSpeed, setAnimationSpeed] = useState(1.0);
-  const [zoom, setZoom] = useState(1.0);
-  const [pan, setPan] = useState({ x: 0, y: 0 });
-  const [time, setTime] = useState(0);
+class Particle {
+  constructor(x, y, type, vx = 0, vy = 0) {
+    this.x = x;
+    this.y = y;
+    this.type = type; // 'H2O', 'OH-', 'H+', 'O2', 'H2', 'e-'
+    this.vx = vx;
+    this.vy = vy;
+    this.radius = type === 'e-' ? 2 : type.includes('bubble') ? 8 : 4;
+    this.charge = type === 'OH-' ? -1 : type === 'H+' ? 1 : 0;
+    this.id = Math.random();
+    this.isDraggable = true;
+    this.isBeingDragged = false;
+    this.age = 0;
+    this.lifetime = type.includes('bubble') ? 3000 : Infinity;
+  }
 
-  // Parâmetros físicos interativos
-  const [voltage, setVoltage] = useState(2.0);
-  const [current, setCurrent] = useState(10);
-  const [temperature, setTemperature] = useState(80);
-  const [pressure, setPressure] = useState(30);
-  const [kOHConcentration, setKOHConcentration] = useState(30);
+  update(dt, electricField, temperature, showElectricField = false) {
+    if (this.isBeingDragged) return;
 
-  // Camadas de visualização (toggle on/off)
-  const [showMolecules, setShowMolecules] = useState(true);
-  const [showElectrons, setShowElectrons] = useState(true);
-  const [showBubbles, setShowBubbles] = useState(true);
-  const [showElectricField, setShowElectricField] = useState(false);
-  const [showTemperatureGradient, setShowTemperatureGradient] = useState(false);
-  const [showMeasurements, setShowMeasurements] = useState(true);
+    // Movimento browniano (intensidade depende da temperatura)
+    const brownianIntensity = (temperature / 100) * 0.5;
+    this.vx += (Math.random() - 0.5) * brownianIntensity;
+    this.vy += (Math.random() - 0.5) * brownianIntensity;
 
-  // Estados de partículas e elementos
-  const [waterMolecules, setWaterMolecules] = useState([]);
-  const [hydroxideIons, setHydroxideIons] = useState([]);
-  const [hydrogenBubbles, setHydrogenBubbles] = useState([]);
-  const [oxygenBubbles, setOxygenBubbles] = useState([]);
-  const [electrons, setElectrons] = useState([]);
-
-  // Estados de drag & drop
-  const [isDragging, setIsDragging] = useState(false);
-  const [draggedElement, setDraggedElement] = useState(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  // Estados calculados em tempo real
-  const [hydrogenProduction, setHydrogenProduction] = useState(0);
-  const [oxygenProduction, setOxygenProduction] = useState(0);
-  const [efficiency, setEfficiency] = useState(0);
-  const [power, setPower] = useState(0);
-  const [heatGenerated, setHeatGenerated] = useState(0);
-
-  // Referências
-  const canvasRef = useRef(null);
-  const animationFrameRef = useRef(null);
-  const containerRef = useRef(null);
-
-  // Dimensões do canvas
-  const CANVAS_WIDTH = 800;
-  const CANVAS_HEIGHT = 600;
-
-  // Dimensões dos eletrodos
-  const CATHODE_X = 150;
-  const ANODE_X = 650;
-  const ELECTRODE_WIDTH = 30;
-  const ELECTRODE_HEIGHT = 400;
-  const ELECTRODE_Y = 100;
-
-  // Classe para partículas interativas
-  class Particle {
-    constructor(x, y, type, vx = 0, vy = 0) {
-      this.x = x;
-      this.y = y;
-      this.type = type; // 'H2O', 'OH-', 'H+', 'O2', 'H2', 'e-'
-      this.vx = vx;
-      this.vy = vy;
-      this.radius = type === 'e-' ? 2 : type.includes('bubble') ? 8 : 4;
-      this.charge = type === 'OH-' ? -1 : type === 'H+' ? 1 : 0;
-      this.id = Math.random();
-      this.isDraggable = true;
-      this.isBeingDragged = false;
-      this.age = 0;
-      this.lifetime = type.includes('bubble') ? 3000 : Infinity;
+    // Força elétrica nos íons
+    if (this.charge !== 0 && showElectricField) {
+      const fieldStrength = electricField * 0.01;
+      this.vx += this.charge * fieldStrength;
     }
 
-    update(dt, electricField, temperature) {
-      if (this.isBeingDragged) return;
-
-      // Movimento browniano (intensidade depende da temperatura)
-      const brownianIntensity = (temperature / 100) * 0.5;
-      this.vx += (Math.random() - 0.5) * brownianIntensity;
-      this.vy += (Math.random() - 0.5) * brownianIntensity;
-
-      // Força elétrica nos íons
-      if (this.charge !== 0 && showElectricField) {
-        const fieldStrength = electricField * 0.01;
-        this.vx += this.charge * fieldStrength;
-      }
-
-      // Gravidade inversa para bolhas
-      if (this.type.includes('bubble')) {
-        this.vy -= 0.5; // Bolhas sobem
-      }
-
-      // Limite de velocidade
-      const maxSpeed = 2;
-      const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
-      if (speed > maxSpeed) {
-        this.vx = (this.vx / speed) * maxSpeed;
-        this.vy = (this.vy / speed) * maxSpeed;
-      }
-
-      // Atualizar posição
-      this.x += this.vx * dt;
-      this.y += this.vy * dt;
-
-      // Reflexão nas bordas
-      if (this.x < 20) {
-        this.x = 20;
-        this.vx *= -0.8;
-      }
-      if (this.x > CANVAS_WIDTH - 20) {
-        this.x = CANVAS_WIDTH - 20;
-        this.vx *= -0.8;
-      }
-      if (this.y < 20) {
-        this.y = 20;
-        this.vy *= -0.8;
-      }
-      if (this.y > CANVAS_HEIGHT - 20) {
-        this.y = CANVAS_HEIGHT - 20;
-        this.vy *= -0.8;
-      }
-
-      // Envelhecimento
-      this.age += dt * 16.67; // Assumindo 60fps
+    // Gravidade inversa para bolhas
+    if (this.type.includes('bubble')) {
+      this.vy -= 0.5; // Bolhas sobem
     }
+
+    // Limite de velocidade
+    const maxSpeed = 2;
+    const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+    if (speed > maxSpeed) {
+      this.vx = (this.vx / speed) * maxSpeed;
+      this.vy = (this.vy / speed) * maxSpeed;
+    }
+
+    // Atualizar posição
+    this.x += this.vx * dt;
+    this.y += this.vy * dt;
+
+    // Reflexão nas bordas
+    if (this.x < 20) {
+      this.x = 20;
+      this.vx *= -0.8;
+    }
+    if (this.x > CANVAS_WIDTH - 20) {
+      this.x = CANVAS_WIDTH - 20;
+      this.vx *= -0.8;
+    }
+    if (this.y < 20) {
+      this.y = 20;
+      this.vy *= -0.8;
+    }
+    if (this.y > CANVAS_HEIGHT - 20) {
+      this.y = CANVAS_HEIGHT - 20;
+      this.vy *= -0.8;
+    }
+
+    // Envelhecimento
+    this.age += dt * 16.67; // Assumindo 60fps
+  }
 
     draw(ctx, zoom, pan) {
       const x = (this.x + pan.x) * zoom;

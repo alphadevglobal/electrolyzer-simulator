@@ -3,6 +3,18 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Palette } from 'lucide-react';
 
 const HydrogenColors = () => {
+  // Mapeamento fixo de cores para classes Tailwind (não pode ser dinâmico)
+  const colorClasses = {
+    'Green': 'bg-green-500',
+    'Blue': 'bg-blue-500',
+    'Grey': 'bg-gray-500',
+    'Pink': 'bg-pink-500',
+    'Turquoise': 'bg-cyan-500',
+    'Yellow': 'bg-yellow-500',
+    'White': 'bg-white border border-gray-300',
+    'Black/Brown': 'bg-stone-800',
+  };
+
   const hydrogenTypes = [
     {
       color: 'Green',
@@ -80,7 +92,7 @@ const HydrogenColors = () => {
           {hydrogenTypes.map((type, index) => (
             <div key={index} className="border-b pb-4 last:border-b-0 last:pb-0">
               <h3 className="text-xl font-semibold flex items-center gap-2">
-                <span className={`w-4 h-4 rounded-full bg-${type.color.toLowerCase()}-500`}></span>
+                <span className={`w-4 h-4 rounded-full ${colorClasses[type.color]}`}></span>
                 Hidrogênio {type.color}
               </h3>
               <p className="mt-2 text-muted-foreground">{type.description}</p>
