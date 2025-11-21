@@ -17,6 +17,26 @@ import {
   AlertTriangle
 } from 'lucide-react';
 
+// Custos por hora (em R$/hora)
+const COSTS = {
+  green: {
+    solarPanel: { idle: 0.5, running: 1.2, maintenance: 15 },
+    windTurbine: { idle: 0.8, running: 1.5, maintenance: 20 },
+    electrolyzer: { idle: 2.0, running: 50, maintenance: 100 },
+    compressor: { idle: 0.5, running: 8, maintenance: 30 },
+    storage: { idle: 0.1, running: 0.3, maintenance: 10 },
+    water: 0.05,
+    energy: 0.65,
+  },
+  blue: {
+    naturalGas: { idle: 1.0, running: 120, maintenance: 80 },
+    reformer: { idle: 3.0, running: 80, maintenance: 150 },
+    ccs: { idle: 2.0, running: 40, maintenance: 100 },
+    storage: { idle: 0.1, running: 0.3, maintenance: 10 },
+    gasPrice: 0.30,
+  }
+};
+
 /**
  * Visualização Interativa do Processo Completo de Produção de H₂
  *
@@ -58,42 +78,6 @@ const ProcessFlowVisualization = () => {
 
   // Referências
   const intervalRef = useRef(null);
-  const canvasRef = useRef(null);
-
-  // Custos por hora (em R$/hora)
-  const COSTS = {
-    green: {
-      solarPanel: { idle: 0.5, running: 1.2, maintenance: 15 }, // R$/h
-      windTurbine: { idle: 0.8, running: 1.5, maintenance: 20 },
-      electrolyzer: { idle: 2.0, running: 50, maintenance: 100 },
-      compressor: { idle: 0.5, running: 8, maintenance: 30 },
-      storage: { idle: 0.1, running: 0.3, maintenance: 10 },
-      water: 0.05, // R$/L
-      energy: 0.65, // R$/kWh (tarifa média Brasil)
-    },
-    blue: {
-      naturalGas: { idle: 1.0, running: 120, maintenance: 80 },
-      reformer: { idle: 3.0, running: 80, maintenance: 150 },
-      ccs: { idle: 2.0, running: 40, maintenance: 100 },
-      storage: { idle: 0.1, running: 0.3, maintenance: 10 },
-      gasPrice: 0.30, // R$/m³
-    }
-  };
-
-  // Produção de H₂ (kg/h) baseada em condições
-  const calculateH2Production = () => {
-    if (!isRunning || !electrolyzer.active) return 0;
-
-    const energyAvailable = (solarIntensity / 100) * 2 + (windSpeed / 100) * 3; // kW
-    const waterAvailable = waterFlow; // L/h
-
-    // Lei de Faraday simplificada
-    // 1 kg H₂ requer ~39 kWh de eletricidade e ~9 L de água
-    const h2FromEnergy = energyAvailable / 39;
-    const h2FromWater = waterAvailable / 9;
-
-    return Math.min(h2FromEnergy, h2FromWater); // kg/h
-  };
 
   // Simulação a cada segundo
   useEffect(() => {
@@ -105,10 +89,18 @@ const ProcessFlowVisualization = () => {
     intervalRef.current = setInterval(() => {
       setTimeElapsed(t => t + 1);
 
-      // Calcular produção
-      const h2Rate = calculateH2Production(); // kg/h
-      const h2PerSecond = h2Rate / 3600; // kg/s
-      const o2PerSecond = h2PerSecond * 8; // O₂ é 8x mais pesado
+      // Calcular produção de H₂ (kg/h) baseada em condições
+      let h2Rate = 0;
+      if (electrolyzer.active) {
+        const energyAvailable = (solarIntensity / 100) * 2 + (windSpeed / 100) * 3;
+        const waterAvailable = waterFlow;
+        const h2FromEnergy = energyAvailable / 39;
+        const h2FromWater = waterAvailable / 9;
+        h2Rate = Math.min(h2FromEnergy, h2FromWater);
+      }
+
+      const h2PerSecond = h2Rate / 3600;
+      const o2PerSecond = h2PerSecond * 8;
 
       setH2Produced(prev => prev + h2PerSecond);
       setO2Produced(prev => prev + o2PerSecond);
@@ -151,7 +143,7 @@ const ProcessFlowVisualization = () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [isRunning, processType, solarIntensity, windSpeed, waterFlow,
-      solarPanel.status, windTurbine.status, electrolyzer.status,
+      solarPanel.status, windTurbine.status, electrolyzer.status, electrolyzer.active,
       compressor.status, storage.status]);
 
   // Toggle de equipamentos
@@ -246,7 +238,17 @@ const ProcessFlowVisualization = () => {
             </div>
             <div className="bg-orange-50 p-3 rounded">
               <div className="text-sm text-gray-600">Taxa H₂</div>
-              <div className="text-2xl font-bold text-orange-600">{(calculateH2Production() * 1000).toFixed(1)} g/h</div>
+              <div className="text-2xl font-bold text-orange-600">
+                {(() => {
+                  if (!electrolyzer.active) return '0.0';
+                  const energyAvailable = (solarIntensity / 100) * 2 + (windSpeed / 100) * 3;
+                  const waterAvailable = waterFlow;
+                  const h2FromEnergy = energyAvailable / 39;
+                  const h2FromWater = waterAvailable / 9;
+                  const h2Rate = Math.min(h2FromEnergy, h2FromWater);
+                  return (h2Rate * 1000).toFixed(1);
+                })()} g/h
+              </div>
             </div>
           </div>
 
