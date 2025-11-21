@@ -290,7 +290,7 @@ const InteractiveElectrolyzerPhET = () => {
       // Atualizar moléculas de água
       setWaterMolecules(prev =>
         prev.map(p => {
-          p.update(dt, electricField, temperature);
+          p.update(dt, electricField, temperature, showElectricField);
           return p;
         })
       );
@@ -298,7 +298,7 @@ const InteractiveElectrolyzerPhET = () => {
       // Atualizar íons OH-
       setHydroxideIons(prev =>
         prev.map(p => {
-          p.update(dt, electricField, temperature);
+          p.update(dt, electricField, temperature, showElectricField);
 
           // Reação no ânodo: OH- → O2 + e-
           if (p.x > ANODE_X - 40 && Math.random() < 0.002 * current / 10) {
@@ -347,7 +347,7 @@ const InteractiveElectrolyzerPhET = () => {
       setHydrogenBubbles(prev =>
         prev
           .map(p => {
-            p.update(dt, 0, temperature);
+            p.update(dt, 0, temperature, showElectricField);
             return p;
           })
           .filter(p => p.age < p.lifetime && p.y > 0)
@@ -357,7 +357,7 @@ const InteractiveElectrolyzerPhET = () => {
       setOxygenBubbles(prev =>
         prev
           .map(p => {
-            p.update(dt, 0, temperature);
+            p.update(dt, 0, temperature, showElectricField);
             return p;
           })
           .filter(p => p.age < p.lifetime && p.y > 0)
@@ -505,11 +505,11 @@ const InteractiveElectrolyzerPhET = () => {
     ctx.restore();
 
     // Desenhar todas as partículas (sem transformação de zoom/pan - elas já aplicam internamente)
-    waterMolecules.forEach(p => p.draw(ctx, zoom, pan));
-    hydroxideIons.forEach(p => p.draw(ctx, zoom, pan));
-    hydrogenBubbles.forEach(p => p.draw(ctx, zoom, pan));
-    oxygenBubbles.forEach(p => p.draw(ctx, zoom, pan));
-    electrons.forEach(p => p.draw(ctx, zoom, pan));
+    waterMolecules.forEach(p => p.draw(ctx, zoom, pan, showMolecules, showBubbles, showElectrons));
+    hydroxideIons.forEach(p => p.draw(ctx, zoom, pan, showMolecules, showBubbles, showElectrons));
+    hydrogenBubbles.forEach(p => p.draw(ctx, zoom, pan, showMolecules, showBubbles, showElectrons));
+    oxygenBubbles.forEach(p => p.draw(ctx, zoom, pan, showMolecules, showBubbles, showElectrons));
+    electrons.forEach(p => p.draw(ctx, zoom, pan, showMolecules, showBubbles, showElectrons));
 
     // Medidores visuais (sempre no topo, sem zoom)
     if (showMeasurements) {
