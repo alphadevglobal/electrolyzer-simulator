@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Zap, Activity, HelpCircle, Palette, Download, Github, FileImage, Globe, Thermometer, Briefcase } from 'lucide-react';
+import { Zap, Activity, HelpCircle, Palette, Download, Github, FileImage, Globe, Thermometer, Briefcase, Network } from 'lucide-react';
 
 import StaticSimulation from './components/StaticSimulation';
 import DynamicSimulation from './components/DynamicSimulation';
@@ -14,6 +14,7 @@ import ResearchGallery from './components/ResearchGallery';
 import ClimateAnalysis from './components/ClimateAnalysis';
 import TemperatureEffect from './components/TemperatureEffect';
 import BusinessModel from './components/BusinessModel';
+import ProcessFlowVisualization from './components/ProcessFlowVisualization';
 
 function App() {
   const [activeTab, setActiveTab] = useState('static');
@@ -69,7 +70,7 @@ function App() {
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <div className="overflow-x-auto">
-            <TabsList className="grid w-full grid-cols-8 lg:w-auto lg:grid-cols-8 min-w-max">
+            <TabsList className="grid w-full grid-cols-9 lg:w-auto lg:grid-cols-9 min-w-max">
               <TabsTrigger value="static" className="flex items-center gap-2 text-xs sm:text-sm">
                 <Zap className="h-4 w-4" />
                 <span className="hidden sm:inline">Simulação</span> Estática
@@ -77,6 +78,10 @@ function App() {
               <TabsTrigger value="dynamic" className="flex items-center gap-2 text-xs sm:text-sm">
                 <Activity className="h-4 w-4" />
                 <span className="hidden sm:inline">Simulação</span> Dinâmica
+              </TabsTrigger>
+              <TabsTrigger value="process" className="flex items-center gap-2 text-xs sm:text-sm">
+                <Network className="h-4 w-4" />
+                <span className="hidden sm:inline">Fluxo de</span> Processo
               </TabsTrigger>
               <TabsTrigger value="temperature" className="flex items-center gap-2 text-xs sm:text-sm">
                 <Thermometer className="h-4 w-4" />
@@ -111,6 +116,10 @@ function App() {
 
           <TabsContent value="dynamic">
             <DynamicSimulation />
+          </TabsContent>
+
+          <TabsContent value="process">
+            <ProcessFlowVisualization />
           </TabsContent>
 
           <TabsContent value="temperature">
@@ -164,6 +173,8 @@ function App() {
               </h3>
               <ul className="text-gray-600 text-sm space-y-2">
                 <li>• Simulação estática e dinâmica em tempo real</li>
+                <li>• Visualização do fluxo de processo completo</li>
+                <li>• Análise de custos operacionais em tempo real</li>
                 <li>• Análise do efeito da temperatura na produção</li>
                 <li>• Análise climática regional comparativa</li>
                 <li>• Modelagem híbrida (Físico + ML)</li>
@@ -171,7 +182,6 @@ function App() {
                 <li>• Galeria de pesquisa com upload de imagens</li>
                 <li>• Exportação de dados para pesquisa</li>
                 <li>• FAQ científico detalhado</li>
-                <li>• Efeitos de tropicalização</li>
               </ul>
             </div>
             <div>
