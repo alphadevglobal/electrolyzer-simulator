@@ -99,42 +99,42 @@ class Particle {
     this.age += dt * 16.67; // Assumindo 60fps
   }
 
-    draw(ctx, zoom, pan) {
-      const x = (this.x + pan.x) * zoom;
-      const y = (this.y + pan.y) * zoom;
-      const radius = this.radius * zoom;
+  draw(ctx, zoom, pan, showMolecules = true, showBubbles = true, showElectrons = true) {
+    const x = (this.x + pan.x) * zoom;
+    const y = (this.y + pan.y) * zoom;
+    const radius = this.radius * zoom;
 
-      ctx.save();
+    ctx.save();
 
-      // Cores e estilos por tipo
-      switch (this.type) {
-        case 'H2O':
-          ctx.fillStyle = showMolecules ? 'rgba(59, 130, 246, 0.7)' : 'transparent';
-          ctx.strokeStyle = 'rgba(59, 130, 246, 0.9)';
-          break;
-        case 'OH-':
-          ctx.fillStyle = showMolecules ? 'rgba(249, 115, 22, 0.7)' : 'transparent';
-          ctx.strokeStyle = 'rgba(249, 115, 22, 0.9)';
-          break;
-        case 'H+':
-          ctx.fillStyle = showMolecules ? 'rgba(34, 197, 94, 0.7)' : 'transparent';
-          ctx.strokeStyle = 'rgba(34, 197, 94, 0.9)';
-          break;
-        case 'H2-bubble':
-          ctx.fillStyle = showBubbles ? 'rgba(147, 197, 253, 0.5)' : 'transparent';
-          ctx.strokeStyle = 'rgba(59, 130, 246, 0.8)';
-          break;
-        case 'O2-bubble':
-          ctx.fillStyle = showBubbles ? 'rgba(251, 146, 60, 0.5)' : 'transparent';
-          ctx.strokeStyle = 'rgba(249, 115, 22, 0.8)';
-          break;
-        case 'e-':
-          ctx.fillStyle = showElectrons ? 'rgba(234, 179, 8, 0.9)' : 'transparent';
-          ctx.strokeStyle = 'rgba(202, 138, 4, 1)';
-          break;
-        default:
-          ctx.fillStyle = 'rgba(156, 163, 175, 0.7)';
-      }
+    // Cores e estilos por tipo
+    switch (this.type) {
+      case 'H2O':
+        ctx.fillStyle = showMolecules ? 'rgba(59, 130, 246, 0.7)' : 'transparent';
+        ctx.strokeStyle = 'rgba(59, 130, 246, 0.9)';
+        break;
+      case 'OH-':
+        ctx.fillStyle = showMolecules ? 'rgba(249, 115, 22, 0.7)' : 'transparent';
+        ctx.strokeStyle = 'rgba(249, 115, 22, 0.9)';
+        break;
+      case 'H+':
+        ctx.fillStyle = showMolecules ? 'rgba(34, 197, 94, 0.7)' : 'transparent';
+        ctx.strokeStyle = 'rgba(34, 197, 94, 0.9)';
+        break;
+      case 'H2-bubble':
+        ctx.fillStyle = showBubbles ? 'rgba(147, 197, 253, 0.5)' : 'transparent';
+        ctx.strokeStyle = 'rgba(59, 130, 246, 0.8)';
+        break;
+      case 'O2-bubble':
+        ctx.fillStyle = showBubbles ? 'rgba(251, 146, 60, 0.5)' : 'transparent';
+        ctx.strokeStyle = 'rgba(249, 115, 22, 0.8)';
+        break;
+      case 'e-':
+        ctx.fillStyle = showElectrons ? 'rgba(234, 179, 8, 0.9)' : 'transparent';
+        ctx.strokeStyle = 'rgba(202, 138, 4, 1)';
+        break;
+      default:
+        ctx.fillStyle = 'rgba(156, 163, 175, 0.7)';
+    }
 
       // Desenhar partícula
       ctx.beginPath();
