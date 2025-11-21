@@ -5,11 +5,12 @@ describe('calculations', () => {
   describe('simulateElectrolyzer', () => {
     it('deve calcular produção de hidrogênio corretamente', () => {
       const params = {
+        electrolyzerType: 'Alkaline',
         temperature: 80,
         pressure: 30,
         concentration: 30,
         currentDensity: 1.5,
-        electrodeArea: 100,
+        area: 100,
         voltage: 2.0,
         molality: 6.0,
       };
@@ -23,11 +24,12 @@ describe('calculations', () => {
 
     it('deve calcular eficiência dentro do range esperado', () => {
       const params = {
+        electrolyzerType: 'Alkaline',
         temperature: 80,
         pressure: 30,
         concentration: 30,
         currentDensity: 1.5,
-        electrodeArea: 100,
+        area: 100,
         voltage: 2.0,
         molality: 6.0,
       };
@@ -41,11 +43,12 @@ describe('calculations', () => {
 
     it('deve retornar todos os campos esperados', () => {
       const params = {
+        electrolyzerType: 'Alkaline',
         temperature: 80,
         pressure: 30,
         concentration: 30,
         currentDensity: 1.5,
-        electrodeArea: 100,
+        area: 100,
         voltage: 2.0,
         molality: 6.0,
       };
@@ -62,11 +65,12 @@ describe('calculations', () => {
 
     it('deve aumentar produção com maior corrente', () => {
       const paramsLow = {
+        electrolyzerType: 'Alkaline',
         temperature: 80,
         pressure: 30,
         concentration: 30,
         currentDensity: 1.0,
-        electrodeArea: 100,
+        area: 100,
         voltage: 2.0,
         molality: 6.0,
       };
@@ -84,11 +88,12 @@ describe('calculations', () => {
 
     it('deve aumentar eficiência com maior temperatura (até certo ponto)', () => {
       const params60 = {
+        electrolyzerType: 'Alkaline',
         temperature: 60,
         pressure: 30,
         concentration: 30,
         currentDensity: 1.5,
-        electrodeArea: 100,
+        area: 100,
         voltage: 2.0,
         molality: 6.0,
       };
@@ -107,11 +112,12 @@ describe('calculations', () => {
 
     it('não deve retornar NaN ou Infinity', () => {
       const params = {
+        electrolyzerType: 'Alkaline',
         temperature: 80,
         pressure: 30,
         concentration: 30,
         currentDensity: 1.5,
-        electrodeArea: 100,
+        area: 100,
         voltage: 2.0,
         molality: 6.0,
       };
