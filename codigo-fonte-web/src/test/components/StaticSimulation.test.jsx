@@ -63,6 +63,7 @@ vi.mock('../../lib/calculations', () => ({
 // Mock do AWS API
 vi.mock('../../lib/awsApi', () => ({
   sendToAWS: vi.fn(() => Promise.resolve({ success: true })),
+  checkAWSHealth: vi.fn(() => Promise.resolve({ healthy: true })),
 }));
 
 describe('StaticSimulation', () => {
