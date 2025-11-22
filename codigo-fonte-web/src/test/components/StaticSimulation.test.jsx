@@ -92,6 +92,14 @@ vi.mock('../../lib/calculations', () => ({
 vi.mock('../../lib/awsApi', () => ({
   sendToAWS: vi.fn(() => Promise.resolve({ success: true })),
   checkAWSHealth: vi.fn(() => Promise.resolve({ healthy: true })),
+  predictWithAWS: vi.fn(() => Promise.resolve({ prediction: 0.0075 })),
+}));
+
+// Mock dos efeitos de temperatura
+vi.mock('../../lib/temperatureEffects', () => ({
+  calculateTemperatureEffects: vi.fn(() => ({})),
+  generateTemperatureChartData: vi.fn(() => []),
+  calculateOptimalTemperature: vi.fn(() => ({ temperature: 70, efficiency: 80 })),
 }));
 
 describe('StaticSimulation', () => {
