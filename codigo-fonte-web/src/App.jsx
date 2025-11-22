@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Zap, Activity, HelpCircle, Palette, Download, Github, FileImage, Globe, Thermometer, Briefcase, Network } from 'lucide-react';
+import { Zap, Activity, HelpCircle, Palette, Download, Github, FileImage, Globe, Thermometer, Briefcase, Network, Clapperboard } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 import StaticSimulation from './components/StaticSimulation';
 import DynamicSimulation from './components/DynamicSimulation';
@@ -15,6 +16,7 @@ import ClimateAnalysis from './components/ClimateAnalysis';
 import TemperatureEffect from './components/TemperatureEffect';
 import BusinessModel from './components/BusinessModel';
 import ProcessFlowVisualization from './components/ProcessFlowVisualization';
+import AnimatedProcessVisualization from './components/AnimatedProcessVisualization';
 
 function App() {
   const [activeTab, setActiveTab] = useState('static');
@@ -69,44 +71,83 @@ function App() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <div className="overflow-x-auto">
-            <TabsList className="grid w-full grid-cols-9 lg:w-auto lg:grid-cols-9 min-w-max">
-              <TabsTrigger value="static" className="flex items-center gap-2 text-xs sm:text-sm">
-                <Zap className="h-4 w-4" />
-                <span className="hidden sm:inline">Simulação</span> Estática
-              </TabsTrigger>
-              <TabsTrigger value="dynamic" className="flex items-center gap-2 text-xs sm:text-sm">
-                <Activity className="h-4 w-4" />
-                <span className="hidden sm:inline">Simulação</span> Dinâmica
-              </TabsTrigger>
-              <TabsTrigger value="process" className="flex items-center gap-2 text-xs sm:text-sm">
-                <Network className="h-4 w-4" />
-                <span className="hidden sm:inline">Fluxo de</span> Processo
-              </TabsTrigger>
-              <TabsTrigger value="temperature" className="flex items-center gap-2 text-xs sm:text-sm">
-                <Thermometer className="h-4 w-4" />
-                <span className="hidden sm:inline">Efeito</span> Temperatura
-              </TabsTrigger>
-              <TabsTrigger value="climate" className="flex items-center gap-2 text-xs sm:text-sm">
-                <Globe className="h-4 w-4" />
-                <span className="hidden sm:inline">Análise</span> Climática
-              </TabsTrigger>
-              <TabsTrigger value="gallery" className="flex items-center gap-2 text-xs sm:text-sm">
-                <FileImage className="h-4 w-4" />
-                Galeria
-              </TabsTrigger>
-              <TabsTrigger value="faq" className="flex items-center gap-2 text-xs sm:text-sm">
-                <HelpCircle className="h-4 w-4" />
-                FAQ
-              </TabsTrigger>
-              <TabsTrigger value="hydrogen" className="flex items-center gap-2 text-xs sm:text-sm">
-                <Palette className="h-4 w-4" />
-                <span className="hidden sm:inline">H₂</span> Colorido
-              </TabsTrigger>
-              <TabsTrigger value="business" className="flex items-center gap-2 text-xs sm:text-sm">
-                <Briefcase className="h-4 w-4" />
-                Modelo de Negócio
-              </TabsTrigger>
+          <div className="lg:hidden">
+            <Select value={activeTab} onValueChange={setActiveTab}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Selecione uma página" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="static">Simulação Estática</SelectItem>
+                <SelectItem value="dynamic">Simulação Dinâmica</SelectItem>
+                <SelectItem value="animated">Visualização Animada</SelectItem>
+                <SelectItem value="process">Fluxo de Processo</SelectItem>
+                <SelectItem value="temperature">Efeito da Temperatura</SelectItem>
+                <SelectItem value="climate">Análise Climática</SelectItem>
+                <SelectItem value="gallery">Galeria</SelectItem>
+                <SelectItem value="faq">FAQ Científico</SelectItem>
+                <SelectItem value="hydrogen">H₂ Colorido</SelectItem>
+                <SelectItem value="business">Modelo de Negócio</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="hidden lg:block">
+            <TabsList className="inline-flex h-auto flex-wrap gap-2 bg-transparent p-0">
+              <div className="flex flex-wrap gap-2">
+                <div className="bg-muted p-1 rounded-lg">
+                  <div className="text-xs font-semibold text-muted-foreground px-2 py-1">Simulações</div>
+                  <div className="flex gap-1">
+                    <TabsTrigger value="static" className="flex items-center gap-2">
+                      <Zap className="h-4 w-4" /> Estática
+                    </TabsTrigger>
+                    <TabsTrigger value="dynamic" className="flex items-center gap-2">
+                      <Activity className="h-4 w-4" /> Dinâmica
+                    </TabsTrigger>
+                  </div>
+                </div>
+
+                <div className="bg-muted p-1 rounded-lg">
+                  <div className="text-xs font-semibold text-muted-foreground px-2 py-1">Visualizações</div>
+                  <div className="flex gap-1">
+                    <TabsTrigger value="animated" className="flex items-center gap-2">
+                      <Clapperboard className="h-4 w-4" /> Animada
+                    </TabsTrigger>
+                    <TabsTrigger value="process" className="flex items-center gap-2">
+                      <Network className="h-4 w-4" /> Processo
+                    </TabsTrigger>
+                  </div>
+                </div>
+
+                <div className="bg-muted p-1 rounded-lg">
+                  <div className="text-xs font-semibold text-muted-foreground px-2 py-1">Análises</div>
+                  <div className="flex gap-1">
+                    <TabsTrigger value="temperature" className="flex items-center gap-2">
+                      <Thermometer className="h-4 w-4" /> Temperatura
+                    </TabsTrigger>
+                    <TabsTrigger value="climate" className="flex items-center gap-2">
+                      <Globe className="h-4 w-4" /> Clima
+                    </TabsTrigger>
+                  </div>
+                </div>
+
+                <div className="bg-muted p-1 rounded-lg">
+                  <div className="text-xs font-semibold text-muted-foreground px-2 py-1">Recursos</div>
+                  <div className="flex gap-1">
+                    <TabsTrigger value="gallery" className="flex items-center gap-2">
+                      <FileImage className="h-4 w-4" /> Galeria
+                    </TabsTrigger>
+                    <TabsTrigger value="faq" className="flex items-center gap-2">
+                      <HelpCircle className="h-4 w-4" /> FAQ
+                    </TabsTrigger>
+                    <TabsTrigger value="hydrogen" className="flex items-center gap-2">
+                      <Palette className="h-4 w-4" /> H₂ Colorido
+                    </TabsTrigger>
+                    <TabsTrigger value="business" className="flex items-center gap-2">
+                      <Briefcase className="h-4 w-4" /> Negócio
+                    </TabsTrigger>
+                  </div>
+                </div>
+              </div>
             </TabsList>
           </div>
 
@@ -116,6 +157,10 @@ function App() {
 
           <TabsContent value="dynamic">
             <DynamicSimulation />
+          </TabsContent>
+
+          <TabsContent value="animated">
+            <AnimatedProcessVisualization />
           </TabsContent>
 
           <TabsContent value="process">
@@ -173,6 +218,7 @@ function App() {
               </h3>
               <ul className="text-gray-600 text-sm space-y-2">
                 <li>• Simulação estática e dinâmica em tempo real</li>
+                <li>• Visualização animada interativa com SVG</li>
                 <li>• Visualização do fluxo de processo completo</li>
                 <li>• Análise de custos operacionais em tempo real</li>
                 <li>• Análise do efeito da temperatura na produção</li>
@@ -181,7 +227,6 @@ function App() {
                 <li>• Análise de múltiplos tipos de eletrolisadores</li>
                 <li>• Galeria de pesquisa com upload de imagens</li>
                 <li>• Exportação de dados para pesquisa</li>
-                <li>• FAQ científico detalhado</li>
               </ul>
             </div>
             <div>
