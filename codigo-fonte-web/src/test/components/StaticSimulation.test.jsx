@@ -41,7 +41,7 @@ vi.mock('../../lib/calculations', () => ({
       currentEfficiency: 95.0,
     },
   })),
-  validateParameters: vi.fn(() => ({ isValid: true, errors: [] })),
+  validateParameters: vi.fn(() => ({ isValid: true, errors: [], warnings: [] })),
   ELECTROLYZER_PARAMS: {
     Alkaline: {
       name: 'Eletrolisador Alcalino',

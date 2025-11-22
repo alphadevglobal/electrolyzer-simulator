@@ -77,6 +77,7 @@ describe('DynamicSimulation', () => {
   });
 
   it('deve iniciar simulação ao clicar em Iniciar', async () => {
+    vi.useRealTimers(); // Use real timers for this test
     const user = userEvent.setup({ delay: null });
     render(<DynamicSimulation />);
 
@@ -84,71 +85,80 @@ describe('DynamicSimulation', () => {
     const startButton = startButtons[0]; // Get the first "Iniciar" button (from DynamicSimulation controls)
     await user.click(startButton);
 
-    // Advance timers to let the simulation start
-    await vi.advanceTimersByTimeAsync(100);
+    // Wait a bit for React to update
+    await new Promise(resolve => setTimeout(resolve, 50));
 
     expect(screen.getAllByRole('button', { name: /Pausar/i }).length).toBeGreaterThan(0);
+    vi.useFakeTimers(); // Restore fake timers for other tests
   });
 
   it('deve pausar e retomar simulação', async () => {
+    vi.useRealTimers();
     const user = userEvent.setup({ delay: null });
     render(<DynamicSimulation />);
 
     // Iniciar
     const startButtons = screen.getAllByRole('button', { name: /Iniciar/i });
     await user.click(startButtons[0]);
-    await vi.advanceTimersByTimeAsync(100);
+    await new Promise(resolve => setTimeout(resolve, 50));
 
     expect(screen.getAllByRole('button', { name: /Pausar/i }).length).toBeGreaterThan(0);
 
     // Pausar
     const pauseButtons = screen.getAllByRole('button', { name: /Pausar/i });
     await user.click(pauseButtons[0]);
-    await vi.advanceTimersByTimeAsync(100);
+    await new Promise(resolve => setTimeout(resolve, 50));
 
     expect(screen.getAllByRole('button', { name: /Retomar/i }).length).toBeGreaterThan(0);
+    vi.useFakeTimers();
   });
 
   it('deve parar simulação ao clicar em Parar', async () => {
+    vi.useRealTimers();
     const user = userEvent.setup({ delay: null });
     render(<DynamicSimulation />);
 
     // Iniciar
     const startButtons = screen.getAllByRole('button', { name: /Iniciar/i });
     await user.click(startButtons[0]);
-    await vi.advanceTimersByTimeAsync(100);
+    await new Promise(resolve => setTimeout(resolve, 50));
 
     const stopButtons = screen.getAllByRole('button', { name: /Parar/i });
     await user.click(stopButtons[0]);
-    await vi.advanceTimersByTimeAsync(100);
+    await new Promise(resolve => setTimeout(resolve, 50));
 
     expect(screen.getAllByRole('button', { name: /Iniciar/i }).length).toBeGreaterThan(0);
+    vi.useFakeTimers();
   });
 
   it('deve exibir gráficos de resultados durante simulação', async () => {
+    vi.useRealTimers();
     const user = userEvent.setup({ delay: null });
     render(<DynamicSimulation />);
 
     const startButtons = screen.getAllByRole('button', { name: /Iniciar/i });
     await user.click(startButtons[0]);
 
-    // Avançar tempo
-    await vi.advanceTimersByTimeAsync(2000);
+    // Wait for simulation to run
+    await new Promise(resolve => setTimeout(resolve, 100));
 
     expect(screen.getAllByText(/Produção de H₂/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/Eficiência/i).length).toBeGreaterThan(0);
+    vi.useFakeTimers();
   });
 
   it('não deve permitir alterar parâmetros durante simulação', async () => {
+    vi.useRealTimers();
     const user = userEvent.setup({ delay: null });
     render(<DynamicSimulation />);
 
     const startButtons = screen.getAllByRole('button', { name: /Iniciar/i });
     await user.click(startButtons[0]);
-    await vi.advanceTimersByTimeAsync(100);
+    await new Promise(resolve => setTimeout(resolve, 50));
 
     const areaInput = screen.getByLabelText(/Área Membrana/i);
     expect(areaInput).toBeDisabled();
+    vi.useFakeTimers();
   });
 
   it('deve renderizar simulação interativa PhET', () => {
