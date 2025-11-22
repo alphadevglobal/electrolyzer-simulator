@@ -13,7 +13,7 @@ vi.mock('../../lib/calculations', () => ({
     powerConsumption: 150,
     temperature: params.temperature,
   })),
-  validateParameters: vi.fn((params) => ({ isValid: true, errors: [] })),
+  validateParameters: vi.fn(() => ({ isValid: true, errors: [] })),
   ELECTROLYZER_PARAMS: {
     Alkaline: {
       name: 'Eletrolisador Alcalino',
