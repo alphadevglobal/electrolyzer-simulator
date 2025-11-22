@@ -9,10 +9,55 @@ vi.mock('../../lib/calculations', () => ({
     hydrogenProduction: 0.0075,
     efficiency: 65.5,
     voltage: params.voltage || 2.0,
-    current: params.currentDensity * params.electrodeArea,
+    current: params.currentDensity * params.area,
     powerConsumption: 150,
     temperature: params.temperature,
   })),
+  validateParameters: vi.fn((params) => ({ isValid: true, errors: [] })),
+  ELECTROLYZER_PARAMS: {
+    Alkaline: {
+      name: 'Eletrolisador Alcalino',
+      minTemp: 25,
+      maxTemp: 80,
+      minCurrentDensity: 0.2,
+      maxCurrentDensity: 0.8,
+      minEfficiency: 60,
+      maxEfficiency: 80,
+      minConsumption: 50,
+      maxConsumption: 60,
+      electrolyte: 'KOH',
+      electrodes: 'Níquel',
+      asr: 0.00045
+    },
+    PEM: {
+      name: 'Membrana de Troca de Prótons',
+      minTemp: 25,
+      maxTemp: 80,
+      minCurrentDensity: 1.0,
+      maxCurrentDensity: 2.0,
+      minEfficiency: 60,
+      maxEfficiency: 80,
+      minConsumption: 45,
+      maxConsumption: 55,
+      electrolyte: 'Nafion',
+      electrodes: 'Pt/Ir',
+      asr: 0.00025
+    },
+    SOEC: {
+      name: 'Eletrolisador de Óxido Sólido',
+      minTemp: 700,
+      maxTemp: 1000,
+      minCurrentDensity: 0.5,
+      maxCurrentDensity: 1.5,
+      minEfficiency: 80,
+      maxEfficiency: 90,
+      minConsumption: 35,
+      maxConsumption: 45,
+      electrolyte: 'YSZ',
+      electrodes: 'Cerâmicos',
+      asr: 0.00012
+    }
+  }
 }));
 
 // Mock do AWS API
