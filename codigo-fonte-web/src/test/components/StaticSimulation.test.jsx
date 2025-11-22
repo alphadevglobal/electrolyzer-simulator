@@ -6,12 +6,40 @@ import StaticSimulation from '../../components/StaticSimulation';
 // Mock do módulo de cálculos
 vi.mock('../../lib/calculations', () => ({
   simulateElectrolyzer: vi.fn((params) => ({
-    hydrogenProduction: 0.0075,
-    efficiency: 65.5,
-    voltage: params.voltage || 2.0,
-    current: params.currentDensity * params.area,
-    powerConsumption: 150,
-    temperature: params.temperature,
+    production: {
+      kgPerHour: 0.0075,
+      molesPerSecond: 0.001,
+      totalMass: 0.01,
+      totalMoles: 0.005,
+    },
+    efficiency: {
+      value: 65.5,
+      theoretical: 70.0,
+    },
+    overpotentials: {
+      activationAnode: 0.15,
+      activationCathode: 0.12,
+      activation: 0.27,
+      ohmic: 0.08,
+      concentration: 0.05,
+      total: 0.4,
+    },
+    energy: {
+      specificConsumption: 50.5,
+      totalConsumption: 150,
+      theoreticalVoltage: 1.23,
+      actualVoltage: params.voltage || 2.0,
+      inputVoltage: params.voltage || 2.0,
+    },
+    economics: {
+      costPerKg: 5.0,
+      hourlyOperatingCost: 0.0375,
+    },
+    parameters: {
+      totalCurrent: params.currentDensity * params.area,
+      powerDensity: 2.0,
+      currentEfficiency: 95.0,
+    },
   })),
   validateParameters: vi.fn(() => ({ isValid: true, errors: [] })),
   ELECTROLYZER_PARAMS: {
@@ -77,7 +105,7 @@ describe('StaticSimulation', () => {
 
     expect(screen.getByLabelText(/Temperatura/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Pressão/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Concentração de KOH/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Concentração/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Densidade de Corrente/i)).toBeInTheDocument();
   });
 
@@ -110,7 +138,7 @@ describe('StaticSimulation', () => {
     expect(screen.getByText(/Geometria do Eletrolizador/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Área da Membrana/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Número de Células/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Gap entre Eletrodos/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Gap Eletrodos/i)).toBeInTheDocument();
   });
 
   it('deve calcular área total corretamente', async () => {

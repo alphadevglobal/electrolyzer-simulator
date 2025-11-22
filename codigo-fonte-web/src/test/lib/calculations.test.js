@@ -17,9 +17,10 @@ describe('calculations', () => {
 
       const result = simulateElectrolyzer(params);
 
-      expect(result).toHaveProperty('hydrogenProduction');
-      expect(result.hydrogenProduction).toBeGreaterThan(0);
-      expect(typeof result.hydrogenProduction).toBe('number');
+      expect(result).toHaveProperty('production');
+      expect(result.production).toHaveProperty('kgPerHour');
+      expect(result.production.kgPerHour).toBeGreaterThan(0);
+      expect(typeof result.production.kgPerHour).toBe('number');
     });
 
     it('deve calcular eficiência dentro do range esperado', () => {
@@ -37,8 +38,9 @@ describe('calculations', () => {
       const result = simulateElectrolyzer(params);
 
       expect(result).toHaveProperty('efficiency');
-      expect(result.efficiency).toBeGreaterThanOrEqual(0);
-      expect(result.efficiency).toBeLessThanOrEqual(100);
+      expect(result.efficiency).toHaveProperty('value');
+      expect(result.efficiency.value).toBeGreaterThanOrEqual(0);
+      expect(result.efficiency.value).toBeLessThanOrEqual(100);
     });
 
     it('deve retornar todos os campos esperados', () => {
@@ -55,12 +57,12 @@ describe('calculations', () => {
 
       const result = simulateElectrolyzer(params);
 
-      expect(result).toHaveProperty('hydrogenProduction');
+      expect(result).toHaveProperty('production');
       expect(result).toHaveProperty('efficiency');
-      expect(result).toHaveProperty('voltage');
-      expect(result).toHaveProperty('current');
-      expect(result).toHaveProperty('powerConsumption');
-      expect(result).toHaveProperty('temperature');
+      expect(result).toHaveProperty('energy');
+      expect(result).toHaveProperty('overpotentials');
+      expect(result).toHaveProperty('economics');
+      expect(result).toHaveProperty('parameters');
     });
 
     it('deve aumentar produção com maior corrente', () => {
@@ -83,7 +85,7 @@ describe('calculations', () => {
       const resultLow = simulateElectrolyzer(paramsLow);
       const resultHigh = simulateElectrolyzer(paramsHigh);
 
-      expect(resultHigh.hydrogenProduction).toBeGreaterThan(resultLow.hydrogenProduction);
+      expect(resultHigh.production.kgPerHour).toBeGreaterThan(resultLow.production.kgPerHour);
     });
 
     it('deve aumentar eficiência com maior temperatura (até certo ponto)', () => {
@@ -107,7 +109,7 @@ describe('calculations', () => {
       const result80 = simulateElectrolyzer(params80);
 
       // Temperatura maior geralmente melhora eficiência até certo ponto
-      expect(result80.efficiency).toBeGreaterThanOrEqual(result60.efficiency * 0.95); // Margem de 5%
+      expect(result80.efficiency.value).toBeGreaterThanOrEqual(result60.efficiency.value * 0.95); // Margem de 5%
     });
 
     it('não deve retornar NaN ou Infinity', () => {
@@ -124,12 +126,18 @@ describe('calculations', () => {
 
       const result = simulateElectrolyzer(params);
 
-      Object.values(result).forEach((value) => {
-        if (typeof value === 'number') {
-          expect(isNaN(value)).toBe(false);
-          expect(isFinite(value)).toBe(true);
-        }
-      });
+      const checkValues = (obj) => {
+        Object.values(obj).forEach((value) => {
+          if (typeof value === 'number') {
+            expect(isNaN(value)).toBe(false);
+            expect(isFinite(value)).toBe(true);
+          } else if (typeof value === 'object' && value !== null) {
+            checkValues(value);
+          }
+        });
+      };
+
+      checkValues(result);
     });
   });
 });

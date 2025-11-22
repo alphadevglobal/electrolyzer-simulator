@@ -6,12 +6,40 @@ import DynamicSimulation from '../../components/DynamicSimulation';
 // Mock do módulo de cálculos
 vi.mock('../../lib/calculations', () => ({
   simulateElectrolyzer: vi.fn((params) => ({
-    hydrogenProduction: 0.0075,
-    efficiency: 65.5,
-    voltage: params.voltage || 2.0,
-    current: params.currentDensity * params.electrodeArea,
-    powerConsumption: 150,
-    temperature: params.temperature,
+    production: {
+      kgPerHour: 0.0075,
+      molesPerSecond: 0.001,
+      totalMass: 0.01,
+      totalMoles: 0.005,
+    },
+    efficiency: {
+      value: 65.5,
+      theoretical: 70.0,
+    },
+    overpotentials: {
+      activationAnode: 0.15,
+      activationCathode: 0.12,
+      activation: 0.27,
+      ohmic: 0.08,
+      concentration: 0.05,
+      total: 0.4,
+    },
+    energy: {
+      specificConsumption: 50.5,
+      totalConsumption: 150,
+      theoreticalVoltage: 1.23,
+      actualVoltage: params.voltage || 2.0,
+      inputVoltage: params.voltage || 2.0,
+    },
+    economics: {
+      costPerKg: 5.0,
+      hourlyOperatingCost: 0.0375,
+    },
+    parameters: {
+      totalCurrent: params.currentDensity * params.area,
+      powerDensity: 2.0,
+      currentEfficiency: 95.0,
+    },
   })),
 }));
 
@@ -27,13 +55,13 @@ describe('DynamicSimulation', () => {
 
   it('deve renderizar o componente corretamente', () => {
     render(<DynamicSimulation />);
-    expect(screen.getByText(/Simulação Dinâmica/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Simulação Dinâmica/i).length).toBeGreaterThan(0);
   });
 
   it('deve ter controles de simulação', () => {
     render(<DynamicSimulation />);
 
-    expect(screen.getByRole('button', { name: /Iniciar/i })).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /Iniciar/i }).length).toBeGreaterThan(0);
     expect(screen.getByLabelText(/Duração/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Passo de tempo/i)).toBeInTheDocument();
   });
@@ -43,18 +71,19 @@ describe('DynamicSimulation', () => {
 
     expect(screen.getByLabelText(/Área Membrana/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Número de Células/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Gap entre Eletrodos/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Gap Eletrodos/i)).toBeInTheDocument();
   });
 
   it('deve iniciar simulação ao clicar em Iniciar', async () => {
     const user = userEvent.setup({ delay: null });
     render(<DynamicSimulation />);
 
-    const startButton = screen.getByRole('button', { name: /Iniciar/i });
+    const startButtons = screen.getAllByRole('button', { name: /Iniciar/i });
+    const startButton = startButtons[0]; // Get the first "Iniciar" button (from DynamicSimulation controls)
     await user.click(startButton);
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: /Pausar/i })).toBeInTheDocument();
+      expect(screen.getAllByRole('button', { name: /Pausar/i }).length).toBeGreaterThan(0);
     });
   });
 
@@ -63,19 +92,19 @@ describe('DynamicSimulation', () => {
     render(<DynamicSimulation />);
 
     // Iniciar
-    const startButton = screen.getByRole('button', { name: /Iniciar/i });
-    await user.click(startButton);
+    const startButtons = screen.getAllByRole('button', { name: /Iniciar/i });
+    await user.click(startButtons[0]);
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: /Pausar/i })).toBeInTheDocument();
+      expect(screen.getAllByRole('button', { name: /Pausar/i }).length).toBeGreaterThan(0);
     });
 
     // Pausar
-    const pauseButton = screen.getByRole('button', { name: /Pausar/i });
-    await user.click(pauseButton);
+    const pauseButtons = screen.getAllByRole('button', { name: /Pausar/i });
+    await user.click(pauseButtons[0]);
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: /Retomar/i })).toBeInTheDocument();
+      expect(screen.getAllByRole('button', { name: /Retomar/i }).length).toBeGreaterThan(0);
     });
   });
 
@@ -84,16 +113,16 @@ describe('DynamicSimulation', () => {
     render(<DynamicSimulation />);
 
     // Iniciar
-    const startButton = screen.getByRole('button', { name: /Iniciar/i });
-    await user.click(startButton);
+    const startButtons = screen.getAllByRole('button', { name: /Iniciar/i });
+    await user.click(startButtons[0]);
 
     await waitFor(() => {
-      const stopButton = screen.getByRole('button', { name: /Parar/i });
-      return user.click(stopButton);
+      const stopButtons = screen.getAllByRole('button', { name: /Parar/i });
+      return user.click(stopButtons[0]);
     });
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: /Iniciar/i })).toBeInTheDocument();
+      expect(screen.getAllByRole('button', { name: /Iniciar/i }).length).toBeGreaterThan(0);
     });
   });
 
@@ -101,15 +130,15 @@ describe('DynamicSimulation', () => {
     const user = userEvent.setup({ delay: null });
     render(<DynamicSimulation />);
 
-    const startButton = screen.getByRole('button', { name: /Iniciar/i });
-    await user.click(startButton);
+    const startButtons = screen.getAllByRole('button', { name: /Iniciar/i });
+    await user.click(startButtons[0]);
 
     // Avançar tempo
     vi.advanceTimersByTime(2000);
 
     await waitFor(() => {
-      expect(screen.getByText(/Produção de H₂/i)).toBeInTheDocument();
-      expect(screen.getByText(/Eficiência/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/Produção de H₂/i).length).toBeGreaterThan(0);
+      expect(screen.getAllByText(/Eficiência/i).length).toBeGreaterThan(0);
     });
   });
 
@@ -117,8 +146,8 @@ describe('DynamicSimulation', () => {
     const user = userEvent.setup({ delay: null });
     render(<DynamicSimulation />);
 
-    const startButton = screen.getByRole('button', { name: /Iniciar/i });
-    await user.click(startButton);
+    const startButtons = screen.getAllByRole('button', { name: /Iniciar/i });
+    await user.click(startButtons[0]);
 
     await waitFor(() => {
       const areaInput = screen.getByLabelText(/Área Membrana/i);
