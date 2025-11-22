@@ -91,63 +91,56 @@ function App() {
             </Select>
           </div>
 
-          <div className="hidden lg:block">
-            <TabsList className="inline-flex h-auto flex-wrap gap-2 bg-transparent p-0">
-              <div className="flex flex-wrap gap-2">
-                <div className="bg-muted p-1 rounded-lg">
-                  <div className="text-xs font-semibold text-muted-foreground px-2 py-1">Simulações</div>
-                  <div className="flex gap-1">
-                    <TabsTrigger value="static" className="flex items-center gap-2">
-                      <Zap className="h-4 w-4" /> Estática
-                    </TabsTrigger>
-                    <TabsTrigger value="dynamic" className="flex items-center gap-2">
-                      <Activity className="h-4 w-4" /> Dinâmica
-                    </TabsTrigger>
-                  </div>
-                </div>
-
-                <div className="bg-muted p-1 rounded-lg">
-                  <div className="text-xs font-semibold text-muted-foreground px-2 py-1">Visualizações</div>
-                  <div className="flex gap-1">
-                    <TabsTrigger value="animated" className="flex items-center gap-2">
-                      <Clapperboard className="h-4 w-4" /> Animada
-                    </TabsTrigger>
-                    <TabsTrigger value="process" className="flex items-center gap-2">
-                      <Network className="h-4 w-4" /> Processo
-                    </TabsTrigger>
-                  </div>
-                </div>
-
-                <div className="bg-muted p-1 rounded-lg">
-                  <div className="text-xs font-semibold text-muted-foreground px-2 py-1">Análises</div>
-                  <div className="flex gap-1">
-                    <TabsTrigger value="temperature" className="flex items-center gap-2">
-                      <Thermometer className="h-4 w-4" /> Temperatura
-                    </TabsTrigger>
-                    <TabsTrigger value="climate" className="flex items-center gap-2">
-                      <Globe className="h-4 w-4" /> Clima
-                    </TabsTrigger>
-                  </div>
-                </div>
-
-                <div className="bg-muted p-1 rounded-lg">
-                  <div className="text-xs font-semibold text-muted-foreground px-2 py-1">Recursos</div>
-                  <div className="flex gap-1">
-                    <TabsTrigger value="gallery" className="flex items-center gap-2">
-                      <FileImage className="h-4 w-4" /> Galeria
-                    </TabsTrigger>
-                    <TabsTrigger value="faq" className="flex items-center gap-2">
-                      <HelpCircle className="h-4 w-4" /> FAQ
-                    </TabsTrigger>
-                    <TabsTrigger value="hydrogen" className="flex items-center gap-2">
-                      <Palette className="h-4 w-4" /> H₂ Colorido
-                    </TabsTrigger>
-                    <TabsTrigger value="business" className="flex items-center gap-2">
-                      <Briefcase className="h-4 w-4" /> Negócio
-                    </TabsTrigger>
-                  </div>
-                </div>
+          <div className="hidden lg:block space-y-3">
+            <div className="flex flex-wrap gap-2">
+              <div className="px-3 py-1 bg-blue-50 rounded-md border border-blue-200">
+                <span className="text-xs font-semibold text-blue-700">Simulações</span>
               </div>
+              <div className="px-3 py-1 bg-purple-50 rounded-md border border-purple-200">
+                <span className="text-xs font-semibold text-purple-700">Visualizações</span>
+              </div>
+              <div className="px-3 py-1 bg-green-50 rounded-md border border-green-200">
+                <span className="text-xs font-semibold text-green-700">Análises</span>
+              </div>
+              <div className="px-3 py-1 bg-orange-50 rounded-md border border-orange-200">
+                <span className="text-xs font-semibold text-orange-700">Recursos</span>
+              </div>
+            </div>
+
+            <TabsList className="w-full flex flex-wrap h-auto gap-2 bg-transparent justify-start p-0">
+              <TabsTrigger value="static" className="flex items-center gap-2">
+                <Zap className="h-4 w-4" /> Estática
+              </TabsTrigger>
+              <TabsTrigger value="dynamic" className="flex items-center gap-2">
+                <Activity className="h-4 w-4" /> Dinâmica
+              </TabsTrigger>
+              <span className="border-l border-gray-300 h-8 mx-1"></span>
+              <TabsTrigger value="animated" className="flex items-center gap-2">
+                <Clapperboard className="h-4 w-4" /> Animada
+              </TabsTrigger>
+              <TabsTrigger value="process" className="flex items-center gap-2">
+                <Network className="h-4 w-4" /> Processo
+              </TabsTrigger>
+              <span className="border-l border-gray-300 h-8 mx-1"></span>
+              <TabsTrigger value="temperature" className="flex items-center gap-2">
+                <Thermometer className="h-4 w-4" /> Temperatura
+              </TabsTrigger>
+              <TabsTrigger value="climate" className="flex items-center gap-2">
+                <Globe className="h-4 w-4" /> Clima
+              </TabsTrigger>
+              <span className="border-l border-gray-300 h-8 mx-1"></span>
+              <TabsTrigger value="gallery" className="flex items-center gap-2">
+                <FileImage className="h-4 w-4" /> Galeria
+              </TabsTrigger>
+              <TabsTrigger value="faq" className="flex items-center gap-2">
+                <HelpCircle className="h-4 w-4" /> FAQ
+              </TabsTrigger>
+              <TabsTrigger value="hydrogen" className="flex items-center gap-2">
+                <Palette className="h-4 w-4" /> H₂ Colorido
+              </TabsTrigger>
+              <TabsTrigger value="business" className="flex items-center gap-2">
+                <Briefcase className="h-4 w-4" /> Negócio
+              </TabsTrigger>
             </TabsList>
           </div>
 
