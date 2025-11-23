@@ -255,7 +255,7 @@ const StaticSimulation = () => {
         <h2 className="text-2xl font-bold">Simulação Estática</h2>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[420px_minmax(0,1fr)] xl:grid-cols-[480px_minmax(0,1fr)] gap-8">
         {/* Painel de Entrada */}
         <div className="lg:col-span-1">
           <Card>

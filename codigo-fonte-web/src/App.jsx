@@ -21,7 +21,7 @@ import AnimatedProcessVisualization from './components/AnimatedProcessVisualizat
 function App() {
   const [activeTab, setActiveTab] = useState('static');
 
-  const container = "w-full max-w-screen-2xl 2xl:max-w-[1920px] mx-auto px-6 lg:px-10 xl:px-14";
+  const container = "w-full max-w-[1800px] 2xl:max-w-[2000px] mx-auto px-6 sm:px-8 lg:px-12 xl:px-16";
 
   const navItems = [
     { value: 'static', label: 'Simulação Estática', icon: Zap },
@@ -85,9 +85,9 @@ function App() {
           </Card>
         </div>
 
-        <div className="lg:grid lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-10 lg:items-start">
-          <aside className="hidden lg:block">
-            <Card className="sticky top-8">
+        <div className="lg:grid lg:grid-cols-[360px_minmax(0,1fr)] lg:gap-12 lg:items-start">
+          <aside className="hidden lg:block w-full">
+            <Card className="sticky top-8 w-full">
               <CardHeader>
                 <CardTitle className="text-base">Navegação</CardTitle>
                 <CardDescription>Escolha a simulação ou recurso</CardDescription>
@@ -116,10 +116,10 @@ function App() {
             </Card>
           </aside>
 
-          <div className="space-y-6">
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <div className="space-y-6 min-w-0 w-full">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6 w-full min-w-0">
               {/* Desktop quick nav */}
-              <TabsList className="hidden lg:flex flex-wrap gap-2 bg-white/60 border border-gray-200 rounded-xl p-3 shadow-sm">
+              <TabsList className="hidden lg:flex flex-wrap gap-2 bg-white/60 border border-gray-200 rounded-xl p-3 shadow-sm w-full justify-start">
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   return (
@@ -135,7 +135,7 @@ function App() {
                 })}
               </TabsList>
 
-              <div className="lg:hidden">
+              <div className="lg:hidden w-full">
                 <Select value={activeTab} onValueChange={setActiveTab}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Selecione uma página" />
