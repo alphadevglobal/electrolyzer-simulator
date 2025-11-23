@@ -117,7 +117,7 @@ function App() {
           <div className="space-y-6">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
               {/* Desktop quick nav */}
-              <div className="hidden lg:flex flex-wrap gap-2 bg-white/60 border border-gray-200 rounded-xl p-3 shadow-sm">
+              <TabsList className="hidden lg:flex flex-wrap gap-2 bg-white/60 border border-gray-200 rounded-xl p-3 shadow-sm">
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   return (
@@ -131,7 +131,7 @@ function App() {
                     </TabsTrigger>
                   );
                 })}
-              </div>
+              </TabsList>
 
               <div className="lg:hidden">
                 <Select value={activeTab} onValueChange={setActiveTab}>
