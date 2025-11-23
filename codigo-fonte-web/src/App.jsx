@@ -83,7 +83,7 @@ function App() {
           </Card>
         </div>
 
-        <div className="lg:grid lg:grid-cols-[260px_1fr] lg:gap-6">
+        <div className="lg:grid lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-8 lg:items-start">
           <aside className="hidden lg:block">
             <Card className="sticky top-8">
               <CardHeader>
@@ -116,6 +116,23 @@ function App() {
 
           <div className="space-y-6">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+              {/* Desktop quick nav */}
+              <div className="hidden lg:flex flex-wrap gap-2 bg-white/60 border border-gray-200 rounded-xl p-3 shadow-sm">
+                {navItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <TabsTrigger
+                      key={item.value}
+                      value={item.value}
+                      className="flex items-center gap-2 text-sm px-3 py-2"
+                    >
+                      <Icon className="h-4 w-4" />
+                      {item.label}
+                    </TabsTrigger>
+                  );
+                })}
+              </div>
+
               <div className="lg:hidden">
                 <Select value={activeTab} onValueChange={setActiveTab}>
                   <SelectTrigger className="w-full">
