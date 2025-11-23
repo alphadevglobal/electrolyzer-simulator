@@ -21,6 +21,19 @@ import AnimatedProcessVisualization from './components/AnimatedProcessVisualizat
 function App() {
   const [activeTab, setActiveTab] = useState('static');
 
+  const navItems = [
+    { value: 'static', label: 'Simulação Estática', icon: Zap },
+    { value: 'dynamic', label: 'Simulação Dinâmica', icon: Activity },
+    { value: 'animated', label: 'Visualização Animada', icon: Clapperboard },
+    { value: 'process', label: 'Fluxo de Processo', icon: Network },
+    { value: 'temperature', label: 'Efeito da Temperatura', icon: Thermometer },
+    { value: 'climate', label: 'Análise Climática', icon: Globe },
+    { value: 'gallery', label: 'Galeria', icon: FileImage },
+    { value: 'faq', label: 'FAQ Científico', icon: HelpCircle },
+    { value: 'hydrogen', label: 'H₂ Colorido', icon: Palette },
+    { value: 'business', label: 'Modelo de Negócio', icon: Briefcase },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Header */}
@@ -70,120 +83,139 @@ function App() {
           </Card>
         </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <div className="lg:hidden">
-            <Select value={activeTab} onValueChange={setActiveTab}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Selecione uma página" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="static">Simulação Estática</SelectItem>
-                <SelectItem value="dynamic">Simulação Dinâmica</SelectItem>
-                <SelectItem value="animated">Visualização Animada</SelectItem>
-                <SelectItem value="process">Fluxo de Processo</SelectItem>
-                <SelectItem value="temperature">Efeito da Temperatura</SelectItem>
-                <SelectItem value="climate">Análise Climática</SelectItem>
-                <SelectItem value="gallery">Galeria</SelectItem>
-                <SelectItem value="faq">FAQ Científico</SelectItem>
-                <SelectItem value="hydrogen">H₂ Colorido</SelectItem>
-                <SelectItem value="business">Modelo de Negócio</SelectItem>
-              </SelectContent>
-            </Select>
+        <div className="lg:grid lg:grid-cols-[260px_1fr] lg:gap-6">
+          <aside className="hidden lg:block">
+            <Card className="sticky top-8">
+              <CardHeader>
+                <CardTitle className="text-base">Navegação</CardTitle>
+                <CardDescription>Escolha a simulação ou recurso</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-1">
+                {navItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = activeTab === item.value;
+                  return (
+                    <button
+                      key={item.value}
+                      type="button"
+                      onClick={() => setActiveTab(item.value)}
+                      className={`w-full flex items-center gap-3 rounded-lg px-3 py-2 text-left transition ${
+                        isActive
+                          ? 'bg-blue-50 text-blue-700 border border-blue-200 shadow-sm'
+                          : 'hover:bg-gray-50 text-gray-700'
+                      }`}
+                    >
+                      <Icon className="h-4 w-4" />
+                      <span className="text-sm font-medium">{item.label}</span>
+                    </button>
+                  );
+                })}
+              </CardContent>
+            </Card>
+          </aside>
+
+          <div className="space-y-6">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+              <div className="lg:hidden">
+                <Select value={activeTab} onValueChange={setActiveTab}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Selecione uma página" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="static">Simulação Estática</SelectItem>
+                    <SelectItem value="dynamic">Simulação Dinâmica</SelectItem>
+                    <SelectItem value="animated">Visualização Animada</SelectItem>
+                    <SelectItem value="process">Fluxo de Processo</SelectItem>
+                    <SelectItem value="temperature">Efeito da Temperatura</SelectItem>
+                    <SelectItem value="climate">Análise Climática</SelectItem>
+                    <SelectItem value="gallery">Galeria</SelectItem>
+                    <SelectItem value="faq">FAQ Científico</SelectItem>
+                    <SelectItem value="hydrogen">H₂ Colorido</SelectItem>
+                    <SelectItem value="business">Modelo de Negócio</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="block lg:hidden">
+                <TabsList className="w-full flex flex-wrap h-auto gap-2 bg-transparent justify-start p-0">
+                  <TabsTrigger value="static" className="flex items-center gap-2">
+                    <Zap className="h-4 w-4" /> Estática
+                  </TabsTrigger>
+                  <TabsTrigger value="dynamic" className="flex items-center gap-2">
+                    <Activity className="h-4 w-4" /> Dinâmica
+                  </TabsTrigger>
+                  <span className="border-l border-gray-300 h-8 mx-1"></span>
+                  <TabsTrigger value="animated" className="flex items-center gap-2">
+                    <Clapperboard className="h-4 w-4" /> Animada
+                  </TabsTrigger>
+                  <TabsTrigger value="process" className="flex items-center gap-2">
+                    <Network className="h-4 w-4" /> Processo
+                  </TabsTrigger>
+                  <span className="border-l border-gray-300 h-8 mx-1"></span>
+                  <TabsTrigger value="temperature" className="flex items-center gap-2">
+                    <Thermometer className="h-4 w-4" /> Temperatura
+                  </TabsTrigger>
+                  <TabsTrigger value="climate" className="flex items-center gap-2">
+                    <Globe className="h-4 w-4" /> Clima
+                  </TabsTrigger>
+                  <span className="border-l border-gray-300 h-8 mx-1"></span>
+                  <TabsTrigger value="gallery" className="flex items-center gap-2">
+                    <FileImage className="h-4 w-4" /> Galeria
+                  </TabsTrigger>
+                  <TabsTrigger value="faq" className="flex items-center gap-2">
+                    <HelpCircle className="h-4 w-4" /> FAQ
+                  </TabsTrigger>
+                  <TabsTrigger value="hydrogen" className="flex items-center gap-2">
+                    <Palette className="h-4 w-4" /> H₂ Colorido
+                  </TabsTrigger>
+                  <TabsTrigger value="business" className="flex items-center gap-2">
+                    <Briefcase className="h-4 w-4" /> Negócio
+                  </TabsTrigger>
+                </TabsList>
+              </div>
+
+              <TabsContent value="static">
+                <StaticSimulation />
+              </TabsContent>
+
+              <TabsContent value="dynamic">
+                <DynamicSimulation />
+              </TabsContent>
+
+              <TabsContent value="animated">
+                <AnimatedProcessVisualization />
+              </TabsContent>
+
+              <TabsContent value="process">
+                <ProcessFlowVisualization />
+              </TabsContent>
+
+              <TabsContent value="temperature">
+                <TemperatureEffect />
+              </TabsContent>
+
+              <TabsContent value="climate">
+                <ClimateAnalysis />
+              </TabsContent>
+
+              <TabsContent value="gallery">
+                <ResearchGallery />
+              </TabsContent>
+
+              <TabsContent value="faq">
+                <ScientificFAQ />
+              </TabsContent>
+
+              <TabsContent value="hydrogen">
+                <HydrogenColors />
+              </TabsContent>
+
+              <TabsContent value="business">
+                <BusinessModel />
+              </TabsContent>
+            </Tabs>
           </div>
-
-          <div className="hidden lg:block space-y-3">
-            <div className="flex flex-wrap gap-2">
-              <div className="px-3 py-1 bg-blue-50 rounded-md border border-blue-200">
-                <span className="text-xs font-semibold text-blue-700">Simulações</span>
-              </div>
-              <div className="px-3 py-1 bg-purple-50 rounded-md border border-purple-200">
-                <span className="text-xs font-semibold text-purple-700">Visualizações</span>
-              </div>
-              <div className="px-3 py-1 bg-green-50 rounded-md border border-green-200">
-                <span className="text-xs font-semibold text-green-700">Análises</span>
-              </div>
-              <div className="px-3 py-1 bg-orange-50 rounded-md border border-orange-200">
-                <span className="text-xs font-semibold text-orange-700">Recursos</span>
-              </div>
-            </div>
-
-            <TabsList className="w-full flex flex-wrap h-auto gap-2 bg-transparent justify-start p-0">
-              <TabsTrigger value="static" className="flex items-center gap-2">
-                <Zap className="h-4 w-4" /> Estática
-              </TabsTrigger>
-              <TabsTrigger value="dynamic" className="flex items-center gap-2">
-                <Activity className="h-4 w-4" /> Dinâmica
-              </TabsTrigger>
-              <span className="border-l border-gray-300 h-8 mx-1"></span>
-              <TabsTrigger value="animated" className="flex items-center gap-2">
-                <Clapperboard className="h-4 w-4" /> Animada
-              </TabsTrigger>
-              <TabsTrigger value="process" className="flex items-center gap-2">
-                <Network className="h-4 w-4" /> Processo
-              </TabsTrigger>
-              <span className="border-l border-gray-300 h-8 mx-1"></span>
-              <TabsTrigger value="temperature" className="flex items-center gap-2">
-                <Thermometer className="h-4 w-4" /> Temperatura
-              </TabsTrigger>
-              <TabsTrigger value="climate" className="flex items-center gap-2">
-                <Globe className="h-4 w-4" /> Clima
-              </TabsTrigger>
-              <span className="border-l border-gray-300 h-8 mx-1"></span>
-              <TabsTrigger value="gallery" className="flex items-center gap-2">
-                <FileImage className="h-4 w-4" /> Galeria
-              </TabsTrigger>
-              <TabsTrigger value="faq" className="flex items-center gap-2">
-                <HelpCircle className="h-4 w-4" /> FAQ
-              </TabsTrigger>
-              <TabsTrigger value="hydrogen" className="flex items-center gap-2">
-                <Palette className="h-4 w-4" /> H₂ Colorido
-              </TabsTrigger>
-              <TabsTrigger value="business" className="flex items-center gap-2">
-                <Briefcase className="h-4 w-4" /> Negócio
-              </TabsTrigger>
-            </TabsList>
-          </div>
-
-          <TabsContent value="static">
-            <StaticSimulation />
-          </TabsContent>
-
-          <TabsContent value="dynamic">
-            <DynamicSimulation />
-          </TabsContent>
-
-          <TabsContent value="animated">
-            <AnimatedProcessVisualization />
-          </TabsContent>
-
-          <TabsContent value="process">
-            <ProcessFlowVisualization />
-          </TabsContent>
-
-          <TabsContent value="temperature">
-            <TemperatureEffect />
-          </TabsContent>
-
-          <TabsContent value="climate">
-            <ClimateAnalysis />
-          </TabsContent>
-
-          <TabsContent value="gallery">
-            <ResearchGallery />
-          </TabsContent>
-
-          <TabsContent value="faq">
-            <ScientificFAQ />
-          </TabsContent>
-
-          <TabsContent value="hydrogen">
-            <HydrogenColors />
-          </TabsContent>
-
-          <TabsContent value="business">
-            <BusinessModel />
-          </TabsContent>
-        </Tabs>
+        </div>
 
         {/* Footer */}
         <footer className="mt-16 pt-8 border-t border-gray-200">
@@ -272,4 +304,3 @@ function App() {
 }
 
 export default App;
-
