@@ -21,6 +21,8 @@ import AnimatedProcessVisualization from './components/AnimatedProcessVisualizat
 function App() {
   const [activeTab, setActiveTab] = useState('static');
 
+  const container = "w-full max-w-screen-2xl 2xl:max-w-[1920px] mx-auto px-6 lg:px-10 xl:px-14";
+
   const navItems = [
     { value: 'static', label: 'Simulação Estática', icon: Zap },
     { value: 'dynamic', label: 'Simulação Dinâmica', icon: Activity },
@@ -38,7 +40,7 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Header */}
       <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={container}>
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 sm:py-6 gap-4">
             <div className="flex items-center space-x-3">
               <div className="p-2 bg-blue-600 rounded-lg">
@@ -66,7 +68,7 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className={`${container} py-8`}>
         <div className="mb-8">
           <Card className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
             <CardHeader>
@@ -83,7 +85,7 @@ function App() {
           </Card>
         </div>
 
-        <div className="lg:grid lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-8 lg:items-start">
+        <div className="lg:grid lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-10 lg:items-start">
           <aside className="hidden lg:block">
             <Card className="sticky top-8">
               <CardHeader>
