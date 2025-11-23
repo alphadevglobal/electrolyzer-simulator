@@ -72,13 +72,39 @@ const StaticSimulation = () => {
     };
   }, []);
 
+  const clampParameter = (key, rawValue) => {
+    const limits = {
+      temperature: {
+        min: ELECTROLYZER_PARAMS[electrolyzerType]?.minTemp ?? 20,
+        max: ELECTROLYZER_PARAMS[electrolyzerType]?.maxTemp ?? 100
+      },
+      pressure: { min: 1, max: 30 },
+      concentration: { min: 10, max: 50 },
+      currentDensity: {
+        min: ELECTROLYZER_PARAMS[electrolyzerType]?.minCurrentDensity ?? 0.2,
+        max: ELECTROLYZER_PARAMS[electrolyzerType]?.maxCurrentDensity ?? 2
+      },
+      electrodeArea: { min: 1, max: 10000 },
+      voltage: { min: 1.2, max: 3.0 },
+      molality: { min: 2, max: 18 },
+      membraneArea: { min: 10, max: 500 },
+      numberOfCells: { min: 1, max: 100 },
+      electrodeGap: { min: 0.5, max: 5 }
+    };
+
+    const range = limits[key];
+    const parsed = parseFloat(String(rawValue).replace(/,/g, '.'));
+    if (isNaN(parsed)) return range?.min ?? 0;
+    if (!range) return parsed;
+
+    return Math.min(Math.max(parsed, range.min), range.max);
+  };
+
   const handleParameterChange = (key, value) => {
-    const numValue = parseFloat(value.replace(
-      /,/g, "."
-    ));
+    const clamped = clampParameter(key, value);
     setParameters(prev => ({
       ...prev,
-      [key]: isNaN(numValue) ? (key === 'temperature' ? 60 : 0) : numValue // Default para 60 se temperatura, senão 0
+      [key]: clamped
     }));
   };
 
@@ -477,6 +503,13 @@ const StaticSimulation = () => {
               </TabsList>
 
               <Card className="border-dashed">
+                <CardHeader className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
+                  <div>
+                    <CardTitle className="text-lg">Resultados</CardTitle>
+                    <CardDescription className="text-xs">Resumo consolidado dos cenários calculados</CardDescription>
+                  </div>
+                </CardHeader>
+
                 <CardHeader className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
                   <div>
                     <CardTitle className="text-lg">Integração AWS Lambda</CardTitle>

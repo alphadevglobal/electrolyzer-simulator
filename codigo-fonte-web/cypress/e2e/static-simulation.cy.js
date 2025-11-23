@@ -68,10 +68,10 @@ describe('Static Simulation E2E', () => {
 
     // Valor muito alto
     tempInput.clear().type('200');
-    tempInput.should('have.value', '100'); // Max = 100
+    tempInput.should('have.value', '80'); // Max definido para PEM
 
     // Valor muito baixo
     tempInput.clear().type('-10');
-    tempInput.should('have.value', '20'); // Min = 20
+    tempInput.should('have.value', '25'); // Min definido para PEM
   });
 });

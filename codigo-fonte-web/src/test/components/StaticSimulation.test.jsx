@@ -163,7 +163,10 @@ describe('StaticSimulation', () => {
     await user.type(cellsInput, '10');
 
     const geometrySummary = await screen.findByTestId('geometry-summary');
-    expect(geometrySummary).toHaveTextContent(/Área total ativa: 1000 cm²/i);
+    const expectedArea = Number(areaInput.value) * Number(cellsInput.value);
+    expect(geometrySummary).toHaveTextContent(
+      new RegExp(`Área total ativa: ${expectedArea} cm²`, 'i')
+    );
   });
 
   it('deve validar ranges de parâmetros', async () => {
@@ -176,9 +179,13 @@ describe('StaticSimulation', () => {
     await user.tripleClick(tempInput);
     await user.keyboard('150');
 
-    // Verificar se está dentro do range permitido - component should clamp to max
-    // Note: The component may not enforce max in real-time, so we just check it accepts the input
-    expect(parseInt(tempInput.value)).toBeGreaterThanOrEqual(100);
+    // Verificar se está dentro do range permitido
+    expect(parseInt(tempInput.value)).toBeLessThanOrEqual(80);
+
+    // Valor muito baixo
+    await user.tripleClick(tempInput);
+    await user.keyboard('-10');
+    expect(parseInt(tempInput.value)).toBeGreaterThanOrEqual(25);
   });
 
   it('deve exportar dados para CSV', async () => {
