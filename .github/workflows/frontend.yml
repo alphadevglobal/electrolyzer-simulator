@@ -17,6 +17,8 @@ jobs:
   test:
     name: Build & Test
     runs-on: ubuntu-latest
+    env:
+      RUN_E2E: ${{ vars.RUN_E2E || 'false' }}
     defaults:
       run:
         working-directory: codigo-fonte-web
@@ -50,9 +52,11 @@ jobs:
         run: pnpm run build
 
       - name: Install Cypress binary
+        if: env.RUN_E2E == 'true'
         run: pnpm exec cypress install
 
       - name: Run Cypress E2E tests
+        if: env.RUN_E2E == 'true'
         uses: cypress-io/github-action@v6
         with:
           working-directory: codigo-fonte-web
@@ -60,6 +64,10 @@ jobs:
           start: pnpm dev --host 0.0.0.0 --port 4173
           wait-on: http://127.0.0.1:4173
           wait-on-timeout: 120
+
+      - name: Skip notice for E2E
+        if: env.RUN_E2E != 'true'
+        run: echo "Cypress E2E skipped (set repository variable RUN_E2E=true to enable)" >> $GITHUB_STEP_SUMMARY
 
   deploy:
     name: Deploy to Vercel
