@@ -316,7 +316,7 @@ const StaticSimulation = () => {
                   </div>
                 </div>
 
-                <div className="bg-purple-50 p-2 rounded text-xs">
+                <div className="bg-purple-50 p-2 rounded text-xs" data-testid="geometry-summary">
                   <p><strong>Área total ativa:</strong> {(parameters.membraneArea * parameters.numberOfCells).toFixed(0)} cm²</p>
                   <p><strong>Volume do stack:</strong> {((parameters.membraneArea * parameters.electrodeGap * parameters.numberOfCells) / 1000).toFixed(2)} L</p>
                   <p className="text-gray-600 mt-1">Gap menor = menor resistência ôhmica. Área maior = melhor distribuição térmica.</p>
@@ -532,7 +532,7 @@ const StaticSimulation = () => {
                       <div className="flex items-center gap-2">
                         <Droplets className="h-5 w-5 text-blue-500" />
                         <div>
-                          <p className="text-sm text-muted-foreground">Produção H₂</p>
+                          <p className="text-sm text-muted-foreground">Produção de H₂</p>
                           <p className="text-lg font-bold">{results.production.kgPerHour.toFixed(4).replace(".", ",")} kg/h</p>
                         </div>
                       </div>
@@ -619,7 +619,7 @@ const StaticSimulation = () => {
 
                 <Button onClick={exportResults} className="w-full">
                   <Download className="h-4 w-4 mr-2" />
-                  Exportar Resultados para CSV
+                  Exportar CSV
                 </Button>
               </TabsContent>
 

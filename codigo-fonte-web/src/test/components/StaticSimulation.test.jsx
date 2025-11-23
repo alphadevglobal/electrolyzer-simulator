@@ -140,13 +140,13 @@ describe('StaticSimulation', () => {
     });
   });
 
-  it('deve exibir parâmetros geométricos', () => {
+  it('deve exibir parâmetros geométricos', async () => {
     render(<StaticSimulation />);
 
-    expect(screen.getByText(/Geometria do Eletrolizador/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Área da Membrana/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Número de Células/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Gap Eletrodos/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Geometria do Eletrolisador/i)).toBeInTheDocument();
+    expect(await screen.findByLabelText(/Área da Membrana/i)).toBeInTheDocument();
+    expect(await screen.findByLabelText(/Número de Células/i)).toBeInTheDocument();
+    expect(await screen.findByLabelText(/Gap Eletrodos/i)).toBeInTheDocument();
   });
 
   it('deve calcular área total corretamente', async () => {
@@ -162,9 +162,8 @@ describe('StaticSimulation', () => {
     await user.clear(cellsInput);
     await user.type(cellsInput, '10');
 
-    await waitFor(() => {
-      expect(screen.getByText(/Área total ativa: 1000 cm²/i)).toBeInTheDocument();
-    });
+    const geometrySummary = await screen.findByTestId('geometry-summary');
+    expect(geometrySummary).toHaveTextContent(/Área total ativa: 1000 cm²/i);
   });
 
   it('deve validar ranges de parâmetros', async () => {
