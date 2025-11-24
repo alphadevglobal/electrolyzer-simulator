@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -20,8 +20,16 @@ import AnimatedProcessVisualization from './components/AnimatedProcessVisualizat
 
 function App() {
   const [activeTab, setActiveTab] = useState('static');
+  const [isDesktop, setIsDesktop] = useState(false);
 
   const container = "w-full max-w-[1800px] 2xl:max-w-[2000px] mx-auto px-6 sm:px-8 lg:px-12 xl:px-16";
+
+  useEffect(() => {
+    const updateViewport = () => setIsDesktop(window.innerWidth >= 1024);
+    updateViewport();
+    window.addEventListener('resize', updateViewport);
+    return () => window.removeEventListener('resize', updateViewport);
+  }, []);
 
   const navItems = [
     { value: 'static', label: 'Simulação Estática', icon: Zap },
@@ -85,8 +93,9 @@ function App() {
           </Card>
         </div>
 
-        <div className="lg:grid lg:grid-cols-[360px_minmax(0,1fr)] lg:gap-12 lg:items-start">
-          <aside className="hidden lg:block w-full">
+        <div className={isDesktop ? "grid grid-cols-[360px_minmax(0,1fr)] gap-12 items-start" : "flex flex-col gap-6"}>
+          {isDesktop && (
+          <aside className="w-full">
             <Card className="sticky top-8 w-full">
               <CardHeader>
                 <CardTitle className="text-base">Navegação</CardTitle>
@@ -115,83 +124,86 @@ function App() {
               </CardContent>
             </Card>
           </aside>
+          )}
 
           <div className="space-y-6 min-w-0 w-full">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6 w-full min-w-0">
               {/* Desktop quick nav */}
-              <TabsList className="hidden lg:flex flex-wrap gap-2 bg-white/60 border border-gray-200 rounded-xl p-3 shadow-sm w-full justify-start">
-                {navItems.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <TabsTrigger
-                      key={item.value}
-                      value={item.value}
-                      className="flex items-center gap-2 text-sm px-3 py-2"
-                    >
-                      <Icon className="h-4 w-4" />
-                      {item.label}
-                    </TabsTrigger>
-                  );
-                })}
-              </TabsList>
-
-              <div className="lg:hidden w-full">
-                <Select value={activeTab} onValueChange={setActiveTab}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Selecione uma página" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="static">Simulação Estática</SelectItem>
-                    <SelectItem value="dynamic">Simulação Dinâmica</SelectItem>
-                    <SelectItem value="animated">Visualização Animada</SelectItem>
-                    <SelectItem value="process">Fluxo de Processo</SelectItem>
-                    <SelectItem value="temperature">Efeito da Temperatura</SelectItem>
-                    <SelectItem value="climate">Análise Climática</SelectItem>
-                    <SelectItem value="gallery">Galeria</SelectItem>
-                    <SelectItem value="faq">FAQ Científico</SelectItem>
-                    <SelectItem value="hydrogen">H₂ Colorido</SelectItem>
-                    <SelectItem value="business">Modelo de Negócio</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="block lg:hidden">
-                <TabsList className="w-full flex flex-wrap h-auto gap-2 bg-transparent justify-start p-0">
-                  <TabsTrigger value="static" className="flex items-center gap-2">
-                    <Zap className="h-4 w-4" /> Estática
-                  </TabsTrigger>
-                  <TabsTrigger value="dynamic" className="flex items-center gap-2">
-                    <Activity className="h-4 w-4" /> Dinâmica
-                  </TabsTrigger>
-                  <span className="border-l border-gray-300 h-8 mx-1"></span>
-                  <TabsTrigger value="animated" className="flex items-center gap-2">
-                    <Clapperboard className="h-4 w-4" /> Animada
-                  </TabsTrigger>
-                  <TabsTrigger value="process" className="flex items-center gap-2">
-                    <Network className="h-4 w-4" /> Processo
-                  </TabsTrigger>
-                  <span className="border-l border-gray-300 h-8 mx-1"></span>
-                  <TabsTrigger value="temperature" className="flex items-center gap-2">
-                    <Thermometer className="h-4 w-4" /> Temperatura
-                  </TabsTrigger>
-                  <TabsTrigger value="climate" className="flex items-center gap-2">
-                    <Globe className="h-4 w-4" /> Clima
-                  </TabsTrigger>
-                  <span className="border-l border-gray-300 h-8 mx-1"></span>
-                  <TabsTrigger value="gallery" className="flex items-center gap-2">
-                    <FileImage className="h-4 w-4" /> Galeria
-                  </TabsTrigger>
-                  <TabsTrigger value="faq" className="flex items-center gap-2">
-                    <HelpCircle className="h-4 w-4" /> FAQ
-                  </TabsTrigger>
-                  <TabsTrigger value="hydrogen" className="flex items-center gap-2">
-                    <Palette className="h-4 w-4" /> H₂ Colorido
-                  </TabsTrigger>
-                  <TabsTrigger value="business" className="flex items-center gap-2">
-                    <Briefcase className="h-4 w-4" /> Negócio
-                  </TabsTrigger>
+              {isDesktop ? (
+                <TabsList className="flex flex-wrap gap-2 bg-white/60 border border-gray-200 rounded-xl p-3 shadow-sm w-full justify-start">
+                  {navItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <TabsTrigger
+                        key={item.value}
+                        value={item.value}
+                        className="flex items-center gap-2 text-sm px-3 py-2"
+                      >
+                        <Icon className="h-4 w-4" />
+                        {item.label}
+                      </TabsTrigger>
+                    );
+                  })}
                 </TabsList>
-              </div>
+              ) : (
+                <>
+                  <div className="w-full">
+                    <Select value={activeTab} onValueChange={setActiveTab}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Selecione uma página" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="static">Simulação Estática</SelectItem>
+                        <SelectItem value="dynamic">Simulação Dinâmica</SelectItem>
+                        <SelectItem value="animated">Visualização Animada</SelectItem>
+                        <SelectItem value="process">Fluxo de Processo</SelectItem>
+                        <SelectItem value="temperature">Efeito da Temperatura</SelectItem>
+                        <SelectItem value="climate">Análise Climática</SelectItem>
+                        <SelectItem value="gallery">Galeria</SelectItem>
+                        <SelectItem value="faq">FAQ Científico</SelectItem>
+                        <SelectItem value="hydrogen">H₂ Colorido</SelectItem>
+                        <SelectItem value="business">Modelo de Negócio</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <TabsList className="w-full flex flex-wrap h-auto gap-2 bg-transparent justify-start p-0">
+                    <TabsTrigger value="static" className="flex items-center gap-2">
+                      <Zap className="h-4 w-4" /> Estática
+                    </TabsTrigger>
+                    <TabsTrigger value="dynamic" className="flex items-center gap-2">
+                      <Activity className="h-4 w-4" /> Dinâmica
+                    </TabsTrigger>
+                    <span className="border-l border-gray-300 h-8 mx-1"></span>
+                    <TabsTrigger value="animated" className="flex items-center gap-2">
+                      <Clapperboard className="h-4 w-4" /> Animada
+                    </TabsTrigger>
+                    <TabsTrigger value="process" className="flex items-center gap-2">
+                      <Network className="h-4 w-4" /> Processo
+                    </TabsTrigger>
+                    <span className="border-l border-gray-300 h-8 mx-1"></span>
+                    <TabsTrigger value="temperature" className="flex items-center gap-2">
+                      <Thermometer className="h-4 w-4" /> Temperatura
+                    </TabsTrigger>
+                    <TabsTrigger value="climate" className="flex items-center gap-2">
+                      <Globe className="h-4 w-4" /> Clima
+                    </TabsTrigger>
+                    <span className="border-l border-gray-300 h-8 mx-1"></span>
+                    <TabsTrigger value="gallery" className="flex items-center gap-2">
+                      <FileImage className="h-4 w-4" /> Galeria
+                    </TabsTrigger>
+                    <TabsTrigger value="faq" className="flex items-center gap-2">
+                      <HelpCircle className="h-4 w-4" /> FAQ
+                    </TabsTrigger>
+                    <TabsTrigger value="hydrogen" className="flex items-center gap-2">
+                      <Palette className="h-4 w-4" /> H₂ Colorido
+                    </TabsTrigger>
+                    <TabsTrigger value="business" className="flex items-center gap-2">
+                      <Briefcase className="h-4 w-4" /> Negócio
+                    </TabsTrigger>
+                  </TabsList>
+                </>
+              )}
 
               <TabsContent value="static">
                 <StaticSimulation />

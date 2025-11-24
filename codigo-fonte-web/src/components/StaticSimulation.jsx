@@ -39,6 +39,14 @@ const StaticSimulation = () => {
   const [remotePrediction, setRemotePrediction] = useState(null);
   const [isSyncingAws, setIsSyncingAws] = useState(false);
   const [awsError, setAwsError] = useState(null);
+  const [isWide, setIsWide] = useState(false);
+
+  useEffect(() => {
+    const update = () => setIsWide(window.innerWidth >= 1024);
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
 
   // Atualizar parâmetros quando o tipo de eletrolisador muda
   useEffect(() => {
@@ -255,7 +263,7 @@ const StaticSimulation = () => {
         <h2 className="text-2xl font-bold">Simulação Estática</h2>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[420px_minmax(0,1fr)] xl:grid-cols-[480px_minmax(0,1fr)] gap-8">
+      <div className={isWide ? "grid grid-cols-[420px_minmax(0,1fr)] xl:grid-cols-[480px_minmax(0,1fr)] gap-8" : "grid grid-cols-1 gap-6"}>
         {/* Painel de Entrada */}
         <div className="lg:col-span-1">
           <Card>
