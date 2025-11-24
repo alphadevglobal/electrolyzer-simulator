@@ -128,24 +128,8 @@ function App() {
 
           <div className="space-y-6 min-w-0 w-full">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6 w-full min-w-0">
-              {/* Desktop quick nav */}
-              {isDesktop ? (
-                <TabsList className="flex flex-wrap gap-2 bg-white/60 border border-gray-200 rounded-xl p-3 shadow-sm w-full justify-start">
-                  {navItems.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <TabsTrigger
-                        key={item.value}
-                        value={item.value}
-                        className="flex items-center gap-2 text-sm px-3 py-2"
-                      >
-                        <Icon className="h-4 w-4" />
-                        {item.label}
-                      </TabsTrigger>
-                    );
-                  })}
-                </TabsList>
-              ) : (
+              {/* Navegação superior só no mobile */}
+              {!isDesktop && (
                 <>
                   <div className="w-full">
                     <Select value={activeTab} onValueChange={setActiveTab}>

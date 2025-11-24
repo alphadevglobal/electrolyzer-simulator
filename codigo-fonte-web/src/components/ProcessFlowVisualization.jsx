@@ -20,8 +20,9 @@ import {
 // Custos por hora (em R$/hora)
 const COSTS = {
   green: {
-    solarPanel: { idle: 0.5, running: 1.2, maintenance: 15 },
-    windTurbine: { idle: 0.8, running: 1.5, maintenance: 20 },
+    // Recursos naturais: custo direto zerado, apenas manutenção eventual
+    solarPanel: { idle: 0, running: 0, maintenance: 8 },
+    windTurbine: { idle: 0, running: 0, maintenance: 10 },
     electrolyzer: { idle: 2.0, running: 50, maintenance: 100 },
     compressor: { idle: 0.5, running: 8, maintenance: 30 },
     storage: { idle: 0.1, running: 0.3, maintenance: 10 },
@@ -75,6 +76,9 @@ const ProcessFlowVisualization = () => {
   // Produção
   const [h2Produced, setH2Produced] = useState(0); // kg
   const [o2Produced, setO2Produced] = useState(0); // kg
+  const [solarUsage, setSolarUsage] = useState(0); // segundos de uso diário
+  const [windUsage, setWindUsage] = useState(0); // segundos de uso diário
+  const NATURAL_LIMIT_SECONDS = 6 * 3600; // 6h por dia
 
   // Referências
   const intervalRef = useRef(null);
@@ -88,6 +92,22 @@ const ProcessFlowVisualization = () => {
 
     intervalRef.current = setInterval(() => {
       setTimeElapsed(t => t + 1);
+
+      // Controle de limite diário dos recursos naturais
+      setSolarUsage(prev => {
+        const next = solarPanel.status === 'on' ? prev + 1 : prev;
+        if (next >= NATURAL_LIMIT_SECONDS && solarPanel.status === 'on') {
+          setSolarPanel(curr => ({ ...curr, status: 'off', active: false }));
+        }
+        return Math.min(next, NATURAL_LIMIT_SECONDS);
+      });
+      setWindUsage(prev => {
+        const next = windTurbine.status === 'on' ? prev + 1 : prev;
+        if (next >= NATURAL_LIMIT_SECONDS && windTurbine.status === 'on') {
+          setWindTurbine(curr => ({ ...curr, status: 'off', active: false }));
+        }
+        return Math.min(next, NATURAL_LIMIT_SECONDS);
+      });
 
       // Calcular produção de H₂ (kg/h) baseada em condições
       let h2Rate = 0;
@@ -157,6 +177,9 @@ const ProcessFlowVisualization = () => {
   // Calcular métricas
   const lcoh = h2Produced > 0 ? totalCost / h2Produced : 0; // R$/kg H₂
   const efficiency = electrolyzer.active ? ((33.3 * h2Produced) / ((energyCost / 0.65) || 1)) * 100 : 0;
+  const formatHours = (seconds) => (seconds / 3600).toFixed(1);
+  const solarLimitReached = solarUsage >= NATURAL_LIMIT_SECONDS;
+  const windLimitReached = windUsage >= NATURAL_LIMIT_SECONDS;
 
   return (
     <div className="space-y-6">
@@ -267,12 +290,16 @@ const ProcessFlowVisualization = () => {
                     <Sun className="w-12 h-12" />
                   </Button>
                   <div className="mt-2">
+                    <div className="text-sm font-semibold text-gray-700">Energia Solar</div>
                     <Badge className={solarPanel.status === 'on' ? 'bg-green-600' : solarPanel.status === 'maintenance' ? 'bg-orange-600' : 'bg-gray-600'}>
                       {solarPanel.status === 'on' ? '✓ Online' : solarPanel.status === 'maintenance' ? '🔧 Manutenção' : '⏸ Parado'}
                     </Badge>
                     <div className="text-xs mt-1 font-semibold">
-                      Custo: R$ {(COSTS.green.solarPanel[solarPanel.status] / 3600).toFixed(4)}/s
+                      Recurso natural • Sem custo direto • Uso diário: {formatHours(solarUsage)}h / {formatHours(NATURAL_LIMIT_SECONDS)}h
                     </div>
+                    {solarLimitReached && (
+                      <div className="text-xs text-red-600 mt-1">Limite diário atingido. Retome amanhã.</div>
+                    )}
                     {solarPanel.status === 'on' && (
                       <div className="mt-2">
                         <input
@@ -299,12 +326,16 @@ const ProcessFlowVisualization = () => {
                     <Wind className={`w-12 h-12 ${windTurbine.status === 'on' ? 'animate-spin' : ''}`} />
                   </Button>
                   <div className="mt-2">
+                    <div className="text-sm font-semibold text-gray-700">Energia Eólica</div>
                     <Badge className={windTurbine.status === 'on' ? 'bg-green-600' : windTurbine.status === 'maintenance' ? 'bg-orange-600' : 'bg-gray-600'}>
                       {windTurbine.status === 'on' ? '✓ Online' : windTurbine.status === 'maintenance' ? '🔧 Manutenção' : '⏸ Parado'}
                     </Badge>
                     <div className="text-xs mt-1 font-semibold">
-                      Custo: R$ {(COSTS.green.windTurbine[windTurbine.status] / 3600).toFixed(4)}/s
+                      Recurso natural • Sem custo direto • Uso diário: {formatHours(windUsage)}h / {formatHours(NATURAL_LIMIT_SECONDS)}h
                     </div>
+                    {windLimitReached && (
+                      <div className="text-xs text-red-600 mt-1">Limite diário atingido. Retome amanhã.</div>
+                    )}
                     {windTurbine.status === 'on' && (
                       <div className="mt-2">
                         <input
@@ -327,7 +358,8 @@ const ProcessFlowVisualization = () => {
                     <Droplets className="w-12 h-12 text-white" />
                   </div>
                   <div className="mt-2">
-                    <Badge className="bg-blue-600">Água</Badge>
+                    <div className="text-sm font-semibold text-gray-700">Água</div>
+                    <Badge className="bg-blue-600">Recurso hídrico</Badge>
                     <div className="text-xs mt-1 font-semibold">
                       Custo: R$ {((waterFlow / 3600) * COSTS.green.water).toFixed(4)}/s
                     </div>
